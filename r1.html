@@ -178,6 +178,22 @@ kbd{background:#EFEDE4;border:1px solid #D8D5C6;border-bottom-width:2.5px;border
 </style>
 </head>
 <body>
+<div id="pwgate" style="position:fixed;inset:0;background:#2C3A78;color:#fff;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Malgun Gothic',sans-serif;padding:20px;text-align:center;">
+<div style="font-size:23px;font-weight:800;margin-bottom:8px;">🔒 홍성 AI 배움터 자료</div>
+<div style="font-size:16px;opacity:.9;margin-bottom:18px;">비밀번호를 입력하세요</div>
+<input id="pwin" type="password" autocomplete="off" style="font-size:18px;padding:13px 14px;border-radius:10px;border:none;width:min(260px,80vw);text-align:center;" placeholder="비밀번호">
+<button id="pwbtn" style="margin-top:12px;font-size:17px;font-weight:800;padding:13px 30px;border:none;border-radius:10px;background:#EAE3D2;color:#2C3A78;cursor:pointer;">들어가기</button>
+<div id="pwerr" style="margin-top:10px;font-size:14px;color:#FFD6D6;min-height:18px;"></div>
+</div>
+<script>
+(function(){var PW="hong2026";
+try{if(sessionStorage.getItem('hong_ok')==='1'){var g=document.getElementById('pwgate');if(g)g.remove();return;}}catch(e){}
+function t(){var v=document.getElementById('pwin').value;if(v===PW){try{sessionStorage.setItem('hong_ok','1');}catch(e){}var g=document.getElementById('pwgate');if(g)g.remove();}else{document.getElementById('pwerr').textContent='비밀번호가 틀렸어요';}}
+document.getElementById('pwbtn').addEventListener('click',t);
+document.getElementById('pwin').addEventListener('keydown',function(e){if(e.key==='Enter')t();});
+document.getElementById('pwin').focus();})();
+</script>
+
 
 <!-- 상단 고정 진도 바 -->
 <div class="topbar">
