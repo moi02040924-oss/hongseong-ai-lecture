@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>홍성군 · AI 배움터 2회차 복습</title>
+<style>
+  :root{
+    --paper:#FAFAF8; --ink:#22242B; --sub:#5A5E6B;
+    --indigo:#3A4A94; --indigo-d:#2C3A78; --indigo-l:#EEF0FA;
+    --card:#FFFFFF; --line:#E7E6E0; --ok:#2E7D57; --warn:#B26A00;
+    --accent:#EAE3D2;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Malgun Gothic","맑은 고딕",AppleSDGothicNeo,"Apple SD Gothic Neo",
+      "Noto Sans KR","Segoe UI",sans-serif;
+    font-size:18px; line-height:1.65; word-break:keep-all;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px;}
+
+  /* 헤더 */
+  header.hero{
+    background:linear-gradient(160deg,var(--indigo) 0%,var(--indigo-d) 100%);
+    color:#fff; padding:30px 20px 34px; border-radius:0 0 22px 22px;
+    text-align:center;
+  }
+  .hero .badge-track{
+    display:inline-block; background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.35); color:#fff;
+    padding:5px 14px; border-radius:999px; font-size:15px; font-weight:700;
+    letter-spacing:.2px; margin-bottom:12px;
+  }
+  .hero .round{font-size:15px; opacity:.9; margin:0 0 4px;}
+  .hero h1{font-size:27px; line-height:1.3; margin:2px 0 8px; font-weight:800;}
+  .hero .subtitle{font-size:16px; opacity:.95; margin:0;}
+  .hero .by{font-size:14px; opacity:.8; margin-top:14px;}
+
+  /* 섹션 공통 */
+  section{margin-top:30px;}
+  .sec-head{display:flex; align-items:center; gap:10px; margin:0 0 4px;}
+  .sec-num{
+    flex:0 0 auto; width:34px; height:34px; border-radius:10px;
+    background:var(--indigo); color:#fff; font-weight:800; font-size:17px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-head h2{font-size:21px; margin:0; font-weight:800; color:var(--indigo-d);}
+  .sec-desc{color:var(--sub); font-size:15.5px; margin:6px 2px 16px;}
+
+  /* 안내문 */
+  .intro{
+    background:var(--indigo-l); border-radius:14px; padding:16px 18px;
+    color:var(--indigo-d); font-size:16px; margin-top:20px;
+  }
+
+  /* 오늘 배운 것 */
+  .lcard{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:16px 18px; margin-bottom:12px; display:flex; gap:14px; align-items:flex-start;
+    box-shadow:0 1px 2px rgba(40,40,60,.04);
+  }
+  .lemoji{font-size:30px; flex:0 0 auto; line-height:1.2;}
+  .lbody h3{margin:2px 0 4px; font-size:18.5px; color:var(--indigo-d);}
+  .lbody p{margin:0; font-size:16px; color:var(--ink);}
+
+  /* 가르칠 때 팁 */
+  .tipbox{
+    margin-top:10px; background:var(--indigo-l); border-left:4px solid var(--indigo);
+    border-radius:8px; padding:9px 12px; font-size:14.5px; color:var(--indigo-d);
+  }
+  .tiplabel{font-weight:800;}
+
+  /* 미션 */
+  .mission-grid{display:flex; flex-direction:column; gap:14px;}
+  .mbox{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 18px;
+  }
+  .mbox h3{margin:0 0 4px; font-size:18px; color:var(--indigo-d); display:flex; align-items:center; gap:8px;}
+  .mbox ol{margin:8px 0 0; padding-left:22px;}
+  .mbox li{margin-bottom:8px; font-size:16px;}
+  .mbox li b{color:var(--indigo-d);}
+  .mnote{margin-top:12px; font-size:15px; color:var(--sub); font-style:normal;}
+
+  /* 프롬프트 카드 */
+  .pcard{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin-bottom:12px;
+  }
+  .plabel{font-weight:800; color:var(--indigo-d); font-size:16px; margin-bottom:8px;}
+  .ptext{
+    background:#F6F6F1; border:1px solid var(--line); border-radius:10px;
+    padding:11px 13px; margin:0 0 10px; font-size:15.5px; line-height:1.6;
+    white-space:pre-wrap; word-break:keep-all;
+    font-family:"Malgun Gothic","맑은 고딕",sans-serif; color:#2C2E36;
+  }
+  .ptext.lyric{background:#FBF7EF;}
+  .copybtn{
+    -webkit-appearance:none; appearance:none; cursor:pointer;
+    background:var(--indigo); color:#fff; border:none; border-radius:10px;
+    padding:11px 18px; font-size:16px; font-weight:700; min-height:46px; width:100%;
+  }
+  .copybtn:active{background:var(--indigo-d);}
+  .copybtn.small{width:auto; padding:9px 15px; font-size:14.5px; min-height:40px;}
+  .copybtn.copied{background:var(--ok);}
+
+  /* 수노 카드 */
+  .mcard{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin-bottom:12px;
+  }
+  .mhead{font-weight:800; font-size:17px; color:var(--indigo-d);}
+  .mwhen{font-size:14.5px; color:var(--sub); margin:2px 0 10px;}
+  .mrow{margin-bottom:8px;}
+  .mtag{
+    display:inline-block; background:var(--accent); color:#5B4A22; font-weight:700;
+    font-size:13px; padding:3px 10px; border-radius:999px; margin-bottom:6px;
+  }
+
+  /* 도구 카드 */
+  .tcard{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:15px 16px; margin-bottom:12px;
+  }
+  .tname{font-weight:800; font-size:17.5px; color:var(--indigo-d);}
+  .tmeta{margin:6px 0; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .badge{font-size:13px; font-weight:800; padding:3px 10px; border-radius:999px;}
+  .badge.ok{background:#E4F3EB; color:var(--ok);}
+  .badge.warn{background:#FBEEDB; color:var(--warn);}
+  .quota{font-size:14px; color:var(--sub);}
+  .tdesc{font-size:15.5px; margin:4px 0 12px;}
+  .toolbtn{
+    display:block; text-align:center; text-decoration:none;
+    background:var(--indigo-l); color:var(--indigo-d); font-weight:800;
+    border:1px solid #D6DAF0; border-radius:10px; padding:12px; font-size:16px; min-height:46px;
+  }
+  .toolbtn:active{background:#E1E5F6;}
+
+  /* 팁 리스트 */
+  .tiplist{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:6px 18px;
+  }
+  .tiplist li{margin:12px 0; font-size:16px; list-style:none; padding-left:26px; position:relative;}
+  .tiplist li::before{content:"💡"; position:absolute; left:0; top:0;}
+  .tiplist b{color:var(--indigo-d);}
+  ul.plain{margin:0; padding:0;}
+
+  /* 주의 박스 */
+  .warnbox{
+    background:#FBF3E7; border:1px solid #EAD8B8; border-radius:14px;
+    padding:15px 18px; color:#6B4E1E; font-size:15.5px;
+  }
+  .warnbox b{color:#8A5A12;}
+
+  /* 갤러리·질문 자리 */
+  .placeholder{
+    background:var(--card); border:2px dashed #CFCEC5; border-radius:16px;
+    padding:24px 18px; text-align:center; color:var(--sub);
+  }
+  .placeholder .big{font-size:34px; margin-bottom:6px;}
+  .placeholder h3{margin:2px 0 6px; color:var(--indigo-d); font-size:18px;}
+
+  /* 푸터 */
+  footer{margin-top:40px; text-align:center; color:var(--sub); font-size:14px; line-height:1.7;}
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:var(--indigo-d); color:#fff; padding:12px 22px; border-radius:999px;
+    font-size:15.5px; font-weight:700; opacity:0; pointer-events:none;
+    transition:opacity .2s, transform .2s; z-index:50; box-shadow:0 6px 20px rgba(30,30,60,.25);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:380px){
+    body{font-size:17px;}
+    .hero h1{font-size:24px;}
+  }
+
+  /* 수노 섹션 확장 (v2) */
+  .subhead{margin:24px 0 12px; font-size:18px; font-weight:800; color:var(--indigo-d);
+    border-bottom:2px solid var(--indigo-l); padding-bottom:7px;}
+  .ptext.eng{font-family:"Consolas","Menlo","D2Coding",monospace; background:#EAF0FF;
+    border-color:#CDD8F5; color:#233066; letter-spacing:.2px;}
+  .mvocal{font-size:14.5px; color:var(--sub); margin-top:4px;}
+  .chipgrid{display:flex; flex-direction:column; gap:10px; margin-bottom:6px;}
+  .chipcard{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:11px 13px;}
+  .chipname{font-weight:800; color:var(--indigo-d); font-size:16px; margin-bottom:7px;}
+  .metabox{background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin-bottom:12px;}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="badge-track">AI 강사양성 과정</div>
+  <p class="round">홍성군 · AI 배움터 · 2회차</p>
+  <h1>말로 그리는 홍보물,<br>말로 만드는 우리 노래</h1>
+  <p class="subtitle">AI 이미지 + AI 음악(수노) · 집에서 다시 해보기</p>
+  <p class="by">커리어숲 · 강사 임금희 &nbsp;|&nbsp; 2026 기준</p>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">오늘 배운 걸 복습하고, '어떻게 가르칠지'까지 챙기는 페이지예요. 각 항목의 파란 '가르칠 때 팁'을 함께 보세요.</div>
+
+  <!-- 1. 오늘 배운 것 요약 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">1</span><h2>오늘 배운 것, 한눈에</h2></div>
+    <p class="sec-desc">핵심만 짧게 다시 봅니다. 자세한 건 아래에서 하나씩 이어집니다.</p>
+      <div class="lcard">
+        <div class="lemoji">🖼️</div>
+        <div class="lbody">
+          <h3>말로 이미지 만들기</h3>
+          <p>그리는 게 아니라 &#x27;설명&#x27;만 하면 AI가 그림·사진을 만들어 줍니다. 말한다 → 기다린다 → 고쳐 말한다, 딱 3단계.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: &#x27;한 번에 잘 나오는 사람은 없다, 고쳐 말하는 게 정상&#x27;을 먼저 못박으면 수강생이 안 멈춥니다.</div>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lemoji">🧰</div>
+        <div class="lbody">
+          <h3>무료 도구 4가지</h3>
+          <p>제미나이·ChatGPT·MS 디자이너·Canva. 다 외울 필요 없이 하나만 골라 쓰면 됩니다. 초보는 제미나이 추천.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: 폰 위주 반이면 제미나이 앱, PC 반이면 디자이너. &#x27;오늘의 대표 도구&#x27; 하나만 깊게 가르치세요.</div>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lemoji">✍️</div>
+        <div class="lbody">
+          <h3>잘 만드는 4요소 공식</h3>
+          <p>무엇을 + 스타일 + 용도 + 비율. 이 네 가지를 한 문장으로 이으면 끝. &#x27;무엇을&#x27;만 있어도 그림은 나옵니다.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: 초급은 4요소 빈칸 틀로, 강사 본인·심화는 &#x27;역할+맥락+요청+형식&#x27; 전문 공식으로 갈아 끼우세요.</div>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lemoji">🏪</div>
+        <div class="lbody">
+          <h3>홍보물 8가지 만들기</h3>
+          <p>포스터·카드뉴스·메뉴판·전단지·로고·행사 안내·감사 카드·대표 프로필. 배경만 AI로, 글자는 나중에 얹기.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: 시간이 빠듯하면 대표 하나(포스터)만 생성→글자 얹기까지 시연하고 나머지는 프롬프트 배포.</div>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lemoji">🎵</div>
+        <div class="lbody">
+          <h3>AI로 노래 만들기 (수노)</h3>
+          <p>Suno에 스타일과 가사만 넣으면 1~2분 만에 노래 두 곡이 나옵니다. 악기·악보 몰라도, 스마트폰이면 됩니다.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: 이미지에서 익힌 &#x27;말한다→기다린다→고쳐 말한다&#x27; 원리가 음악에도 똑같이 적용됨을 연결하세요.</div>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lemoji">💾</div>
+        <div class="lbody">
+          <h3>저장·활용과 저작권</h3>
+          <p>폰은 이미지 꾹 누르기·노래는 점3개→MP3로 저장. 손님 얼굴·유명 캐릭터는 넣지 않기, 무료곡은 개인·연습용.</p>
+      <div class="tipbox"><span class="tiplabel">👩‍🏫 가르칠 때 팁</span> 가르칠 때 팁: &#x27;전원 저장 성공&#x27;은 반드시 사수할 성공 경험입니다. 저장 못 하고 집에 가면 &#x27;나는 못 한다&#x27;로 남아요.</div>
+        </div>
+      </div>
+  </section>
+
+  <!-- 2. 집에서 해보기 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">2</span><h2>집에서 해보기 미션</h2></div>
+    <p class="sec-desc">딱 이것만 해보세요. 오른쪽 프롬프트를 그대로 복사해 쓰면 됩니다.</p>
+    <div class="mission-grid">
+      <div class="mbox">
+        <h3>🖼️ 이미지 미션</h3>
+        <ol>
+            <li>폰으로 우리 가게 홍보 이미지 <b>1장</b>을 만들어 저장·전송까지 해보기</li>
+            <li>내 첫 수업에서 '가장 먼저 가르칠 이미지 활용 <b>1가지</b>' 정하기 (쉽게 성공·바로 쓸모·감탄 3기준)</li>
+            <li>그 활용의 시연용 이미지 <b>2장</b>을 미리 만들어 두기</li>
+        </ol>
+        <p class="mnote">완벽하지 않아도 됩니다. 한 번 해 본 경험이 강단에서의 자신감이 됩니다.</p>
+      </div>
+      <div class="mbox">
+        <h3>🎵 음악(수노) 미션</h3>
+        <ol>
+            <li>가족 한 사람을 위한 노래를 <b>이름을 넣어</b> 만들고 MP3로 저장하기</li>
+            <li>만든 노래를 카톡으로 <b>선물</b>해 보기</li>
+            <li>첫 수업에서 먼저 보여줄 <b>시연 곡 1개</b>를 미리 만들어 두기</li>
+        </ol>
+        <p class="mnote">홍성은 <b>‘충절의 고장’</b>과 우리 고장 특산물·명소를 가사에 넣으면 자부심이 살아나는 노래가 됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 이미지 프롬프트 모음 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">3</span><h2>이미지 프롬프트 모음</h2></div>
+    <p class="sec-desc">‘복사하기’를 누르면 프롬프트가 복사됩니다. 도구 입력창에 붙여넣고 괄호 안만 우리 가게로 바꾸세요.</p>
+      <div class="pcard">
+        <div class="plabel">빈칸 틀 (여기에 우리 가게를 넣으세요)</div>
+        <pre class="ptext">( 무엇을 )을(를) ( 스타일 )로, ( 용도 )에 쓸 거야. ( 비율 )로 만들어 줘.</pre>
+        <button class="copybtn" type="button" data-copy="( 무엇을 )을(를) ( 스타일 )로, ( 용도 )에 쓸 거야. ( 비율 )로 만들어 줘.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">① 홍보용 만능 프롬프트</div>
+        <pre class="ptext">( 우리 메뉴/상품 )을(를) 사진처럼, SNS 홍보에 쓸 거야. 가운데 글자 여백 남기고 정사각형으로 만들어 줘.</pre>
+        <button class="copybtn" type="button" data-copy="( 우리 메뉴/상품 )을(를) 사진처럼, SNS 홍보에 쓸 거야. 가운데 글자 여백 남기고 정사각형으로 만들어 줘.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">② 행사용 만능 프롬프트</div>
+        <pre class="ptext">( 행사 이름 ) 안내 이미지, ( 계절/명절 ) 느낌으로, 축하 분위기, 글자 넣을 여백. 세로형으로.</pre>
+        <button class="copybtn" type="button" data-copy="( 행사 이름 ) 안내 이미지, ( 계절/명절 ) 느낌으로, 축하 분위기, 글자 넣을 여백. 세로형으로.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">③ 감사용 만능 프롬프트</div>
+        <pre class="ptext">( 가게 이름 ) 감사 카드, 손글씨 느낌, 따뜻한 색, &#x27;감사합니다&#x27; 글자 자리 비워 줘. 정사각형.</pre>
+        <button class="copybtn" type="button" data-copy="( 가게 이름 ) 감사 카드, 손글씨 느낌, 따뜻한 색, &#x27;감사합니다&#x27; 글자 자리 비워 줘. 정사각형.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">홍보 포스터 예시</div>
+        <pre class="ptext">가을 신메뉴 홍보 포스터, 따뜻한 주황·갈색, 가운데 큰 글자 넣을 여백 남겨 줘. 세로형.</pre>
+        <button class="copybtn" type="button" data-copy="가을 신메뉴 홍보 포스터, 따뜻한 주황·갈색, 가운데 큰 글자 넣을 여백 남겨 줘. 세로형.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">SNS 카드뉴스 예시</div>
+        <pre class="ptext">미니멀한 파스텔 배경 카드뉴스용 이미지 3종, 같은 색감으로, 가운데 글자 여백. 정사각형.</pre>
+        <button class="copybtn" type="button" data-copy="미니멀한 파스텔 배경 카드뉴스용 이미지 3종, 같은 색감으로, 가운데 글자 여백. 정사각형.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">메뉴판 배경 예시</div>
+        <pre class="ptext">아늑한 카페 메뉴판 배경, 나무 질감, 왼쪽에 메뉴 글자 넣을 넓은 여백. 세로형.</pre>
+        <button class="copybtn" type="button" data-copy="아늑한 카페 메뉴판 배경, 나무 질감, 왼쪽에 메뉴 글자 넣을 넓은 여백. 세로형.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">전단지 배경 예시</div>
+        <pre class="ptext">동네 미용실 새단장 오픈 전단지 배경, 깔끔하고 밝은 느낌, 위쪽에 제목·아래에 정보 넣을 여백. 세로형 인쇄용.</pre>
+        <button class="copybtn" type="button" data-copy="동네 미용실 새단장 오픈 전단지 배경, 깔끔하고 밝은 느낌, 위쪽에 제목·아래에 정보 넣을 여백. 세로형 인쇄용.">복사하기</button>
+      </div>
+      <div class="pcard">
+        <div class="plabel">로고·프로필 예시</div>
+        <pre class="ptext">우리 빵집 로고, 밀과 빵을 단순한 선으로, 따뜻한 갈색 한 가지, 흰 배경. 정사각형.</pre>
+        <button class="copybtn" type="button" data-copy="우리 빵집 로고, 밀과 빵을 단순한 선으로, 따뜻한 갈색 한 가지, 흰 배경. 정사각형.">복사하기</button>
+      </div>
+  </section>
+
+  <!-- 4. 수노 음악 프롬프트 (최신 A4카드+부록 반영) -->
+  <section>
+    <div class="sec-head"><span class="sec-num">4</span><h2>수노(음악) 프롬프트 모음</h2></div>
+    <p class="sec-desc">노래(수노) 프롬프트만 모았습니다. 초록 칸(영어 태그)은 <b>스타일칸에 그대로 복사</b>, 노란 칸은 <b>가사칸에 복사</b>. 수강생 지도용으로 골라 쓰세요.</p>
+    <div class="intro" style="margin-top:14px;">
+      <b>스타일칸 공식</b> = [장르] + [분위기] + [악기] + [보컬 언어] + [템포]<br>
+      → 영어로, 쉼표(,)로 3~5개. 스타일=영어·가사=한국어 조합이 가장 안정적. 안 나오면 태그 1~2개만 바꿔 다시.
+    </div>
+    <div class="subhead">🎼 장르별 프롬프트 (10가지)</div>
+      <div class="mcard">
+        <div class="mhead">💃 세련된 트로트 (모던 트롯)</div>
+        <div class="mwhen">익숙한 트롯을 젊고 세련되게</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">modern trot, k-trot, stylish, synth, groovy, mid-tempo, confident female vocal</pre>
+          <button class="copybtn small" type="button" data-copy="modern trot, k-trot, stylish, synth, groovy, mid-tempo, confident female vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">오늘 밤은 내가 주인공
+반짝이는 조명 아래
+흔들어 흔들어 리듬을 타고
+세상 근심 다 잊어버려</pre>
+          <button class="copybtn small" type="button" data-copy="오늘 밤은 내가 주인공
+반짝이는 조명 아래
+흔들어 흔들어 리듬을 타고
+세상 근심 다 잊어버려">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 여성</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🕺 K-팝 댄스</div>
+        <div class="mwhen">젊은 감각의 신나는 댄스곡</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-pop, dance, energetic, electronic, punchy beat, bright synth, catchy hook</pre>
+          <button class="copybtn small" type="button" data-copy="k-pop, dance, energetic, electronic, punchy beat, bright synth, catchy hook">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">Light it up 오늘 밤
+심장이 뛰어 두근두근
+손을 높이 all night long
+우리가 만드는 무대</pre>
+          <button class="copybtn small" type="button" data-copy="Light it up 오늘 밤
+심장이 뛰어 두근두근
+손을 높이 all night long
+우리가 만드는 무대">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한영 혼합</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎬 시네마틱 · 영화 OST</div>
+        <div class="mwhen">영화 같은 웅장한 배경음악</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">cinematic, epic orchestral, film score, emotional strings, powerful, building, instrumental</pre>
+          <button class="copybtn small" type="button" data-copy="cinematic, epic orchestral, film score, emotional strings, powerful, building, instrumental">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">(가사 없이 instrumental 추천)
+또는 웅장한 합창으로 →
+긴 밤을 지나 새벽이 오면
+우리는 다시 일어서리라</pre>
+          <button class="copybtn small" type="button" data-copy="(가사 없이 instrumental 추천)
+또는 웅장한 합창으로 →
+긴 밤을 지나 새벽이 오면
+우리는 다시 일어서리라">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 연주곡 / 합창</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">📺 드라마 OST (발라드)</div>
+        <div class="mwhen">드라마 같은 애틋한 발라드</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-drama ost, emotional ballad, piano, strings, longing, cinematic, soft female vocal</pre>
+          <button class="copybtn small" type="button" data-copy="k-drama ost, emotional ballad, piano, strings, longing, cinematic, soft female vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">너를 처음 만난 그 계절에
+시간이 멈춘 것만 같았어
+돌아갈 수 없는 그날에
+나는 아직 서 있어</pre>
+          <button class="copybtn small" type="button" data-copy="너를 처음 만난 그 계절에
+시간이 멈춘 것만 같았어
+돌아갈 수 없는 그날에
+나는 아직 서 있어">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 여성</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🌙 R&amp;B · 소울</div>
+        <div class="mwhen">부드러운 밤 감성</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">korean r&amp;b, soul, smooth, groovy, mellow, warm bass, night mood, male vocal</pre>
+          <button class="copybtn small" type="button" data-copy="korean r&amp;b, soul, smooth, groovy, mellow, warm bass, night mood, male vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">달빛이 흐르는 이 밤
+네 생각에 잠 못 이뤄
+천천히 다가와 baby
+이 노래를 들어줘</pre>
+          <button class="copybtn small" type="button" data-copy="달빛이 흐르는 이 밤
+네 생각에 잠 못 이뤄
+천천히 다가와 baby
+이 노래를 들어줘">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한영 혼합</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎷 재즈 (라운지)</div>
+        <div class="mwhen">카페 같은 여유로운 분위기</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">jazz, smooth jazz, saxophone, piano, lounge, relaxed, swing, soft female vocal</pre>
+          <button class="copybtn small" type="button" data-copy="jazz, smooth jazz, saxophone, piano, lounge, relaxed, swing, soft female vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">커피 한 잔의 여유
+창밖엔 비가 내리고
+오늘 하루도 수고했어
+나를 위한 이 시간</pre>
+          <button class="copybtn small" type="button" data-copy="커피 한 잔의 여유
+창밖엔 비가 내리고
+오늘 하루도 수고했어
+나를 위한 이 시간">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 / 영어</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎸 락 (밴드)</div>
+        <div class="mwhen">뜨거운 밴드 사운드</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">korean rock, band, electric guitar, driving drums, anthemic, powerful, male vocal</pre>
+          <button class="copybtn small" type="button" data-copy="korean rock, band, electric guitar, driving drums, anthemic, powerful, male vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">멈추지 마 여기서
+넘어져도 다시 일어나
+소리쳐 우리의 이름을
+오늘이 바로 그날이야</pre>
+          <button class="copybtn small" type="button" data-copy="멈추지 마 여기서
+넘어져도 다시 일어나
+소리쳐 우리의 이름을
+오늘이 바로 그날이야">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 남성</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎤 힙합</div>
+        <div class="mwhen">당당한 랩</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-hiphop, boom bap, confident, rhythmic, punchy, urban, rap vocal</pre>
+          <button class="copybtn small" type="button" data-copy="k-hiphop, boom bap, confident, rhythmic, punchy, urban, rap vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">한 걸음씩 내 길을 가
+누가 뭐래도 나는 나
+어제보다 나은 오늘
+이게 바로 내 스타일</pre>
+          <button class="copybtn small" type="button" data-copy="한 걸음씩 내 길을 가
+누가 뭐래도 나는 나
+어제보다 나은 오늘
+이게 바로 내 스타일">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 랩</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🪕 국악 퓨전 (세련)</div>
+        <div class="mwhen">세상에 없던 요즘 국악</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">korean fusion, gugak fusion, traditional meets modern, gayageum, trap beat, cinematic</pre>
+          <button class="copybtn small" type="button" data-copy="korean fusion, gugak fusion, traditional meets modern, gayageum, trap beat, cinematic">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">옛것과 새것이 하나로
+대금 소리 위에 비트를 얹어
+세상에 없던 우리의 소리
+지금 여기서 시작돼</pre>
+          <button class="copybtn small" type="button" data-copy="옛것과 새것이 하나로
+대금 소리 위에 비트를 얹어
+세상에 없던 우리의 소리
+지금 여기서 시작돼">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 연주곡도 가능</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">👶 동요 (밝은)</div>
+        <div class="mwhen">아이를 위한 밝은 노래</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">children song, cheerful, bright, simple melody, xylophone, playful, kids choir</pre>
+          <button class="copybtn small" type="button" data-copy="children song, cheerful, bright, simple melody, xylophone, playful, kids choir">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">반짝반짝 우리 아가
+방긋방긋 웃어봐요
+사랑 듬뿍 받고 자라
+꿈을 향해 나아가요</pre>
+          <button class="copybtn small" type="button" data-copy="반짝반짝 우리 아가
+방긋방긋 웃어봐요
+사랑 듬뿍 받고 자라
+꿈을 향해 나아가요">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 아이 합창</div>
+      </div>
+    <div class="subhead">🏡 실생활 활용 프롬프트 (6가지) — 괄호 안만 내 상황으로</div>
+      <div class="mcard">
+        <div class="mhead">🏪 우리 가게 홍보송</div>
+        <div class="mwhen">기억에 남는 짧은 훅의 홍보곡</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-pop, catchy jingle, bright, upbeat, punchy, short hook, female vocal</pre>
+          <button class="copybtn small" type="button" data-copy="k-pop, catchy jingle, bright, upbeat, punchy, short hook, female vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">홍성 OO카페 오늘도 활짝
+향긋한 커피 한 잔 어때요
+여기가 바로 핫플레이스
+어서 와요 기다렸어요</pre>
+          <button class="copybtn small" type="button" data-copy="홍성 OO카페 오늘도 활짝
+향긋한 커피 한 잔 어때요
+여기가 바로 핫플레이스
+어서 와요 기다렸어요">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 여성</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎁 기념일 축하송</div>
+        <div class="mwhen">결혼기념일·특별한 날에</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-drama ost, warm ballad, celebration, piano, heartfelt, mixed vocal</pre>
+          <button class="copybtn small" type="button" data-copy="k-drama ost, warm ballad, celebration, piano, heartfelt, mixed vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">함께한 세월이 벌써 이만큼
+고마운 당신에게 이 노래를
+앞으로의 날들도 함께 걸어요
+사랑해요 오늘도 내일도</pre>
+          <button class="copybtn small" type="button" data-copy="함께한 세월이 벌써 이만큼
+고마운 당신에게 이 노래를
+앞으로의 날들도 함께 걸어요
+사랑해요 오늘도 내일도">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 남녀</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🦐 홍성 특산물송</div>
+        <div class="mwhen">광천 새우젓·남당항 대하 자랑</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">modern trot, proud, groovy, brass, festive, korean, catchy, mixed vocal</pre>
+          <button class="copybtn small" type="button" data-copy="modern trot, proud, groovy, brass, festive, korean, catchy, mixed vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">충절의 고장 홍성으로 오세요
+광천 새우젓 감칠맛 최고
+남당항 대하 살이 통통
+맛과 멋이 가득한 우리 고장</pre>
+          <button class="copybtn small" type="button" data-copy="충절의 고장 홍성으로 오세요
+광천 새우젓 감칠맛 최고
+남당항 대하 살이 통통
+맛과 멋이 가득한 우리 고장">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 남녀</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎪 행사 오프닝 음악</div>
+        <div class="mwhen">무대를 여는 웅장한 음악</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">cinematic, uplifting, epic, orchestral, building, instrumental</pre>
+          <button class="copybtn small" type="button" data-copy="cinematic, uplifting, epic, orchestral, building, instrumental">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">(instrumental로 무대 오프닝)
+또는 짧은 내레이션 →
+오늘 이 자리를 빛내주신
+모든 분께 감사드립니다</pre>
+          <button class="copybtn small" type="button" data-copy="(instrumental로 무대 오프닝)
+또는 짧은 내레이션 →
+오늘 이 자리를 빛내주신
+모든 분께 감사드립니다">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 연주곡 / 내레이션</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">🎊 지역 행사송</div>
+        <div class="mwhen">다 함께 부르는 행사 주제가</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">k-pop, anthemic, bright, energetic, hopeful, group vocal</pre>
+          <button class="copybtn small" type="button" data-copy="k-pop, anthemic, bright, energetic, hopeful, group vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">우리 함께 만드는 오늘
+홍성의 이름으로 하나 되어
+손을 맞잡고 노래 불러
+내일을 향해 나아가자</pre>
+          <button class="copybtn small" type="button" data-copy="우리 함께 만드는 오늘
+홍성의 이름으로 하나 되어
+손을 맞잡고 노래 불러
+내일을 향해 나아가자">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어 · 그룹</div>
+      </div>
+      <div class="mcard">
+        <div class="mhead">⭐ 나만의 테마송</div>
+        <div class="mwhen">나를 위한 세련된 응원가</div>
+        <div class="mrow"><span class="mtag">스타일칸 (영어 그대로 복사)</span>
+          <pre class="ptext eng">modern trot, hopeful, stylish, uplifting, mid-tempo, confident vocal</pre>
+          <button class="copybtn small" type="button" data-copy="modern trot, hopeful, stylish, uplifting, mid-tempo, confident vocal">스타일 복사</button>
+        </div>
+        <div class="mrow"><span class="mtag">가사 씨앗 (한국어)</span>
+          <pre class="ptext lyric">내 인생의 주인공은 나
+흔들려도 다시 중심을 잡아
+오늘도 한 걸음 앞으로
+빛나는 나의 무대 위에서</pre>
+          <button class="copybtn small" type="button" data-copy="내 인생의 주인공은 나
+흔들려도 다시 중심을 잡아
+오늘도 한 걸음 앞으로
+빛나는 나의 무대 위에서">가사 복사</button>
+        </div>
+        <div class="mvocal">🗣️ 보컬: 한국어</div>
+      </div>
+    <div class="subhead">🎨 분위기별 태그 — 위 스타일칸에 하나 더 붙여 쓰기</div>
+    <div class="chipgrid">
+      <div class="chipcard">
+        <div class="chipname">밝고 신나는</div>
+        <pre class="ptext eng">bright, upbeat, cheerful, energetic, feel-good</pre>
+        <button class="copybtn small" type="button" data-copy="bright, upbeat, cheerful, energetic, feel-good">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">잔잔·따뜻한</div>
+        <pre class="ptext eng">gentle, warm, tender, mellow, heartfelt</pre>
+        <button class="copybtn small" type="button" data-copy="gentle, warm, tender, mellow, heartfelt">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">웅장·감동</div>
+        <pre class="ptext eng">epic, cinematic, powerful, emotional, orchestral</pre>
+        <button class="copybtn small" type="button" data-copy="epic, cinematic, powerful, emotional, orchestral">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">그리운 추억</div>
+        <pre class="ptext eng">nostalgic, wistful, retro, warm, sentimental</pre>
+        <button class="copybtn small" type="button" data-copy="nostalgic, wistful, retro, warm, sentimental">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">희망찬</div>
+        <pre class="ptext eng">hopeful, uplifting, inspiring, bright, anthemic</pre>
+        <button class="copybtn small" type="button" data-copy="hopeful, uplifting, inspiring, bright, anthemic">복사</button>
+      </div>
+    </div>
+    <div class="subhead">🗣️ 보컬 언어별 태그 — 스타일칸 맨 뒤에 붙이기</div>
+    <div class="chipgrid">
+      <div class="chipcard">
+        <div class="chipname">한국어</div>
+        <pre class="ptext eng">korean vocal / female korean vocal / male korean vocal</pre>
+        <div class="mvocal">우리말 노래. 어르신·가족 노래에 딱</div>
+        <button class="copybtn small" type="button" data-copy="korean vocal / female korean vocal / male korean vocal">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">영어</div>
+        <pre class="ptext eng">english vocal</pre>
+        <div class="mvocal">팝·영화 느낌. 세련된 배경음악에 좋아요</div>
+        <button class="copybtn small" type="button" data-copy="english vocal">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">한영 혼합</div>
+        <pre class="ptext eng">korean and english mixed vocal</pre>
+        <div class="mvocal">절은 한국어, 후렴은 영어처럼. 세련된 느낌</div>
+        <button class="copybtn small" type="button" data-copy="korean and english mixed vocal">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">연주곡 (가사 없이)</div>
+        <pre class="ptext eng">instrumental</pre>
+        <div class="mvocal">목소리 없이 배경음악만. 영상·가게 배경음악에 딱</div>
+        <button class="copybtn small" type="button" data-copy="instrumental">복사</button>
+      </div>
+    </div>
+    <div class="subhead">🔀 이렇게 섞으면 이런 느낌 (장르 조합)</div>
+    <div class="chipgrid">
+      <div class="chipcard">
+        <div class="chipname">트롯 + K-팝 <span style="font-weight:600;color:#7A5CB8;">→ 익숙한 트롯을 젊고 세련되게</span></div>
+        <pre class="ptext eng">k-trot, dance, synth, energetic, korean</pre>
+        <button class="copybtn small" type="button" data-copy="k-trot, dance, synth, energetic, korean">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">영화음악 + 발라드 <span style="font-weight:600;color:#7A5CB8;">→ 드라마 같은 웅장한 감동</span></div>
+        <pre class="ptext eng">cinematic, ballad, orchestral, emotional, korean</pre>
+        <button class="copybtn small" type="button" data-copy="cinematic, ballad, orchestral, emotional, korean">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">국악 + 트랩 <span style="font-weight:600;color:#7A5CB8;">→ 세상에 없던 요즘 국악</span></div>
+        <pre class="ptext eng">gugak fusion, trap, gayageum, modern, unique</pre>
+        <button class="copybtn small" type="button" data-copy="gugak fusion, trap, gayageum, modern, unique">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">재즈 + 보사노바 <span style="font-weight:600;color:#7A5CB8;">→ 카페 같은 여유로운 분위기</span></div>
+        <pre class="ptext eng">jazz, bossa nova, smooth, relaxed, soft vocal</pre>
+        <button class="copybtn small" type="button" data-copy="jazz, bossa nova, smooth, relaxed, soft vocal">복사</button>
+      </div>
+      <div class="chipcard">
+        <div class="chipname">R&amp;B + 시티팝 <span style="font-weight:600;color:#7A5CB8;">→ 세련된 밤 감성</span></div>
+        <pre class="ptext eng">r&amp;b, city pop, groovy, retro, night mood</pre>
+        <button class="copybtn small" type="button" data-copy="r&amp;b, city pop, groovy, retro, night mood">복사</button>
+      </div>
+    </div>
+    <div class="subhead">🤖 가사가 어려우면 — AI에게 시키는 프롬프트</div>
+      <div class="metabox">
+        <div class="plabel">📋 가사 만들어 달라고 하기 (제미나이·챗지피티에 복붙)</div>
+        <pre class="ptext">40대 부부의 결혼 20주년을 축하하는 드라마 OST 감성 발라드 가사를 써줘. 1절-후렴-2절 구조로, 후렴은 4줄, 세련되고 담백하게. &#x27;함께&#x27;, &#x27;고마워&#x27; 같은 표현을 자연스럽게 넣어줘.</pre>
+        <button class="copybtn" type="button" data-copy="40대 부부의 결혼 20주년을 축하하는 드라마 OST 감성 발라드 가사를 써줘. 1절-후렴-2절 구조로, 후렴은 4줄, 세련되고 담백하게. &#x27;함께&#x27;, &#x27;고마워&#x27; 같은 표현을 자연스럽게 넣어줘.">복사하기</button>
+      </div>
+      <div class="metabox">
+        <div class="plabel">📋 상황만 주면 스타일+가사 한 번에 (메타 프롬프트 · [   ]만 바꾸기)</div>
+        <pre class="ptext">너는 Suno 작곡 도우미야. 다음 상황에 맞는 ①Suno 스타일 태그(영어, 쉼표로 5개)와 ②한국어 가사(1절-후렴-2절)를 만들어줘. 상황: [홍성 지역 축제 개막을 여는 밝고 웅장한 응원가]. 스타일 태그에는 장르·분위기·악기·보컬·템포를 꼭 포함하고, 세련된 느낌으로.</pre>
+        <button class="copybtn" type="button" data-copy="너는 Suno 작곡 도우미야. 다음 상황에 맞는 ①Suno 스타일 태그(영어, 쉼표로 5개)와 ②한국어 가사(1절-후렴-2절)를 만들어줘. 상황: [홍성 지역 축제 개막을 여는 밝고 웅장한 응원가]. 스타일 태그에는 장르·분위기·악기·보컬·템포를 꼭 포함하고, 세련된 느낌으로.">복사하기</button>
+      </div>
+      <div class="metabox">
+        <div class="plabel">📋 나만의 &#x27;수노 작곡 도우미&#x27; 챗봇 만들기 (제미나이 Gem·GPT &#x27;지침&#x27;에 붙여넣기)</div>
+        <pre class="ptext">[역할] 너는 &#x27;수노 작곡 도우미&#x27;다. 사용자가 상황이나 원하는 느낌만 말하면, Suno에 바로 넣을 결과를 만들어 준다.
+
+[규칙]
+1) 스타일 태그는 영어로, 쉼표로 5개 내외. 장르·분위기·악기·보컬 언어·템포를 반드시 포함한다.
+2) 가사는 한국어로, 1절-후렴-2절 구조. 후렴은 따라 부르기 쉽게 4줄로.
+3) 대상·분위기(세련·웅장·따뜻 등)에 맞춰 톤을 조절한다.
+4) 실존 가수·특정 곡은 흉내 내지 않는다. 저작권에 안전하게 만든다.
+
+[출력 형식]
+■ 스타일 태그: (영어 태그)
+■ 가사: [1절] … [후렴] … [2절] …
+■ 한 줄 팁: (이 곡을 더 좋게 만들 스타일칸 변형 1가지)</pre>
+        <button class="copybtn" type="button" data-copy="[역할] 너는 &#x27;수노 작곡 도우미&#x27;다. 사용자가 상황이나 원하는 느낌만 말하면, Suno에 바로 넣을 결과를 만들어 준다.
+
+[규칙]
+1) 스타일 태그는 영어로, 쉼표로 5개 내외. 장르·분위기·악기·보컬 언어·템포를 반드시 포함한다.
+2) 가사는 한국어로, 1절-후렴-2절 구조. 후렴은 따라 부르기 쉽게 4줄로.
+3) 대상·분위기(세련·웅장·따뜻 등)에 맞춰 톤을 조절한다.
+4) 실존 가수·특정 곡은 흉내 내지 않는다. 저작권에 안전하게 만든다.
+
+[출력 형식]
+■ 스타일 태그: (영어 태그)
+■ 가사: [1절] … [후렴] … [2절] …
+■ 한 줄 팁: (이 곡을 더 좋게 만들 스타일칸 변형 1가지)">복사하기</button>
+      </div>
+    <div class="warnbox" style="margin-top:14px;">
+      <b>⚠️ 강사가 꼭 짚을 저작권 한 줄</b><br>
+      무료로 만든 곡은 <b>개인·가족·연습용</b>. 팔거나 유튜브에 올릴 땐 3가지 확인 — ①라이선스(유료·상업허용) ②사람의 창작 기여 ③AI 표시(2026.1.22 AI기본법 표시의무). 실존 가수·특정 곡 흉내 금지. (2026-08 기준, 약관·법 해석은 강의 직전 재확인)
+    </div>
+  </section>
+  <!-- 5. 무료 도구 바로가기 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">5</span><h2>무료 도구 바로가기</h2></div>
+    <p class="sec-desc">아래 버튼을 누르면 새 창에서 도구가 열립니다. 구글 계정으로 로그인하면 가장 쉽습니다.</p>
+    <h3 style="font-size:17px;color:var(--indigo-d);margin:10px 2px 8px;">🖼️ 이미지 도구</h3>
+      <div class="tcard">
+        <div class="tname">제미나이 (Nano Banana)</div>
+        <div class="tmeta"><span class="badge ok">무료</span><span class="quota">하루 약 20장</span></div>
+        <div class="tdesc">대화하듯 만들고 사진 합성이 강함. 초보자 1순위 추천.</div>
+        <a class="toolbtn" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">gemini.google.com 열기 ↗</a>
+      </div>
+      <div class="tcard">
+        <div class="tname">ChatGPT</div>
+        <div class="tmeta"><span class="badge warn">무료·한도</span><span class="quota">하루 2~3장</span></div>
+        <div class="tdesc">설명·글자 반영이 좋음. &#x27;오늘 꼭 필요한 한 장&#x27;에 아껴 쓰기.</div>
+        <a class="toolbtn" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">chatgpt.com 열기 ↗</a>
+      </div>
+      <div class="tcard">
+        <div class="tname">MS 코파일럿·디자이너</div>
+        <div class="tmeta"><span class="badge ok">무료</span><span class="quota">하루 15부스트</span></div>
+        <div class="tdesc">포스터 템플릿까지 한 번에. PC로 홍보물 완성에 강함.</div>
+        <a class="toolbtn" href="https://designer.microsoft.com" target="_blank" rel="noopener noreferrer">designer.microsoft.com 열기 ↗</a>
+      </div>
+      <div class="tcard">
+        <div class="tname">Canva (Magic Media)</div>
+        <div class="tmeta"><span class="badge warn">무료·한도</span><span class="quota">평생 50장</span></div>
+        <div class="tdesc">글자 넣기·편집이 가장 편함. 생성은 아끼고 &#x27;마무리&#x27; 전담.</div>
+        <a class="toolbtn" href="https://canva.com" target="_blank" rel="noopener noreferrer">canva.com 열기 ↗</a>
+      </div>
+    <h3 style="font-size:17px;color:var(--indigo-d);margin:18px 2px 8px;">🎵 음악 도구</h3>
+      <div class="tcard">
+        <div class="tname">Suno (수노)</div>
+        <div class="tmeta"><span class="badge ok">무료</span><span class="quota">하루 50크레딧(약 10곡) · 매일 채워짐</span></div>
+        <div class="tdesc">스타일·가사만 넣으면 1~2분 만에 노래 2곡. 무료도 MP3 저장 가능(점 3개 → Download → MP3).</div>
+        <a class="toolbtn" href="https://suno.com" target="_blank" rel="noopener noreferrer">suno.com 열기 ↗</a>
+      </div>
+      <div class="tcard">
+        <div class="tname">제미나이 (Lyria)</div>
+        <div class="tmeta"><span class="badge ok">무료</span><span class="quota">약 30초 짧은 곡 · 만 18세 이상</span></div>
+        <div class="tdesc">구글 제미나이 앱에서 ‘봄에 관한 따뜻한 노래 만들어줘’처럼 말로 부탁하면 짧은 곡이 나옵니다. 가볍게 맛보기용.</div>
+        <a class="toolbtn" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">gemini.google.com 열기 ↗</a>
+      </div>
+
+    <div class="tiplist" style="margin-top:16px;">
+      <ul class="plain">
+        <li><b>가입은 ‘구글로 계속하기’</b>가 제일 쉽습니다. 새 비밀번호 안 만들어도 돼요.</li>
+        <li><b>무료로 시작</b>을 고르세요. 카드번호를 넣으라는 창은 유료 쪽이니 무료 버튼을 다시 찾으면 됩니다.</li>
+        <li><b>영어 필요 없어요.</b> 한국어로 편하게 말해도 잘 알아듣습니다.</li>
+        <li><b>글자·숫자는 AI에 맡기지 마세요.</b> ‘글자 자리만 비워줘’ 하고 글자는 직접 얹으면 오타 걱정이 없습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 저작권·개인정보 주의 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">⚠️</span><h2>꼭 지킬 것</h2></div>
+    <div class="warnbox">
+      <b>남의 얼굴·상표·유명 캐릭터를 넣지 말고, 손님 사진은 올리지 마세요.</b><br>
+      · 손님·직원 얼굴 사진은 AI에 올리지 않기(필요하면 캐릭터로 대신)<br>
+      · 유명 캐릭터·남의 로고·연예인 얼굴 따라 만들지 않기<br>
+      · 무료로 만든 <b>노래·이미지는 개인·가족·연습용</b>. 가게 광고·판매 등 <b>돈 버는 데는 유료 전환</b> 후 사용<br>
+      · 요금·무료 한도·버전은 자주 바뀝니다. 실제로 쓸 땐 각 사이트에서 다시 확인하세요. (2026 기준)
+    </div>
+  </section>
+
+  <!-- 6. 갤러리·질문 안내 (자리) -->
+  <section>
+    <div class="sec-head"><span class="sec-num">6</span><h2>자랑하기 · 질문하기</h2></div>
+    <div class="placeholder">
+      <div class="big">🖼️🎵</div>
+      <h3>오늘 만든 작품, 오픈채팅방에 올려요</h3>
+      <p>만든 이미지·노래를 우리 반 오픈채팅방에 올려 서로 구경해요.<br>궁금한 건 언제든 편하게 물어보세요.</p>
+      <p style="margin-top:12px; font-size:14px;">(오픈채팅방 링크·QR는 강의 때 안내드립니다)</p>
+    </div>
+  </section>
+
+  <footer>
+    홍성군 · AI 배움터 2회차 복습 페이지<br>
+    커리어숲 · 강사 임금희 · 2026 기준<br>
+    <span style="font-size:13px;">개인정보를 수집하지 않는 안내용 페이지입니다.</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast">복사됐어요! 도구에 붙여넣으세요 📋</div>
+
+<script>
+(function(){
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function doCopy(text, btn){
+    function onOk(){
+      showToast('복사됐어요! 도구에 붙여넣으세요 📋');
+      if(btn){
+        var old = btn.textContent;
+        btn.classList.add('copied');
+        btn.textContent = '✓ 복사됨';
+        setTimeout(function(){ btn.classList.remove('copied'); btn.textContent = old; }, 1600);
+      }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(onOk, function(){
+        if(fallbackCopy(text)) onOk(); else showToast('복사가 안 돼요. 길게 눌러 직접 복사해 주세요.');
+      });
+    } else {
+      if(fallbackCopy(text)) onOk(); else showToast('복사가 안 돼요. 길게 눌러 직접 복사해 주세요.');
+    }
+  }
+  document.addEventListener('click', function(ev){
+    var btn = ev.target.closest ? ev.target.closest('.copybtn') : null;
+    if(!btn) return;
+    var text = btn.getAttribute('data-copy');
+    if(text) doCopy(text, btn);
+  });
+})();
+</script>
+</body>
+</html>

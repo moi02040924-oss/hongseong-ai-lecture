@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>홍성 3회차 · AI 이미지 강사양성 심화 — 실습 복붙 자료</title>
+<meta name="description" content="이미지 AI 툴 비교·프롬프트 키워드 사전·장르별/트렌드 복붙 프롬프트·저작권 안전수칙. 폰으로 열어 프롬프트를 복사해 바로 실습하세요.">
+<style>
+/* ===== 커리어숲 · 인디고 톤 · 모바일 우선 ===== */
+:root{
+  --bg:#f5f6fb; --card:#ffffff; --ink:#1e2233; --sub:#525872; --line:#e5e7f2;
+  --brand:#4f46e5; --brand2:#7c3aed; --brand-soft:#eef0fe; --brand-ink:#3730a3;
+  --ok:#0f9d6b; --ok-soft:#e6f7f0; --warn:#c2410c; --warn-soft:#fff3ec;
+  --paid:#b42318; --paid-soft:#fdecea; --part:#b7791f; --part-soft:#fdf5e6;
+  --radius:16px; --shadow:0 2px 10px rgba(40,44,80,.07);
+  --maxw:820px;
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px; line-height:1.62; word-break:keep-all; overflow-wrap:anywhere;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 15px 60px;}
+img{max-width:100%;}
+
+/* 헤더 */
+header{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
+  color:#fff; padding:26px 15px 22px; text-align:center;
+}
+.hd-in{max-width:var(--maxw); margin:0 auto;}
+.hbadge{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
+  padding:5px 13px; border-radius:999px; font-size:13.5px; font-weight:700; margin-bottom:12px;}
+header h1{font-size:24px; line-height:1.32; margin:0 0 8px; font-weight:800;}
+header .sub{font-size:15px; opacity:.95; margin:0;}
+.ver{margin-top:12px; font-size:13px; opacity:.9; letter-spacing:.02em;}
+.note-date{max-width:var(--maxw); margin:0 auto; padding:11px 15px; background:#fff8ec;
+  color:#7a5b18; font-size:13.5px; text-align:center; border-bottom:1px solid var(--line);}
+
+/* 섹션 내비 */
+nav.toc{position:sticky; top:0; z-index:20; background:rgba(245,246,251,.96);
+  backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:9px 0;}
+.toc-in{max-width:var(--maxw); margin:0 auto; padding:0 12px; display:flex; gap:7px;
+  overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+.toc-in::-webkit-scrollbar{display:none;}
+.toc a{flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--brand-ink);
+  background:var(--brand-soft); padding:7px 12px; border-radius:999px; text-decoration:none; white-space:nowrap;}
+.toc a:active{background:#dfe2fd;}
+
+/* 섹션 공통 */
+section{margin-top:26px;}
+.sec-h{display:flex; align-items:baseline; gap:9px; margin:0 0 5px;}
+.sec-h .sn{font-size:14px; font-weight:800; color:#fff; background:var(--brand);
+  border-radius:8px; padding:2px 9px; flex:0 0 auto;}
+.sec-h h2{font-size:20.5px; margin:0; font-weight:800;}
+.sec-lead{color:var(--sub); font-size:14.5px; margin:0 0 14px;}
+
+/* 카드 */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:15px; box-shadow:var(--shadow); margin-bottom:12px;}
+
+/* 복붙 프롬프트 */
+.pbox{background:#f8f9ff; border:1px solid #e3e6fb; border-radius:12px; padding:11px 12px; margin:9px 0 0;}
+.pt{margin:0 0 9px; font-family:inherit; font-size:15.5px; line-height:1.6; white-space:pre-wrap;
+  color:#232842; font-weight:500;}
+.copy{width:100%; min-height:48px; border:none; border-radius:10px; cursor:pointer;
+  background:var(--brand); color:#fff; font-size:16px; font-weight:800;
+  font-family:inherit; display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:background .12s;}
+.copy:active{background:#3f38c9;}
+.copy.done{background:var(--ok);}
+.copy .ci::before{content:"📋 "; }
+.copy.done .ci::before{content:"✓ "; }
+
+/* 섹션1 툴 */
+.tool{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px 14px;
+  box-shadow:var(--shadow); margin-bottom:10px;}
+.tool-h{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:7px;}
+.tname{font-size:16.5px; font-weight:800;}
+.tag{font-size:12.5px; font-weight:800; padding:3px 9px; border-radius:999px; flex:0 0 auto;}
+.tag.free{color:var(--ok); background:var(--ok-soft);}
+.tag.part{color:var(--part); background:var(--part-soft);}
+.tag.paid{color:var(--paid); background:var(--paid-soft);}
+.trow{display:flex; gap:8px; font-size:14.5px; padding:2px 0; align-items:baseline;}
+.trow b{flex:0 0 40px; color:var(--sub); font-weight:700; font-size:13px;}
+.trow.use{color:var(--brand-ink); font-weight:600;}
+.trow.use b{color:var(--brand);}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.chip-card{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:12px;
+  box-shadow:var(--shadow);}
+.chip-card h4{margin:0 0 4px; font-size:14.5px; color:var(--brand-ink);}
+.cc-tools{margin:0 0 5px; font-size:13.5px; font-weight:700;}
+.cc-desc{margin:0; font-size:13px; color:var(--sub); line-height:1.5;}
+
+.rec{display:flex; gap:10px; align-items:center; padding:9px 0; border-bottom:1px dashed var(--line);}
+.rec:last-child{border-bottom:none;}
+.rq{flex:1; font-size:14.5px;}
+.ra{flex:0 0 auto; font-size:14px; font-weight:800; color:var(--brand-ink);
+  background:var(--brand-soft); padding:5px 10px; border-radius:9px; text-align:right;}
+
+/* 섹션2 5요소 */
+.elem{display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1px dashed var(--line);}
+.elem:last-child{border-bottom:none;}
+.en{flex:0 0 30px; height:30px; line-height:30px; text-align:center; border-radius:50%;
+  background:var(--brand); color:#fff; font-weight:800; font-size:15px;}
+.elem b{font-size:15.5px;}
+.elem .ed{display:block; font-size:13px; color:var(--sub);}
+.elem .ex{display:block; font-size:13.5px; color:var(--brand-ink); margin-top:2px;}
+
+/* 서랍 */
+.drawer{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px;
+  box-shadow:var(--shadow); margin-bottom:11px;}
+.dh{display:flex; align-items:center; gap:9px; margin-bottom:9px; flex-wrap:wrap;}
+.dnum{flex:0 0 auto; font-size:18px; font-weight:800; color:var(--brand);}
+.dt{flex:1; min-width:120px;}
+.dt b{font-size:16.5px;}
+.dt span{display:block; font-size:12.5px; color:var(--sub);}
+.dh .copy{width:auto; min-height:38px; padding:0 12px; font-size:13.5px; flex:0 0 auto;}
+.kg{margin:7px 0;}
+.kgn{font-size:12.5px; font-weight:800; color:var(--sub); display:block; margin-bottom:4px;}
+.kws{display:flex; flex-wrap:wrap; gap:6px;}
+.kw{font-size:14px; background:var(--brand-soft); color:var(--brand-ink); padding:5px 10px;
+  border-radius:8px; font-weight:600;}
+.why{margin:9px 0 0; font-size:13.5px; color:var(--sub); background:#faf9ff; border-left:3px solid var(--brand2);
+  padding:7px 10px; border-radius:0 8px 8px 0;}
+
+.ratiowrap{display:grid; grid-template-columns:repeat(5,1fr); gap:7px;}
+.ratio{background:var(--card); border:1px solid var(--line); border-radius:11px; padding:9px 5px;
+  text-align:center; box-shadow:var(--shadow);}
+.rr{display:block; font-size:16px; font-weight:800; color:var(--brand);}
+.rn{display:block; font-size:12px; color:var(--sub); margin:1px 0 3px;}
+.ru{display:block; font-size:11px; line-height:1.3;}
+
+.tech{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:13px;
+  box-shadow:var(--shadow); margin-bottom:10px;}
+.tech h4{margin:0 0 3px; font-size:15.5px; color:var(--brand-ink);}
+.tech p{margin:0; font-size:13.5px; color:var(--sub);}
+
+/* 섹션3·4 카드 */
+.gh{display:flex; align-items:flex-start; gap:11px; margin-bottom:3px;}
+.gn{flex:0 0 34px; height:34px; line-height:34px; text-align:center; border-radius:10px;
+  background:var(--brand); color:#fff; font-weight:800; font-size:17px;}
+.gn.tn{background:var(--brand2);}
+.gh b{font-size:17px;}
+.gu{display:block; font-size:13px; color:var(--sub);}
+.what{margin:8px 0 0; font-size:14px; color:var(--sub);}
+.warn{margin:9px 0 0; font-size:13.5px; color:var(--warn); background:var(--warn-soft);
+  border:1px solid #f6d8c4; border-radius:10px; padding:8px 11px; font-weight:600;}
+.why-d{margin-top:9px;}
+.why-d summary{font-size:14px; font-weight:700; color:var(--brand-ink); cursor:pointer; padding:5px 0;
+  list-style:none;}
+.why-d summary::-webkit-details-marker{display:none;}
+.why-d summary::before{content:"▸ "; color:var(--brand);}
+.why-d[open] summary::before{content:"▾ ";}
+.why-l{margin:5px 0 0; padding-left:18px;}
+.why-l li{font-size:13.5px; color:var(--sub); margin:3px 0;}
+
+/* 워크플로 */
+.flow{display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1px dashed var(--line);}
+.flow:last-child{border-bottom:none;}
+.fn{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:50%;
+  background:var(--brand2); color:#fff; font-weight:800; font-size:14px;}
+.flow b{font-size:15.5px;}
+.fd{display:block; font-size:13.5px; color:var(--sub);}
+.fe{display:block; font-size:13px; color:var(--brand-ink); margin-top:2px;}
+
+/* 섹션5 */
+.chk{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
+.chk:last-child{border-bottom:none;}
+.cn{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:8px;
+  background:var(--ok); color:#fff; font-weight:800; font-size:14px;}
+.chk b{font-size:15.5px;}
+.chk span{display:block; font-size:13.5px; color:var(--sub);}
+.red{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px dashed var(--line);}
+.red:last-child{border-bottom:none;}
+.rx{flex:0 0 24px; height:24px; line-height:24px; text-align:center; border-radius:50%;
+  background:var(--paid-soft); color:var(--paid); font-weight:800;}
+.red b{font-size:15px; color:var(--paid);}
+.red span{display:block; font-size:13.5px; color:var(--sub);}
+.crow{display:flex; flex-wrap:wrap; gap:5px 10px; padding:8px 0; border-bottom:1px dashed var(--line);}
+.crow:last-child{border-bottom:none;}
+.ct{flex:1 0 100%; font-size:14.5px; font-weight:700;}
+.cf{font-size:13px; color:var(--paid); background:var(--paid-soft); padding:3px 8px; border-radius:7px;}
+.cp{font-size:13px; color:var(--ok); background:var(--ok-soft); padding:3px 8px; border-radius:7px;}
+.oneline{background:var(--brand-soft); border-radius:12px; padding:12px 14px; margin-top:12px;
+  font-size:15px; font-weight:700; color:var(--brand-ink); text-align:center;}
+.info-rule{background:#fff8ec; border:1px solid #f2e2bf; border-radius:12px; padding:12px 14px; margin-top:11px;}
+.info-rule b{color:var(--warn);}
+.info-rule p{margin:5px 0 0; font-size:13.5px; color:var(--sub);}
+
+/* 섹션6 갤러리 */
+.galt{font-size:16px; margin:16px 0 9px; color:var(--brand-ink); font-weight:800;}
+.galgrid{display:flex; flex-direction:column; gap:10px;}
+.gcard{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:12px;
+  box-shadow:var(--shadow);}
+.gch{display:flex; align-items:center; gap:9px;}
+.gcn{flex:0 0 26px; height:26px; line-height:26px; text-align:center; border-radius:7px;
+  background:var(--brand-soft); color:var(--brand-ink); font-weight:800; font-size:14px;}
+.gch b{font-size:15.5px;}
+
+/* 골든룰 박스 */
+.goldbox{background:linear-gradient(135deg,#eef0fe,#f3edff); border:1px solid #ddd8fb;
+  border-radius:14px; padding:15px; margin-bottom:14px;}
+.goldbox h3{margin:0 0 6px; font-size:16px; color:var(--brand-ink);}
+.goldbox ul{margin:0; padding-left:18px;}
+.goldbox li{font-size:14px; margin:4px 0; color:#3a3d55;}
+.goldbox li b{color:var(--brand2);}
+
+/* 토스트 */
+#toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+  background:#1e2233; color:#fff; padding:12px 22px; border-radius:999px; font-size:15px; font-weight:700;
+  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:60; box-shadow:0 6px 20px rgba(0,0,0,.25);}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* 푸터 */
+footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--line); color:var(--sub); font-size:12.5px;}
+footer p{margin:5px 0;}
+.prbtn{margin:18px 0 6px; text-align:center;}
+.prbtn button{background:#fff; border:1.5px solid var(--brand); color:var(--brand-ink);
+  font-size:15px; font-weight:800; padding:11px 20px; border-radius:11px; cursor:pointer; font-family:inherit;}
+
+/* 반응형 */
+@media (max-width:520px){
+  .grid2{grid-template-columns:1fr;}
+  .ratiowrap{grid-template-columns:repeat(2,1fr);}
+  header h1{font-size:21px;}
+}
+
+/* ===== 인쇄(A4 핸드아웃) ===== */
+@media print{
+  :root{--bg:#fff;}
+  body{font-size:11pt; background:#fff;}
+  nav.toc, #toast, .prbtn, .copy, .toc, .note-date{display:none !important;}
+  header{background:#fff !important; color:#000 !important; border-bottom:2px solid #333; padding:8px 0;}
+  .hbadge{background:#eee !important; color:#333 !important; border-color:#ccc;}
+  header h1{font-size:17pt; color:#000;}
+  header .sub, .ver{color:#333;}
+  .wrap{max-width:100%; padding:0;}
+  section{margin-top:12px; page-break-inside:avoid;}
+  .card,.tool,.drawer,.tech,.chip-card,.gcard,.goldbox{box-shadow:none; border:1px solid #ccc; break-inside:avoid;}
+  .pbox{background:#f4f4f4; border:1px solid #bbb;}
+  .why-d[open] .why-l, .why-d .why-l{display:block;}
+  .why-d summary{color:#333;}
+  a{color:#000; text-decoration:none;}
+  .kw{background:#eee; color:#222;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd-in">
+    <span class="hbadge">홍성군 AI 강사양성 · 3회차 심화</span>
+    <h1>AI 이미지 강사양성 심화<br>실습 복붙 자료</h1>
+    <p class="sub">폰으로 열어 프롬프트를 [복사]해 바로 실습하세요</p>
+    <div class="ver">v1 · 2026-08-24 · 제작 커리어숲</div>
+  </div>
+</header>
+<div class="note-date">※ 도구 이름·무료 한도·약관·판례는 <b>2026.8 기준</b>이며 수시로 바뀝니다. 강의 직전 각 서비스에서 재확인하세요.</div>
+
+<nav class="toc"><div class="toc-in">
+  <a href="#s1">① 툴 한눈에</a>
+  <a href="#s2">② 키워드 사전</a>
+  <a href="#s3">③ 장르 예시</a>
+  <a href="#s4">④ 트렌드 연출</a>
+  <a href="#s5">⑤ 저작권</a>
+  <a href="#s6">⑥ 활용 20선</a>
+</div></nav>
+
+<div class="wrap">
+
+  <div class="goldbox">
+    <h3>오늘의 3대 원칙</h3>
+    <ul>
+      <li><b>구조로 부탁하기</b> — ‘예쁘게’ 대신 5요소+키워드를 채우면 결과가 재현됩니다.</li>
+      <li><b>글자는 AI 말고 Canva에서</b> — 이미지엔 자리만 비우고 텍스트는 따로(오타·깨짐 방지).</li>
+      <li><b>다시 말고 고치기</b> — 처음부터 다시 X, ‘이 그림에서 ○○만 바꿔줘’로 대화하며 완성.</li>
+    </ul>
+  </div>
+
+  <!-- 섹션 1 -->
+  <section id="s1">
+    <div class="sec-h"><span class="sn">①</span><h2>이미지 AI 툴 한눈에</h2></div>
+    <p class="sec-lead">성격은 크게 <b>네 갈래</b>. 수업·실습은 무료 <b>제미나이(나노바나나)</b>로 통일하면 충분합니다. <b>(2026.8 기준)</b></p>
+    <div class="grid2"><div class="chip-card"><h4>대화형 · 접근 쉬움</h4><p class="cc-tools">제미나이 · ChatGPT · Bing/코파일럿</p><p class="cc-desc">한국어로 편하게, 대화로 수정. 수업·초보에 최적.</p></div>
+<div class="chip-card"><h4>아트 · 고퀄리티</h4><p class="cc-tools">미드저니 · Leonardo</p><p class="cc-desc">예술적 완성도·스타일 일관성. 포스터·아트워크용.</p></div>
+<div class="chip-card"><h4>상업 · 저작권 안전</h4><p class="cc-tools">어도비 파이어플라이</p><p class="cc-desc">상업 이용 안전성 강조, 포토샵 연동. 팔 이미지에.</p></div>
+<div class="chip-card"><h4>오픈소스 · 자유도</h4><p class="cc-tools">Stable Diffusion</p><p class="cc-desc">내 PC에 설치, 무제한·세밀 제어. 진입장벽 높음.</p></div></div>
+    <h3 class="galt">툴 총정리 비교표 7종</h3>
+    <div class="tool"><div class="tool-h"><span class="tname">제미나이 (나노바나나)</span><span class="tag free">무료</span></div><div class="trow"><b>강점</b><span>한국어 이해 최상, 대화형 수정 자연스러움, 빠른 반복</span></div><div class="trow"><b>약점</b><span>하루 무료 한도, 예술적 화풍은 미드저니보다 약함</span></div><div class="trow use"><b>추천</b><span>수업·실습, 한국어 초안, 빠른 시안</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">미드저니</span><span class="tag paid">유료</span></div><div class="trow"><b>강점</b><span>예술적 퀄리티·스타일 일관성 최상</span></div><div class="trow"><b>약점</b><span>유료 구독, 영어 프롬프트 권장, 진입장벽</span></div><div class="trow use"><b>추천</b><span>고퀄 포스터·아트워크·전시</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">어도비 파이어플라이</span><span class="tag part">일부 무료</span></div><div class="trow"><b>강점</b><span>상업 이용 안전성 강조, 포토샵 연동</span></div><div class="trow"><b>약점</b><span>크레딧 소진 후 유료, 사진급 리얼리즘 제한</span></div><div class="trow use"><b>추천</b><span>상업물·저작권 민감 작업</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">ChatGPT (DALL·E)</span><span class="tag part">일부 무료</span></div><div class="trow"><b>강점</b><span>대화형, 접근 쉬움, 문맥 이해 좋음</span></div><div class="trow"><b>약점</b><span>무료는 하루 소량·대기 발생</span></div><div class="trow use"><b>추천</b><span>초보 입문, 아이디어 스케치</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">Bing / 코파일럿</span><span class="tag free">무료</span></div><div class="trow"><b>강점</b><span>완전 무료·접근 쉬움, 백업용으로 든든</span></div><div class="trow"><b>약점</b><span>서버 붐빔·품질 편차, 세밀 제어 약함</span></div><div class="trow use"><b>추천</b><span>제미나이 대기 시 백업, 빠른 초안</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">Leonardo (레오나르도)</span><span class="tag part">일부 무료</span></div><div class="trow"><b>강점</b><span>게임·일러스트 화풍 강점, 스타일 프리셋 풍부</span></div><div class="trow"><b>약점</b><span>영어 위주, 무료 한도(토큰) 제한</span></div><div class="trow use"><b>추천</b><span>일러스트·캐릭터·게임 아트</span></div></div>
+<div class="tool"><div class="tool-h"><span class="tname">Stable Diffusion</span><span class="tag free">무료(오픈)</span></div><div class="trow"><b>강점</b><span>내 PC 설치·무제한, 세밀 제어·확장 자유</span></div><div class="trow"><b>약점</b><span>설치·사양 필요, 진입장벽 매우 높음</span></div><div class="trow use"><b>추천</b><span>전문가·대량 작업·커스텀</span></div></div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--brand-ink);">“뭐가 제일 좋아요?” — 상황별 정답</h3>
+      <div class="rec"><span class="rq">한국어로 편하게, 수업에서</span><span class="ra">제미나이(나노바나나)</span></div>
+<div class="rec"><span class="rq">돈 안 들이고 무료로만</span><span class="ra">제미나이 + Bing 백업</span></div>
+<div class="rec"><span class="rq">일러스트·캐릭터를 많이</span><span class="ra">Leonardo (레오나르도)</span></div>
+<div class="rec"><span class="rq">팔거나 인쇄할 고퀄 포스터</span><span class="ra">미드저니(유료) / 파이어플라이</span></div>
+<div class="rec"><span class="rq">상업 이용·저작권이 걱정될 때</span><span class="ra">어도비 파이어플라이</span></div>
+<div class="rec"><span class="rq">전문가·무제한·세밀 제어</span><span class="ra">Stable Diffusion(설치형)</span></div>
+    </div>
+  </section>
+
+  <!-- 섹션 2 -->
+  <section id="s2">
+    <div class="sec-h"><span class="sn">②</span><h2>프롬프트 5요소 + 키워드 사전</h2></div>
+    <p class="sec-lead">5요소가 <b>뼈대</b>, 키워드 사전이 <b>살</b>. 서랍에서 단어를 골라 조합합니다. 서랍마다 <b>[단어 복사]</b> 가능.</p>
+    <div class="card"><div class="elem"><span class="en">1</span><div><b>피사체</b><span class="ed">무엇을 / 누가</span><span class="ex">삼겹살 정식 · 자몽에이드</span></div></div>
+<div class="elem"><span class="en">2</span><div><b>스타일</b><span class="ed">어떤 느낌·화풍</span><span class="ex">실사풍 · 일러스트 · 미니멀</span></div></div>
+<div class="elem"><span class="en">3</span><div><b>조명</b><span class="ed">빛의 방향·분위기</span><span class="ex">자연광 · 역광 · 우드톤</span></div></div>
+<div class="elem"><span class="en">4</span><div><b>구도</b><span class="ed">앵글·배치</span><span class="ex">위 45도 · 플랫레이 · 클로즈업</span></div></div>
+<div class="elem"><span class="en">5</span><div><b>화질</b><span class="ed">디테일·마감</span><span class="ex">고해상 · 물방울 질감 · 선명</span></div></div>
+      <p class="why" style="margin-top:11px;">+ 용도 2요소 · 비율(세로 4:5 SNS / 가로 16:9 배너) · 글자 자리 비우기(글자는 Canva에서 → 오타 방지)</p>
+    </div>
+    <h3 class="galt">키워드 사전 — 6개의 서랍</h3>
+    <div class="drawer"><div class="dh"><span class="dnum">①</span><div class="dt"><b>스타일(화풍)</b><span>화풍·질감의 결</span></div><button type="button" class="copy" data-copy="실사풍, 시네마틱, 다큐멘터리, 수채화, 플랫 일러스트, 3D 렌더, 미니멀, 빈티지·레트로, 지브리풍/애니풍"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">사실 계열</span><div class="kws"><span class="kw">실사풍</span> <span class="kw">시네마틱</span> <span class="kw">다큐멘터리</span></div></div>
+<div class="kg"><span class="kgn">그림 계열</span><div class="kws"><span class="kw">수채화</span> <span class="kw">플랫 일러스트</span> <span class="kw">3D 렌더</span></div></div>
+<div class="kg"><span class="kgn">감성·특수</span><div class="kws"><span class="kw">미니멀</span> <span class="kw">빈티지·레트로</span> <span class="kw">지브리풍/애니풍</span></div></div><p class="why">‘스타일’은 결과의 첫인상. 업종·채널에 맞는 딱 한 단어만(다 섞으면 산으로).</p></div>
+<div class="drawer"><div class="dh"><span class="dnum">②</span><div class="dt"><b>조명(빛)</b><span>빛의 방향·시간</span></div><button type="button" class="copy" data-copy="정면광, 측광(사이드), 역광(백라이트), 림라이트, 자연광, 골든아워, 블루아워, 흐린날광, 소프트 라이트, 드라마틱, 네온·무드등, 스튜디오 조명"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">방향</span><div class="kws"><span class="kw">정면광</span> <span class="kw">측광(사이드)</span> <span class="kw">역광(백라이트)</span> <span class="kw">림라이트</span></div></div>
+<div class="kg"><span class="kgn">시간·자연</span><div class="kws"><span class="kw">자연광</span> <span class="kw">골든아워</span> <span class="kw">블루아워</span> <span class="kw">흐린날광</span></div></div>
+<div class="kg"><span class="kgn">분위기·인공</span><div class="kws"><span class="kw">소프트 라이트</span> <span class="kw">드라마틱</span> <span class="kw">네온·무드등</span> <span class="kw">스튜디오 조명</span></div></div><p class="why">‘밝게’ 대신 ‘부드러운 측광’처럼 방향 지정. 음식=따뜻한 자연광, 상품=스튜디오.</p></div>
+<div class="drawer"><div class="dh"><span class="dnum">③</span><div class="dt"><b>카메라·렌즈</b><span>찍은 ‘느낌’ 만들기</span></div><button type="button" class="copy" data-copy="광각 24mm, 표준 50mm, 망원 85mm, 접사(macro), 얕은 심도, 깊은 심도, 보케, 선명한 초점, DSLR 느낌, 필름 카메라, 드론 샷, 핸드폰 스냅"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">렌즈(화각)</span><div class="kws"><span class="kw">광각 24mm</span> <span class="kw">표준 50mm</span> <span class="kw">망원 85mm</span> <span class="kw">접사(macro)</span></div></div>
+<div class="kg"><span class="kgn">심도·초점</span><div class="kws"><span class="kw">얕은 심도</span> <span class="kw">깊은 심도</span> <span class="kw">보케</span> <span class="kw">선명한 초점</span></div></div>
+<div class="kg"><span class="kgn">카메라 느낌</span><div class="kws"><span class="kw">DSLR 느낌</span> <span class="kw">필름 카메라</span> <span class="kw">드론 샷</span> <span class="kw">핸드폰 스냅</span></div></div><p class="why">‘85mm·얕은 심도’ 한 줄이면 인물 배경이 뭉개져 전문가 사진처럼.</p></div>
+<div class="drawer"><div class="dh"><span class="dnum">④</span><div class="dt"><b>구도·앵글</b><span>어디서 보나</span></div><button type="button" class="copy" data-copy="아이레벨, 하이앵글(위45도), 로우앵글, 플랫레이(정수리), 3분할, 중앙 배치, 대칭, 여백 살림, 클로즈업, 미디엄샷, 풀샷, 와이드샷"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">앵글(높이)</span><div class="kws"><span class="kw">아이레벨</span> <span class="kw">하이앵글(위45도)</span> <span class="kw">로우앵글</span> <span class="kw">플랫레이(정수리)</span></div></div>
+<div class="kg"><span class="kgn">구도·배치</span><div class="kws"><span class="kw">3분할</span> <span class="kw">중앙 배치</span> <span class="kw">대칭</span> <span class="kw">여백 살림</span></div></div>
+<div class="kg"><span class="kgn">거리(샷)</span><div class="kws"><span class="kw">클로즈업</span> <span class="kw">미디엄샷</span> <span class="kw">풀샷</span> <span class="kw">와이드샷</span></div></div><p class="why">홍보물은 ‘상단 여백 + 3분할’이 정석 — 제목 얹을 자리가 남습니다.</p></div>
+<div class="drawer"><div class="dh"><span class="dnum">⑤</span><div class="dt"><b>화질·마감</b><span>디테일·해상도</span></div><button type="button" class="copy" data-copy="고해상, 4K·초고화질, 선명한 디테일, 날카로운 초점, 물방울 질감, 매끈한 표면, 거친 질감, 광택/무광, 그림자 최소, 깨끗한 배경, 프로 사진 품질, 자연스러운 색"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">해상도·선명</span><div class="kws"><span class="kw">고해상</span> <span class="kw">4K·초고화질</span> <span class="kw">선명한 디테일</span> <span class="kw">날카로운 초점</span></div></div>
+<div class="kg"><span class="kgn">질감·마감</span><div class="kws"><span class="kw">물방울 질감</span> <span class="kw">매끈한 표면</span> <span class="kw">거친 질감</span> <span class="kw">광택/무광</span></div></div>
+<div class="kg"><span class="kgn">정리 단어</span><div class="kws"><span class="kw">그림자 최소</span> <span class="kw">깨끗한 배경</span> <span class="kw">프로 사진 품질</span> <span class="kw">자연스러운 색</span></div></div><p class="why">화질 단어는 ‘거들기’ — 2~3개면 충분. 인쇄물엔 ‘고해상·4K’를 꼭.</p></div>
+<div class="drawer"><div class="dh"><span class="dnum">⑥</span><div class="dt"><b>분위기·색감</b><span>감정·무드</span></div><button type="button" class="copy" data-copy="따뜻한, 차분한, 활기찬, 고급스러운, 파스텔톤, 비비드, 모노톤, 어스톤, 봄 파스텔, 여름 청량, 가을 따뜻, 겨울 차분"><span class="ci">단어 복사</span></button></div><div class="kg"><span class="kgn">분위기·무드</span><div class="kws"><span class="kw">따뜻한</span> <span class="kw">차분한</span> <span class="kw">활기찬</span> <span class="kw">고급스러운</span></div></div>
+<div class="kg"><span class="kgn">색조·톤</span><div class="kws"><span class="kw">파스텔톤</span> <span class="kw">비비드</span> <span class="kw">모노톤</span> <span class="kw">어스톤</span></div></div>
+<div class="kg"><span class="kgn">계절·시간감</span><div class="kws"><span class="kw">봄 파스텔</span> <span class="kw">여름 청량</span> <span class="kw">가을 따뜻</span> <span class="kw">겨울 차분</span></div></div><p class="why">브랜드 톤을 한 단어로 고정하면 시리즈 이미지가 통일됩니다(예: ‘따뜻한 어스톤’).</p></div>
+    <h3 class="galt">종횡비 — 채널이 비율을 정합니다</h3>
+    <div class="ratiowrap"><div class="ratio"><span class="rr">1:1</span><span class="rn">정사각</span><span class="ru">인스타 피드·프로필</span></div>
+<div class="ratio"><span class="rr">4:5</span><span class="rn">세로</span><span class="ru">인스타·모바일 홍보(추천)</span></div>
+<div class="ratio"><span class="rr">9:16</span><span class="rn">세로 풀</span><span class="ru">스토리·릴스·쇼츠</span></div>
+<div class="ratio"><span class="rr">16:9</span><span class="rn">가로</span><span class="ru">유튜브 썸네일·배너·PPT</span></div>
+<div class="ratio"><span class="rr">3:2</span><span class="rn">사진</span><span class="ru">일반 사진·인화</span></div></div>
+    <p class="sec-lead" style="margin-top:9px;">모바일 홍보는 <b>세로 4:5</b>가 화면을 가장 크게 씁니다. 프롬프트 끝에 “세로 4:5, 상단 제목 여백”을 세트로.</p>
+    <h3 class="galt">실전 기술 4가지 (복붙 예문 포함)</h3>
+    <div class="tech"><h4>네거티브(빼기)</h4><p>넣을 것만큼 뺄 것이 중요. 제미나이·ChatGPT엔 칸이 없으니 문장 끝에 자연어로.</p><div class="pbox"><pre class="pt">단, 글자·워터마크는 넣지 말고, 손은 자연스럽게, 배경은 단순하게.</pre><button type="button" class="copy" data-copy="단, 글자·워터마크는 넣지 말고, 손은 자연스럽게, 배경은 단순하게."><span class="ci">복사</span></button></div></div>
+<div class="tech"><h4>참조 이미지</h4><p>‘이 느낌으로’ 사진 한 장이 백 마디보다 빠름. 가장 안전한 건 내가 찍은 사진.</p><div class="pbox"><pre class="pt">이 사진 느낌·색감으로 그려줘. 구도는 이대로, 내용만 바꿔서.</pre><button type="button" class="copy" data-copy="이 사진 느낌·색감으로 그려줘. 구도는 이대로, 내용만 바꿔서."><span class="ci">복사</span></button></div></div>
+<div class="tech"><h4>시드 &amp; 리믹스</h4><p>마음에 든 컷을 붙잡아 조금씩 변주. 대화형은 시드보다 ‘이어 고치기’로.</p><div class="pbox"><pre class="pt">이 이미지에서 배경만 밤으로. 같은 구도로 색만 파란 계열로.</pre><button type="button" class="copy" data-copy="이 이미지에서 배경만 밤으로. 같은 구도로 색만 파란 계열로."><span class="ci">복사</span></button></div></div>
+<div class="tech"><h4>반복 개선</h4><p>‘처음부터 다시’가 아니라 ‘이 그림에서 ○○만 바꿔줘’가 심화의 핵심.</p><div class="pbox"><pre class="pt">더 밝게, 색을 선명하게, 배경 단순하게 다시. 세로 4:5로 다시.</pre><button type="button" class="copy" data-copy="더 밝게, 색을 선명하게, 배경 단순하게 다시. 세로 4:5로 다시."><span class="ci">복사</span></button></div></div>
+  </section>
+
+  <!-- 섹션 3 -->
+  <section id="s3">
+    <div class="sec-h"><span class="sn">③</span><h2>장르별 예시 프롬프트 7종</h2></div>
+    <p class="sec-lead">배운 서랍을 조합한 완성 프롬프트. <b>밑줄 명사만 내 업종으로</b> 바꾸면 끝. [복사] 후 제미나이·ChatGPT에 붙여넣기.</p>
+    <div class="card genre"><div class="gh"><span class="gn">1</span><div><b>인물</b><span class="gu">프로필·직원 사진</span></div></div><div class="pbox"><pre class="pt">자영업 사장님 프로필 사진, 40대 한국인 남성, 깔끔한 셔츠, 따뜻한 미소, 실사풍, 표준 50mm, 얕은 심도로 배경 흐림, 부드러운 측광, 밝은 스튜디오, 세로 4:5, 자연스러운 손, 고해상</pre><button type="button" class="copy" data-copy="자영업 사장님 프로필 사진, 40대 한국인 남성, 깔끔한 셔츠, 따뜻한 미소, 실사풍, 표준 50mm, 얕은 심도로 배경 흐림, 부드러운 측광, 밝은 스튜디오, 세로 4:5, 자연스러운 손, 고해상"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>실사풍·50mm → 진짜 사진처럼, 눈으로 본 자연스러운 화각</li><li>얕은 심도 → 배경이 뭉개져 인물이 도드라짐(프로 느낌)</li><li>부드러운 측광 → 입체감 + 부담 없는 표정</li><li>자연스러운 손 → 손가락 오류를 미리 차단(네거티브)</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">2</span><div><b>제품</b><span class="gu">상품컷·메뉴 사진</span></div></div><div class="pbox"><pre class="pt">수제 딸기 케이크 제품 사진, 흰 접시에 한 조각, 위 45도 클로즈업, 실사풍, 스튜디오 조명, 그림자 최소, 깨끗한 흰 배경, 신선한 질감, 물기 있는 딸기, 고해상 4K, 정사각 1:1</pre><button type="button" class="copy" data-copy="수제 딸기 케이크 제품 사진, 흰 접시에 한 조각, 위 45도 클로즈업, 실사풍, 스튜디오 조명, 그림자 최소, 깨끗한 흰 배경, 신선한 질감, 물기 있는 딸기, 고해상 4K, 정사각 1:1"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>위 45도 클로즈업 → 음식이 가장 먹음직스러운 각도</li><li>스튜디오 조명·그림자 최소 → 쇼핑몰 상품컷처럼 깔끔</li><li>깨끗한 흰 배경 → 누끼 따기 쉽고 어디에나 얹기 좋음</li><li>4K·정사각 → 인쇄·인스타 모두 대응</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">3</span><div><b>풍경</b><span class="gu">매장 외관·배경 이미지</span></div></div><div class="pbox"><pre class="pt">해질녘 홍성 시골 카페 외관, 통유리창에 따뜻한 불빛, 골든아워 자연광, 광각 24mm, 깊은 심도로 전체 또렷, 시네마틱, 어스톤 색감, 차분한 분위기, 가로 16:9, 고해상</pre><button type="button" class="copy" data-copy="해질녘 홍성 시골 카페 외관, 통유리창에 따뜻한 불빛, 골든아워 자연광, 광각 24mm, 깊은 심도로 전체 또렷, 시네마틱, 어스톤 색감, 차분한 분위기, 가로 16:9, 고해상"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>골든아워 → 해질녘 따뜻한 빛 = 감성 최고조</li><li>광각 24mm·깊은 심도 → 넓게, 앞뒤 모두 또렷(풍경 기본)</li><li>시네마틱·어스톤 → 영화 톤 + 브랜드 색감 통일</li><li>가로 16:9 → 배너·유튜브·홈페이지 배경용</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">4</span><div><b>일러스트</b><span class="gu">안내·카드뉴스</span></div></div><div class="pbox"><pre class="pt">재활용 분리배출 안내 일러스트, 플랫 디자인, 단순한 도형, 밝은 파스텔톤, 굵은 외곽선, 캐릭터 한 명이 손짓, 흰 배경, 여백 넉넉, 정사각 1:1, 글자 자리 비우기</pre><button type="button" class="copy" data-copy="재활용 분리배출 안내 일러스트, 플랫 디자인, 단순한 도형, 밝은 파스텔톤, 굵은 외곽선, 캐릭터 한 명이 손짓, 흰 배경, 여백 넉넉, 정사각 1:1, 글자 자리 비우기"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>플랫 디자인·단순 도형 → 정보 전달용은 단순할수록 명확</li><li>파스텔톤·굵은 외곽선 → 친근하고 눈에 잘 띔(카드뉴스 톤)</li><li>여백 넉넉·글자 자리 → 제목·설명을 Canva에서 얹을 공간</li><li>흰 배경 → 여러 장 시리즈로 통일하기 쉬움</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">5</span><div><b>로고</b><span class="gu">심볼·아이콘</span></div></div><div class="pbox"><pre class="pt">미니멀 카페 로고, 커피잔과 잎사귀를 결합한 심볼, 단순한 라인 아이콘, 2색(딥그린+크림), 벡터 느낌, 흰 배경, 대칭 균형, 정사각, 글자 없이 심볼만</pre><button type="button" class="copy" data-copy="미니멀 카페 로고, 커피잔과 잎사귀를 결합한 심볼, 단순한 라인 아이콘, 2색(딥그린+크림), 벡터 느낌, 흰 배경, 대칭 균형, 정사각, 글자 없이 심볼만"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>미니멀·단순 라인 → 작게 줄여도 알아보임(로고의 생명)</li><li>2색 제한 → 인쇄·간판 적용이 쉬움</li><li>심볼만·글자 없이 → 상호는 폰트로 따로(AI 글자는 깨짐)</li><li>대칭 균형 → 안정적이고 신뢰감 있는 인상</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">6</span><div><b>웹툰</b><span class="gu">컷·캐릭터</span></div></div><div class="pbox"><pre class="pt">웹툰 스타일 한 컷, 앞치마 두른 젊은 사장 캐릭터, 셀 애니풍 채색, 굵은 외곽선, 말풍선 자리 비우기, 밝고 경쾌한 톤, 단순한 가게 배경, 세로 4:5, 일관된 캐릭터</pre><button type="button" class="copy" data-copy="웹툰 스타일 한 컷, 앞치마 두른 젊은 사장 캐릭터, 셀 애니풍 채색, 굵은 외곽선, 말풍선 자리 비우기, 밝고 경쾌한 톤, 단순한 가게 배경, 세로 4:5, 일관된 캐릭터"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>셀 애니풍·굵은 외곽선 → 웹툰 특유의 또렷한 그림체</li><li>말풍선 자리 비우기 → 대사는 나중에 편집으로(글자 깨짐 방지)</li><li>일관된 캐릭터 → 여러 컷에서 같은 인물 유지가 관건</li><li>세로 4:5 → 모바일 스크롤 웹툰 형식</li></ul></details></div>
+<div class="card genre"><div class="gh"><span class="gn">7</span><div><b>포스터</b><span class="gu">홍보·모집</span></div></div><div class="pbox"><pre class="pt">홍성 국화축제 홍보 포스터 배경, 만개한 노란 국화밭, 가을 골든아워, 시네마틱, 어스톤 색감, 상단·하단 넉넉한 여백(제목/일정 자리), 세로 4:5, 글자 없이 이미지만, 고해상</pre><button type="button" class="copy" data-copy="홍성 국화축제 홍보 포스터 배경, 만개한 노란 국화밭, 가을 골든아워, 시네마틱, 어스톤 색감, 상단·하단 넉넉한 여백(제목/일정 자리), 세로 4:5, 글자 없이 이미지만, 고해상"><span class="ci">복사</span></button></div><details class="why-d"><summary>왜 이렇게 쓰나 — 요소 뜯어보기</summary><ul class="why-l"><li>상단·하단 여백 → 제목·일정·주최를 얹을 공간 확보</li><li>글자 없이 이미지만 → 텍스트는 Canva에서(오타·깨짐 방지)</li><li>시네마틱·어스톤 → 축제 분위기 + 통일된 색감</li><li>세로 4:5 → 현수막·SNS 겸용 세로 포맷</li></ul></details></div>
+  </section>
+
+  <!-- 섹션 4 -->
+  <section id="s4">
+    <div class="sec-h"><span class="sn">④</span><h2>트렌드 연출 프롬프트 9종</h2></div>
+    <p class="sec-lead">요즘 SNS에서 반응 좋은 연출. 기술은 같고 <b>연출 단어</b>만 얹으면 완전히 다른 결과가 나옵니다.</p>
+    <div class="card trend"><div class="gh"><span class="gn tn">1</span><div><b>미니어처화</b><span class="gu">Miniaturization</span></div></div><p class="what">우리 가게·동네·인물을 손바닥만 한 앙증맞은 미니어처 모형처럼.</p><div class="pbox"><pre class="pt">우리 분식집을 손바닥만 한 미니어처 디오라마로, 아기자기한 소품, 따뜻한 조명, 위 30도 앵글, 배경 단순하게, 정사각형</pre><button type="button" class="copy" data-copy="우리 분식집을 손바닥만 한 미니어처 디오라마로, 아기자기한 소품, 따뜻한 조명, 위 30도 앵글, 배경 단순하게, 정사각형"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">2</span><div><b>피규어·박스토이</b><span class="gu">Figure / Blind box</span></div></div><p class="what">사람·캐릭터를 블라인드박스 피규어와 포장 패키지처럼.</p><div class="pbox"><pre class="pt">내 캐릭터를 박스토이 피규어로, 투명 플라스틱 포장 박스 안에, 파스텔 배경, 정면, 상단에 브랜드명 자리 비우기</pre><button type="button" class="copy" data-copy="내 캐릭터를 박스토이 피규어로, 투명 플라스틱 포장 박스 안에, 파스텔 배경, 정면, 상단에 브랜드명 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">3</span><div><b>실사 복원·컬러화</b><span class="gu">Restoration</span></div></div><p class="what">낡고 흐린 흑백 옛 사진을 선명하게 되살리고 자연스러운 색을 입힘.</p><div class="pbox"><pre class="pt">낡은 흑백 가족사진을 자연스러운 컬러로 복원, 얼굴 생김새는 그대로 유지, 손상·주름·얼룩 제거, 따뜻한 색감</pre><button type="button" class="copy" data-copy="낡은 흑백 가족사진을 자연스러운 컬러로 복원, 얼굴 생김새는 그대로 유지, 손상·주름·얼룩 제거, 따뜻한 색감"><span class="ci">복사</span></button></div><p class="warn">⚠ 실제 가족 사진은 본인·가족 동의 아래에서만. ‘얼굴 그대로 유지’ 지정, 원본을 함부로 배포·판매 금지.</p></div>
+<div class="card trend"><div class="gh"><span class="gn tn">4</span><div><b>가상 인플루언서·모델</b><span class="gu">Virtual model</span></div></div><p class="what">일관된 얼굴의 ‘가상 인물’을 만들어 홍보 모델처럼 반복 사용.</p><div class="pbox"><pre class="pt">우리 가게 홍보용 가상 모델, 20대 친근한 인상, 앞치마 착용, 밝은 매장 배경, 정면 미소, 같은 얼굴 유지</pre><button type="button" class="copy" data-copy="우리 가게 홍보용 가상 모델, 20대 친근한 인상, 앞치마 착용, 밝은 매장 배경, 정면 미소, 같은 얼굴 유지"><span class="ci">복사</span></button></div><p class="warn">⚠ 실존 연예인·유명인을 닮게 만들지 않기. 가상 인물임을 오해시키거나 실제 후기인 척 속이지 않기.</p></div>
+<div class="card trend"><div class="gh"><span class="gn tn">5</span><div><b>광고·상품컷</b><span class="gu">Product shot</span></div></div><p class="what">제품을 스튜디오에서 찍은 것처럼 깔끔한 배경·조명으로 연출.</p><div class="pbox"><pre class="pt">수제 딸기잼 유리병 광고컷, 순백 배경, 정면 스튜디오 조명, 물방울·신선한 딸기 소품, 1:1, 라벨 자리 단순하게</pre><button type="button" class="copy" data-copy="수제 딸기잼 유리병 광고컷, 순백 배경, 정면 스튜디오 조명, 물방울·신선한 딸기 소품, 1:1, 라벨 자리 단순하게"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">6</span><div><b>브랜딩·썸네일</b><span class="gu">Thumbnail</span></div></div><p class="what">유튜브 썸네일·채널 아트처럼 ‘클릭을 부르는’ 브랜딩 이미지.</p><div class="pbox"><pre class="pt">유튜브 썸네일 배경, 강렬한 대비 색, 가운데 큰 제목 자리 비우기, 오른쪽 인물 자리, 16:9, 시선 끄는 화살표 소품</pre><button type="button" class="copy" data-copy="유튜브 썸네일 배경, 강렬한 대비 색, 가운데 큰 제목 자리 비우기, 오른쪽 인물 자리, 16:9, 시선 끄는 화살표 소품"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">7</span><div><b>웹툰·캐릭터</b><span class="gu">Webtoon</span></div></div><p class="what">나만의 캐릭터·사장님을 웹툰 주인공처럼 그려 스토리 콘텐츠로.</p><div class="pbox"><pre class="pt">친근한 우리 가게 사장님 캐릭터, 웹툰풍 깔끔한 라인, 밝은 채색, 웃는·놀란·고민하는 표정 세 컷, 흰 배경</pre><button type="button" class="copy" data-copy="친근한 우리 가게 사장님 캐릭터, 웹툰풍 깔끔한 라인, 밝은 채색, 웃는·놀란·고민하는 표정 세 컷, 흰 배경"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">8</span><div><b>MV·영상 소스</b><span class="gu">B-roll</span></div></div><p class="what">릴스·쇼츠·홍보 영상에 깔 배경 이미지·B롤 소스를 미리 제작.</p><div class="pbox"><pre class="pt">잔잔한 새벽 바다 풍경, 영상 배경용, 가로 16:9, 여백 넉넉하게, 부드러운 색감, 글자·사람 없이 깔끔하게</pre><button type="button" class="copy" data-copy="잔잔한 새벽 바다 풍경, 영상 배경용, 가로 16:9, 여백 넉넉하게, 부드러운 색감, 글자·사람 없이 깔끔하게"><span class="ci">복사</span></button></div></div>
+<div class="card trend"><div class="gh"><span class="gn tn">9</span><div><b>스티커·이모티콘</b><span class="gu">Sticker</span></div></div><p class="what">카톡 스티커 느낌으로, 흰 테두리·단순한 라인의 귀여운 이미지.</p><div class="pbox"><pre class="pt">귀여운 고양이 스티커 세트, 흰 테두리, 배경 단순, 인사·엄지척·하트 등 다양한 표정, 단순한 라인, 정사각형</pre><button type="button" class="copy" data-copy="귀여운 고양이 스티커 세트, 흰 테두리, 배경 단순, 인사·엄지척·하트 등 다양한 표정, 단순한 라인, 정사각형"><span class="ci">복사</span></button></div></div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--brand-ink);">연출·기획 워크플로 — 4단계</h3>
+      <div class="flow"><span class="fn">1</span><div><b>컨셉</b><span class="fd">무엇을·누구에게·어디에 쓸지 한 줄로.</span><span class="fe">예: 홍성 국화축제, 어르신 대상, 마을회관 게시용 포스터</span></div></div>
+<div class="flow"><span class="fn">2</span><div><b>레퍼런스</b><span class="fd">비슷한 느낌 이미지 1~2개를 먼저 찾기.</span><span class="fe">‘이런 분위기’ 기준이 생겨야 프롬프트가 구체화</span></div></div>
+<div class="flow"><span class="fn">3</span><div><b>프롬프트</b><span class="fd">5요소 + 연출(스타일·앵글·질감) 얹기.</span><span class="fe">위 §2·§3의 틀에 §4의 ‘연출’을 추가</span></div></div>
+<div class="flow"><span class="fn">4</span><div><b>보정</b><span class="fd">생성 → 마음에 들 때까지 다시.</span><span class="fe">글자·크기는 Canva에서 마무리(오타 방지)</span></div></div>
+      <p class="oneline" style="margin-top:11px;">컨셉 → 레퍼런스 → 프롬프트 → 보정. 이 순서만 지켜도 ‘되는대로’가 ‘기획’이 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 섹션 5 -->
+  <section id="s5">
+    <div class="sec-h"><span class="sn">⑤</span><h2>저작권 안전수칙</h2></div>
+    <p class="sec-lead">겁주기가 아니라 <b>안전하게 오래 쓰기</b> 위해. <b>(2026.8 기준 · 법률자문 아님)</b></p>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--ok);">안전하게 쓰는 5가지 체크리스트</h3>
+      <div class="chk"><span class="cn">1</span><div><b>상업 이용이면 유료 플랜·약관 확인</b><span>팔거나 광고에 쓸 거면 무료 결과물인지부터 점검.</span></div></div>
+<div class="chk"><span class="cn">2</span><div><b>사람이 개입한 흔적·과정 기록</b><span>프롬프트 이력·편집 전후를 남겨두기(저작권·분쟁 대비).</span></div></div>
+<div class="chk"><span class="cn">3</span><div><b>실존 인물·유명 캐릭터·상표·특정 화풍 회피</b><span>남의 얼굴·브랜드·작가 스타일은 넣지 않기.</span></div></div>
+<div class="chk"><span class="cn">4</span><div><b>‘AI 생성’ 표시하기</b><span>특히 밖으로 공유·게시할 때(AI 기본법 표시의무).</span></div></div>
+<div class="chk"><span class="cn">5</span><div><b>정보성 내용은 공식 출처로 검증</b><span>건강·안전·복약 등은 AI가 아니라 공식 기관 자료로.</span></div></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--paid);">이건 만들지 마세요 — 넘지 말아야 할 선</h3>
+      <div class="red"><span class="rx">✕</span><div><b>실존 인물</b><span>연예인·유명인·이웃의 얼굴·목소리를 닮게 만들거나 재현하기. 초상·퍼블리시티·명예 문제.</span></div></div>
+<div class="red"><span class="rx">✕</span><div><b>브랜드·로고</b><span>유명 브랜드 로고·상표·캐릭터(디즈니 등)를 넣거나 흉내 내기. 상표·저작권 침해 위험.</span></div></div>
+<div class="red"><span class="rx">✕</span><div><b>특정 작가 스타일</b><span>‘○○ 작가 화풍으로’ 콕 집기. 분쟁 소지 → ‘따뜻한 손그림풍’처럼 일반적으로.</span></div></div>
+<div class="red"><span class="rx">✕</span><div><b>속이는 이미지</b><span>가짜를 진짜 사진·실제 후기인 척, 딥페이크로 오해 유발. AI 기본법 표시의무와 직결.</span></div></div>
+      <p class="oneline" style="margin-top:11px;">남의 얼굴·남의 브랜드·남의 화풍은 넣지 말고, 가짜를 진짜인 척하지 말기.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--brand-ink);">상업 이용 — 무료는 대체로 금지, 유료는 허용</h3>
+      <div class="crow"><span class="ct">이미지 (미드저니 등)</span><span class="cf">무료: 원칙적으로 상업 이용 제한</span><span class="cp">유료: 유료 구독 시 상업 이용 가능(약관 준수)</span></div>
+<div class="crow"><span class="ct">글·이미지 (ChatGPT·DALL·E)</span><span class="cf">무료: 약관·법령 준수 시 이용자 귀속</span><span class="cp">유료: 동일하게 이용자 귀속</span></div>
+<div class="crow"><span class="ct">음악 (Suno)</span><span class="cf">무료: 상업 이용 불가</span><span class="cp">유료: 유료 플랜에서만 상업 배포·권리 이전</span></div>
+      <p class="sec-lead" style="margin:9px 0 0;">‘저작권 인정’과 ‘팔 수 있나’는 별개. 수익화의 첫 관문은 <b>도구의 약관</b>입니다. 약관은 수시로 바뀌니 쓰기 직전 재확인.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px;font-size:16px;color:var(--brand-ink);">AI 기본법 — ‘AI로 만들었다’고 표시하기</h3>
+      <p class="sec-lead" style="margin:0 0 6px;">「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」 · <b>2026.1.22 전면 시행</b></p>
+      <p style="margin:0;font-size:14px;">생성물이 서비스 밖으로 나갈 때 <b>‘AI 생성’ 표시</b>(제31조). 딥페이크는 가시적 표시 필요. 현재 <b>계도기간</b>(과태료는 빨라도 2027년 이후 전망·미확정). ※ AI 기본법은 저작권을 직접 규율하지 않음.</p>
+    </div>
+    <div class="info-rule">
+      <b>정보 카드(건강·복약·안전)는 특히 주의</b>
+      <p>“AI한테는 <b>그림만</b> 그리라고 하세요. 뭐라고 쓸지는 <b>나라(공식 기관)</b>에 물어보고요.” — 수치·문구는 질병관리청·식약처·경찰청 등 공식 출처에서 확인, AI는 배경 디자인만.</p>
+    </div>
+  </section>
+
+  <!-- 섹션 6 -->
+  <section id="s6">
+    <div class="sec-h"><span class="sn">⑥</span><h2>활용 아이디어 20선</h2></div>
+    <p class="sec-lead">우리 반에 맞는 <b>6~8개</b>를 골라 쓰는 ‘메뉴판’. 각 카드 프롬프트도 [복사] 가능합니다.</p>
+    <div class="galg"><h3 class="galt">A. 개인 · 추억</h3><div class="galgrid"><div class="gcard"><div class="gch"><span class="gcn">1</span><b>미니어처 우리집</b></div><div class="pbox"><pre class="pt">우리 집 마당을 미니어처 디오라마로, 따뜻한 조명, 아기자기한 소품, 위 30도, 배경 단순, 정사각형</pre><button type="button" class="copy" data-copy="우리 집 마당을 미니어처 디오라마로, 따뜻한 조명, 아기자기한 소품, 위 30도, 배경 단순, 정사각형"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">2</span><b>피규어 프로필</b></div><div class="pbox"><pre class="pt">내 캐릭터를 박스토이 피규어로, 투명 포장 박스 안, 파스텔 배경, 정면, 상단 이름 자리 비우기</pre><button type="button" class="copy" data-copy="내 캐릭터를 박스토이 피규어로, 투명 포장 박스 안, 파스텔 배경, 정면, 상단 이름 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">3</span><b>흑백사진 복원·컬러화</b></div><div class="pbox"><pre class="pt">낡은 흑백 가족사진을 자연스러운 컬러로 복원, 얼굴은 그대로 유지, 손상·얼룩 제거, 따뜻한 색감</pre><button type="button" class="copy" data-copy="낡은 흑백 가족사진을 자연스러운 컬러로 복원, 얼굴은 그대로 유지, 손상·얼룩 제거, 따뜻한 색감"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">4</span><b>지브리풍 가족 초상</b></div><div class="pbox"><pre class="pt">우리 가족 사진을 따뜻한 손그림 애니메이션풍으로, 부드러운 채색, 포근한 분위기, 배경은 정원, 세로</pre><button type="button" class="copy" data-copy="우리 가족 사진을 따뜻한 손그림 애니메이션풍으로, 부드러운 채색, 포근한 분위기, 배경은 정원, 세로"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">5</span><b>손그림 → 미술작품</b></div><div class="pbox"><pre class="pt">이 손그림 스케치를 살려서 수채화 작품풍으로, 원래 형태·구도 유지, 부드러운 색, 액자 느낌</pre><button type="button" class="copy" data-copy="이 손그림 스케치를 살려서 수채화 작품풍으로, 원래 형태·구도 유지, 부드러운 색, 액자 느낌"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">6</span><b>아이 이야기 그림책</b></div><div class="pbox"><pre class="pt">토끼가 달나라 가는 동화 삽화, 따뜻한 그림책풍, 파스텔, 아이가 좋아할 밝은 색, 가로, 하단 글 자리 비우기</pre><button type="button" class="copy" data-copy="토끼가 달나라 가는 동화 삽화, 따뜻한 그림책풍, 파스텔, 아이가 좋아할 밝은 색, 가로, 하단 글 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">7</span><b>반려동물 캐리커처</b></div><div class="pbox"><pre class="pt">우리 강아지를 귀여운 캐리커처로, 특징(갈색 털·처진 귀) 살리고, 밝은 배경, 웃는 표정, 정사각형</pre><button type="button" class="copy" data-copy="우리 강아지를 귀여운 캐리커처로, 특징(갈색 털·처진 귀) 살리고, 밝은 배경, 웃는 표정, 정사각형"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">8</span><b>부모님 기념 일러스트</b></div><div class="pbox"><pre class="pt">부모님 사진을 품격 있는 기념 초상 일러스트로, 화사한 꽃 장식, 따뜻한 색, 세로, 상단 &#x27;축 팔순&#x27; 자리 비우기</pre><button type="button" class="copy" data-copy="부모님 사진을 품격 있는 기념 초상 일러스트로, 화사한 꽃 장식, 따뜻한 색, 세로, 상단 &#x27;축 팔순&#x27; 자리 비우기"><span class="ci">복사</span></button></div></div></div></div>
+<div class="galg"><h3 class="galt">B. 정보 · 배포</h3><div class="galgrid"><div class="gcard"><div class="gch"><span class="gcn">9</span><b>건강수칙 카드뉴스</b></div><div class="pbox"><pre class="pt">어르신 건강수칙 카드 배경, 밝고 깔끔, 큰 아이콘 자리, 세로, 글자 자리 넉넉히 비우기 (문구는 공식자료에서)</pre><button type="button" class="copy" data-copy="어르신 건강수칙 카드 배경, 밝고 깔끔, 큰 아이콘 자리, 세로, 글자 자리 넉넉히 비우기 (문구는 공식자료에서)"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">10</span><b>복약 안내 카드</b></div><div class="pbox"><pre class="pt">복약 시간 안내 카드 디자인, 아침·점심·저녁 아이콘 자리, 큰 글씨 자리 비우기, 부드러운 색 (내용은 약사 확인)</pre><button type="button" class="copy" data-copy="복약 시간 안내 카드 디자인, 아침·점심·저녁 아이콘 자리, 큰 글씨 자리 비우기, 부드러운 색 (내용은 약사 확인)"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">11</span><b>보이스피싱 예방 카드</b></div><div class="pbox"><pre class="pt">보이스피싱 예방 안내 카드, 경고 느낌의 선명한 색, 전화·자물쇠 아이콘 자리, 큰 글씨 자리 비우기 (수칙은 경찰청 자료)</pre><button type="button" class="copy" data-copy="보이스피싱 예방 안내 카드, 경고 느낌의 선명한 색, 전화·자물쇠 아이콘 자리, 큰 글씨 자리 비우기 (수칙은 경찰청 자료)"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">12</span><b>시니어 AI 활용팁 카드</b></div><div class="pbox"><pre class="pt">스마트폰 활용 팁 카드, 친근하고 밝은 색, 손·폰 아이콘 자리, 단계 1·2·3 자리, 큰 글씨 자리 비우기</pre><button type="button" class="copy" data-copy="스마트폰 활용 팁 카드, 친근하고 밝은 색, 손·폰 아이콘 자리, 단계 1·2·3 자리, 큰 글씨 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">13</span><b>폭염·한파 안전 카드</b></div><div class="pbox"><pre class="pt">여름 폭염 안전수칙 카드, 시원한 파란 톤, 햇볕·물컵 아이콘 자리, 큰 글씨 자리 비우기, 세로 (수칙은 공식자료)</pre><button type="button" class="copy" data-copy="여름 폭염 안전수칙 카드, 시원한 파란 톤, 햇볕·물컵 아이콘 자리, 큰 글씨 자리 비우기, 세로 (수칙은 공식자료)"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">14</span><b>마을 공지·반상회 안내</b></div><div class="pbox"><pre class="pt">마을 반상회 안내문 배경, 정겨운 시골 느낌, 깔끔한 여백, 제목·날짜·장소 자리 비우기, 세로</pre><button type="button" class="copy" data-copy="마을 반상회 안내문 배경, 정겨운 시골 느낌, 깔끔한 여백, 제목·날짜·장소 자리 비우기, 세로"><span class="ci">복사</span></button></div></div></div></div>
+<div class="galg"><h3 class="galt">C. 지역 · 상업</h3><div class="galgrid"><div class="gcard"><div class="gch"><span class="gcn">15</span><b>마을행사 포스터</b></div><div class="pbox"><pre class="pt">홍성 가을 장터 홍보 포스터, 활기찬 시골 장날, 알록달록 좌판, 따뜻한 햇살, 세로, 상단 제목·하단 일정 자리 비우기</pre><button type="button" class="copy" data-copy="홍성 가을 장터 홍보 포스터, 활기찬 시골 장날, 알록달록 좌판, 따뜻한 햇살, 세로, 상단 제목·하단 일정 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">16</span><b>우리 가게 홍보 이미지</b></div><div class="pbox"><pre class="pt">우리 카페 신메뉴 홍보, 아이스 자몽에이드, 시원한 여름 분위기, 밝은 자연광, 세로 4:5, 상단 제목 자리 비우기</pre><button type="button" class="copy" data-copy="우리 카페 신메뉴 홍보, 아이스 자몽에이드, 시원한 여름 분위기, 밝은 자연광, 세로 4:5, 상단 제목 자리 비우기"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">17</span><b>상품컷 (누끼컷)</b></div><div class="pbox"><pre class="pt">수제 딸기잼 유리병, 순백 배경, 정면 스튜디오 조명, 그림자 최소, 1:1, 라벨 자리 단순하게</pre><button type="button" class="copy" data-copy="수제 딸기잼 유리병, 순백 배경, 정면 스튜디오 조명, 그림자 최소, 1:1, 라벨 자리 단순하게"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">18</span><b>메뉴판 배경</b></div><div class="pbox"><pre class="pt">아늑한 카페 메뉴판 배경, 우드톤, 따뜻한 조명, 여백 넉넉, 세로, 메뉴·가격 자리 크게 비우기, 글자 없이</pre><button type="button" class="copy" data-copy="아늑한 카페 메뉴판 배경, 우드톤, 따뜻한 조명, 여백 넉넉, 세로, 메뉴·가격 자리 크게 비우기, 글자 없이"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">19</span><b>SNS 피드 세트</b></div><div class="pbox"><pre class="pt">우리 반찬가게 인스타 피드용 이미지 세트, 따뜻한 우드톤 통일, 정갈한 반찬, 위에서 본 플랫레이, 1:1, 같은 색감 유지</pre><button type="button" class="copy" data-copy="우리 반찬가게 인스타 피드용 이미지 세트, 따뜻한 우드톤 통일, 정갈한 반찬, 위에서 본 플랫레이, 1:1, 같은 색감 유지"><span class="ci">복사</span></button></div></div>
+<div class="gcard"><div class="gch"><span class="gcn">20</span><b>명함·현수막 시안</b></div><div class="pbox"><pre class="pt">깔끔한 명함 배경 디자인, 우리 업종 느낌, 여백 넉넉, 가로, 이름·연락처 자리 비우기, 단순하고 신뢰감 있게</pre><button type="button" class="copy" data-copy="깔끔한 명함 배경 디자인, 우리 업종 느낌, 여백 넉넉, 가로, 이름·연락처 자리 비우기, 단순하고 신뢰감 있게"><span class="ci">복사</span></button></div></div></div></div>
+  </section>
+
+  <div class="prbtn"><button type="button" onclick="window.print()">🖨 이 페이지 인쇄 / A4 핸드아웃 저장</button></div>
+
+  <footer>
+    <p><b>홍성 3회차 · AI 이미지 강사양성 심화 — 실습 복붙 자료 · v1 · 2026-08-24</b></p>
+    <p>근거: 타이(커리어숲) 강의안 Part1·Part2(2026-08-23). 출처(저작권): 문체부·한국저작권위원회 등록 안내서, 美저작권청 보고서, 각 플랫폼 공개 약관, AI 기본법 시행(2026.1.22), 진행 중 판례(2025.11~2026.7). 모두 <b>2026.8 기준</b>이며 재확인 권장 · 법률자문 아님.</p>
+    <p>개인정보를 수집·저장·전송하지 않습니다(외부 서버 연결 0 · 완전 자기완결). 제작: 커리어숲.</p>
+  </footer>
+</div>
+
+<div id="toast">복사했어요</div>
+
+<script>
+(function(){
+  "use strict";
+  // ── 복사(클립보드 API + execCommand 폴백) ──
+  var toast = document.getElementById('toast'), toastT;
+  function showToast(msg){
+    toast.textContent = msg || '복사했어요';
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+  }
+  function fallbackCopy(text){
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-9999px'; ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+  function markDone(btn){
+    btn.classList.add('done');
+    var span = btn.querySelector('.ci');
+    var prev = span ? span.textContent : '';
+    if(span) span.textContent = '복사됨';
+    setTimeout(function(){
+      btn.classList.remove('done');
+      if(span) span.textContent = prev || '복사';
+    }, 1400);
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest ? e.target.closest('.copy') : null;
+    if(!btn) return;
+    var text = btn.getAttribute('data-copy') || '';
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        markDone(btn); showToast('복사했어요');
+      }).catch(function(){
+        if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
+        else showToast('길게 눌러 복사해 주세요');
+      });
+    }else{
+      if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
+      else showToast('길게 눌러 복사해 주세요');
+    }
+  });
+})();
+</script>
+</body>
+</html>

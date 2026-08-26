@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 강사양성과정 1회차 · 따라하기 실습 페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --paper:#F7F6F1; --card:#FFFFFF; --ink:#232820; --sub:#5C6156;
+  --green:#175B39; --green-dk:#0E3D26; --green-soft:#E8F0EA; --green-line:#C7D9CC;
+  --amber:#9A5B0B; --amber-bg:#FFF7E4; --amber-line:#EBD8A8;
+  --red:#B23B27; --red-bg:#FBEEEA;
+  --line:#E4E2D8; --done:#1D7A4C;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Malgun Gothic',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;font-size:16.5px;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Noto Serif KR',serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+a{color:var(--green);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* ── 상단 고정 진도 바 ───────────────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(247,246,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:960px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.topbar .brand{font-weight:800;font-size:.85rem;letter-spacing:.02em;white-space:nowrap;color:var(--green-dk)}
+.topbar .brand small{display:block;font-weight:600;color:var(--sub);font-size:.68rem}
+.pbar{flex:1;height:10px;background:#E9E7DD;border-radius:99px;overflow:hidden}
+.pbar>i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--green),#2E8B5C);border-radius:99px;transition:width .4s ease}
+.ptext{font-size:.85rem;font-weight:800;color:var(--green-dk);min-width:110px;text-align:right;white-space:nowrap}
+.ptext b{font-size:1.05rem}
+
+/* ── 히어로 ───────────────────── */
+.hero{padding:112px 0 56px;border-bottom:1px solid var(--line);background:
+  linear-gradient(180deg,#F2F4EE 0%,var(--paper) 100%)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:800;letter-spacing:.14em;color:var(--green);border:1.5px solid var(--green-line);background:#fff;padding:6px 14px;border-radius:99px;margin-bottom:22px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green)}
+.hero h1{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(1.9rem,5vw,3rem);line-height:1.3;letter-spacing:-.01em}
+.hero h1 .accent{color:var(--green);box-shadow:inset 0 -0.45em 0 #DCE9DF}
+.hero .lead{margin-top:18px;color:var(--sub);font-size:1.05rem;max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.meta span{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.85rem;font-weight:600;color:var(--ink)}
+.meta b{color:var(--green-dk)}
+.goalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.goal{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px}
+.goal .n{font-family:'Noto Serif KR',serif;font-weight:900;font-size:1.5rem;color:var(--green);line-height:1}
+.goal h3{font-size:1rem;margin:10px 0 6px}
+.goal p{font-size:.85rem;color:var(--sub)}
+.hero-note{margin-top:22px;font-size:.85rem;color:var(--sub)}
+.hero-note b{color:var(--green-dk)}
+
+/* ── 빠른 이동 도구바 ───────────────────── */
+.toolbar{position:sticky;top:52px;z-index:50;background:var(--green-dk);color:#fff}
+.toolbar-in{max-width:960px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.toolbar .lbl{font-size:.78rem;font-weight:800;letter-spacing:.06em;opacity:.85;margin-right:4px}
+.tbtn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:.8rem;font-weight:700;padding:7px 13px;border-radius:9px;transition:background .15s}
+.tbtn:hover{background:rgba(255,255,255,.24)}
+
+/* ── 섹션 공통 ───────────────────── */
+section{padding:58px 0}
+.sec-head{margin-bottom:30px}
+.sec-tag{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:.1em;color:#fff;background:var(--green);padding:5px 12px;border-radius:7px;margin-bottom:12px}
+.sec-tag.warn{background:var(--red)}
+.sec-tag.amber{background:var(--amber)}
+.sec-head h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(1.4rem,3.4vw,1.9rem);letter-spacing:-.01em}
+.sec-head .desc{margin-top:10px;color:var(--sub);max-width:660px;font-size:.95rem}
+.sec-head .timebox{margin-top:10px;font-size:.85rem;font-weight:700;color:var(--green-dk)}
+
+/* ── 체크 과제 항목 ───────────────────── */
+.task{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;transition:border-color .2s, background .2s}
+.task.done{background:#F1F7F2;border-color:#BFDCC8}
+.task-row{display:flex;gap:14px;align-items:flex-start}
+.chk{flex-shrink:0;width:28px;height:28px;border:2.5px solid #B9BFAF;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;color:transparent;transition:all .15s;margin-top:2px}
+.task.done .chk{background:var(--done);border-color:var(--done);color:#fff}
+.task-body{flex:1;min-width:0}
+.task-title{font-weight:800;font-size:1.02rem;cursor:pointer}
+.task.done .task-title{color:#4E6B58;text-decoration:line-through;text-decoration-thickness:1.5px}
+.task-desc{font-size:.88rem;color:var(--sub);margin-top:5px}
+.task-desc b{color:var(--ink)}
+.task-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.golink{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;background:var(--green-soft);color:var(--green-dk);border:1px solid var(--green-line);padding:6px 12px;border-radius:8px}
+.golink:hover{background:#DBE8DE}
+.golink.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.steps{margin-top:12px;display:grid;gap:8px}
+.steps li{list-style:none;display:flex;gap:10px;font-size:.88rem;background:#FAFAF6;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.steps .sn{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+/* ── 복붙 프롬프트 카드 (시그니처) ───────────────────── */
+.prompt{position:relative;background:var(--amber-bg);border:1.5px solid var(--amber-line);border-radius:12px;padding:16px 16px 14px;margin-top:14px}
+.prompt::before{content:"";position:absolute;left:18px;top:-9px;width:46px;height:16px;background:#F3E3B8;border:1px solid #E4CD8F;border-radius:3px;transform:rotate(-2deg)}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.prompt-no{font-size:.75rem;font-weight:800;color:var(--amber);letter-spacing:.04em}
+.copybtn{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#fff;border:none;font-size:.8rem;font-weight:800;padding:7px 14px;border-radius:8px;transition:background .15s}
+.copybtn:hover{background:#7E4A08}
+.copybtn.ok{background:var(--done)}
+.prompt pre{white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:.9rem;line-height:1.7;color:#4A3B18;background:#fff;border:1px solid var(--amber-line);border-radius:9px;padding:13px 15px}
+.prompt .fill{color:var(--red);font-weight:700}
+
+/* 나쁜 예 카드 */
+.prompt.bad{background:var(--red-bg);border-color:#E9C6BC}
+.prompt.bad::before{background:#F0CFC5;border-color:#E0B3A5}
+.prompt.bad .prompt-no{color:var(--red)}
+.prompt.bad pre{border-color:#E9C6BC;color:#6B2A1C}
+
+/* ── 안내 상자 ───────────────────── */
+.note{border-radius:12px;padding:14px 16px;font-size:.88rem;margin-top:14px;display:flex;gap:10px}
+.note .ic{flex-shrink:0;font-size:1.05rem;line-height:1.5}
+.note.warn{background:var(--red-bg);border:1px solid #E9C6BC;color:#6B2A1C}
+.note.tip{background:var(--green-soft);border:1px solid var(--green-line);color:var(--green-dk)}
+.note.phone{background:#EEF3F8;border:1px solid #CFDCE8;color:#2C4A63}
+
+/* ── 아코디언 (제미나이 메뉴 15) ───────────────────── */
+.acc{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px;overflow:hidden}
+.acc-head{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:none;border:none;padding:14px 16px;font-size:.95rem;font-weight:800;color:var(--ink)}
+.acc-head .arrow{margin-left:auto;transition:transform .2s;color:var(--sub)}
+.acc.open .acc-head .arrow{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 16px 16px;font-size:.87rem;color:var(--sub)}
+.acc.open .acc-body{display:block}
+.badge{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;vertical-align:1px}
+.badge.must{background:var(--green);color:#fff}
+.badge.pay{background:#F1E4C8;color:var(--amber)}
+.badge.later{background:#E7E5DC;color:var(--sub)}
+.badge.today{background:var(--red-bg);color:var(--red)}
+.menu-item{padding:10px 0;border-bottom:1px dashed var(--line)}
+.menu-item:last-child{border-bottom:none}
+.menu-item b{color:var(--ink)}
+
+/* ── 표 ───────────────────── */
+table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line);font-size:.88rem}
+th{background:var(--green-dk);color:#fff;text-align:left;padding:10px 14px;font-weight:700}
+td{padding:10px 14px;border-top:1px solid var(--line)}
+kbd{background:#EFEDE4;border:1px solid #D8D5C6;border-bottom-width:2.5px;border-radius:6px;padding:2px 8px;font-family:inherit;font-weight:700;font-size:.82rem;white-space:nowrap}
+
+/* ── 교시 레일 ───────────────────── */
+.period{border-left:4px solid var(--green);padding-left:20px;position:relative}
+.period::before{content:"";position:absolute;left:-11px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--green);border:4px solid var(--paper)}
+.break-strip{display:flex;align-items:center;gap:12px;margin:34px 0;color:var(--sub);font-size:.85rem;font-weight:700}
+.break-strip::before,.break-strip::after{content:"";flex:1;border-top:2px dashed #D6D3C6}
+
+/* ── 숙제 & 마무리 ───────────────────── */
+.hw{background:var(--green-dk);color:#EDF3EE;border-radius:18px;padding:34px 30px;margin-top:8px}
+.hw h3{font-family:'Noto Serif KR',serif;font-size:1.35rem;font-weight:900;color:#fff}
+.hw p{font-size:.92rem;margin-top:10px;color:#C9DACD}
+.hw .hwlist{margin-top:16px;display:grid;gap:8px}
+.hw .hwlist li{list-style:none;display:flex;gap:10px;font-size:.9rem}
+.hw .hwlist li::before{content:"✓";color:#8FD3A8;font-weight:900}
+.hw .prompt{background:#123324;border-color:#2B5A40}
+.hw .prompt::before{display:none}
+.hw .prompt pre{background:#0C2519;border-color:#2B5A40;color:#D9E8DC}
+.hw .prompt-no{color:#8FD3A8}
+.final-check{margin-top:14px}
+.footer{padding:44px 0 70px;text-align:center;color:var(--sub);font-size:.85rem;border-top:1px solid var(--line);margin-top:40px}
+.footer b{color:var(--green-dk)}
+.resetline{margin-top:14px}
+.resetline button{background:none;border:none;color:var(--sub);font-size:.8rem;text-decoration:underline}
+
+/* 토스트 */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:.88rem;font-weight:700;padding:11px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:99}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:720px){
+  body{font-size:15.5px}
+  .goalgrid{grid-template-columns:1fr}
+  .topbar .brand small{display:none}
+  .ptext{min-width:auto}
+  .toolbar{top:47px}
+  .hero{padding-top:100px}
+  th,td{padding:8px 10px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<!-- 상단 고정 진도 바 -->
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand">AI 강사양성 · 1회차<small>따라하기 실습 페이지</small></div>
+    <div class="pbar"><i id="pbar-fill"></i></div>
+    <div class="ptext"><b id="p-pct">0%</b> · <span id="p-count">0</span>/<span id="p-total">0</span> 완료</div>
+  </div>
+</div>
+
+<!-- 히어로 -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">AI 강사양성과정 · 총 12회 36시간 중 1회차</span>
+    <h1 class="serif">생성형 AI 개념과<br><span class="accent">프롬프트 기본</span>, 오늘 손에 익힙니다</h1>
+    <p class="lead">이 페이지는 1회차 수업(180분)을 <b>순서대로 따라하는 실습 안내서</b>예요. 각 단계의 프롬프트를 [복사] 버튼으로 복사해 직접 실행하고, 끝낸 항목은 체크하며 진도를 확인하세요. 수업 후 복습·숙제까지 이 한 페이지로 끝냅니다.</p>
+    <div class="meta">
+      
+      <span>⏱ 180분 (1·2·3교시 + 휴식 2회)</span>
+      <span>👩‍🏫 강사 <b>임금희</b></span>
+      <span>🛠 Gemini(유료) · ChatGPT(무료) · 크롬 · 구글 드라이브</span>
+    </div>
+    <div class="goalgrid">
+      <div class="goal"><div class="n serif">1</div><h3>생성형 AI가 뭔지 감을 잡는다</h3><p>개념 · 3층 구조 · AI 3대장(ChatGPT·Gemini·Claude)과 Copilot의 특징을 이해해요.</p></div>
+      <div class="goal"><div class="n serif">2</div><h3>원하는 답을 뽑는 프롬프트를 쓴다</h3><p>4대 구성요소(역할·맥락·지시·형식)로 정확히 시키는 법을 익혀요.</p></div>
+      <div class="goal"><div class="n serif">3</div><h3>내 프롬프트를 저장·재사용한다</h3><p>「나의 프롬프트 라이브러리」 구글 문서를 만들어 오늘부터 모아요.</p></div>
+    </div>
+    <p class="hero-note">⏳ 시간이 밀리면 원칙은 하나 — <b>설명은 줄이고, 실습과 저장은 반드시 사수합니다.</b></p>
+  </div>
+</header>
+
+<!-- 실습 도구 바로가기 -->
+<div class="toolbar">
+  <div class="toolbar-in">
+    <span class="lbl">실습창 바로가기</span>
+    <a class="tbtn" href="https://gemini.google.com" target="_blank" rel="noopener">✦ Gemini</a>
+    <a class="tbtn" href="https://chatgpt.com" target="_blank" rel="noopener">🤖 ChatGPT</a>
+    <a class="tbtn" href="https://drive.google.com" target="_blank" rel="noopener">📁 구글 드라이브</a>
+    <a class="tbtn" href="#library">📚 프롬프트 라이브러리</a>
+    <a class="tbtn" href="#homework">📝 숙제</a>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ══════════ 0. 시작 전 준비 ══════════ -->
+<section id="prep">
+  <div class="sec-head">
+    <span class="sec-tag warn">시작 전 · 안전 수칙</span>
+    <h2 class="serif">교육장 공용 PC, 안전하게 쓰고 나오기</h2>
+    <p class="desc">교육장 PC는 여러 사람이 번갈아 씁니다. 로그인한 채로 자리를 뜨면 다음 사람이 내 이메일·사진·문서를 그대로 볼 수 있어요. 가장 먼저 내 구글 계정부터 확인하고, 아래 3가지만 몸에 익히면 어느 공용 PC에서든 안전합니다: <b>① 시크릿 창으로 시작 → ② 로그아웃 먼저 → ③ 기록 삭제로 마무리.</b></p>
+  </div>
+
+  <div class="task" data-id="prep-0">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">내 구글 계정 미리 확인하기 — 본인 스마트폰으로 (수업 전 필수)</div>
+        <p class="task-desc">교육장 PC에서 로그인하려면 <b>내 구글 계정 이메일과 비밀번호</b>를 알고 있어야 해요. 의외로 본인 계정을 모르시는 분이 많습니다 — 수업 전에 스마트폰으로 미리 확인해 두세요.</p>
+        <ul class="steps">
+          <li><span class="sn">1</span><span><b>내 계정(이메일) 확인</b> — 스마트폰의 <b>Gmail·YouTube 앱 오른쪽 위 동그란 프로필</b>을 누르면 내 이메일(○○○@gmail.com)이 보여요. 안드로이드는 설정 → Google에서도 확인 가능.</span></li>
+          <li><span class="sn">2</span><span><b>비밀번호가 기억나면</b> — 수첩에 적어 안전하게 보관하세요. (공용 PC 브라우저·카톡에 저장은 금물)</span></li>
+          <li><span class="sn">3</span><span><b>비밀번호를 모르면 미리 재설정</b> — 스마트폰에서 <b>설정 → Google → Google 계정 관리 → 보안 → 비밀번호</b> → 새 비밀번호로 변경. 또는 로그인 화면의 <b>'비밀번호 찾기'</b> → 스마트폰으로 오는 확인 알림·코드로 본인 확인 후 새로 설정.</span></li>
+          <li><span class="sn">4</span><span><b>계정이 아예 없으면</b> — 스마트폰 Gmail 앱에서 [계정 만들기](무료). 수업 당일 만들면 시간이 부족하니 꼭 미리 만들어 오세요.</span></li>
+        </ul>
+        <div class="note tip"><span class="ic">📲</span><span>2단계 인증을 켜 둔 분은 수업 때 <b>본인 스마트폰을 꼭 지참</b>하세요 — 교육장 PC에서 로그인하면 폰으로 "본인이 맞나요?" 확인 알림이 옵니다. 폰에서 '예'를 눌러야 로그인돼요.</span></div>
+        <div class="note warn"><span class="ic">⚠️</span><span>비밀번호는 남에게 보여주지 않기 · 공용 PC에 저장하지 않기. 새로 정한 비밀번호는 잊지 않게 안전한 곳에 적어 두세요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="prep-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">시크릿 창으로 크롬 시작하기</div>
+        <p class="task-desc">크롬 오른쪽 위 <b>⋮ → '새 시크릿 창'</b> (단축키 <b>Ctrl + Shift + N</b>). 어두운 창이 뜨면 성공이에요. 시크릿 창은 창을 닫는 순간 방문 기록과 로그인이 자동으로 지워져서 공용 PC에 가장 안전합니다.</p>
+        <div class="note warn"><span class="ic">⚠️</span><span>창의 <b>X 버튼만 눌러 닫는 것은 로그아웃이 아닙니다.</b> 일반 창을 썼다면 반드시 '로그아웃'을 먼저 누르세요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="prep-2">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">구글 로그인 — 주의 2가지 지키며 로그인</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span>google.com 접속 → 오른쪽 위 '로그인' 클릭 → 이메일 입력 후 '다음'</span></li>
+          <li><span class="sn">2</span><span><b>'로그인 상태 유지' 체크는 반드시 해제</b> — 켜면 다음 사람에게도 로그인이 남아요</span></li>
+          <li><span class="sn">3</span><span>'비밀번호를 저장하시겠어요?' 팝업이 뜨면 <b>'저장 안 함'</b> 클릭 — 저장하면 내 비밀번호가 이 PC에 남습니다</span></li>
+        </ul>
+        <p class="task-desc" style="margin-top:10px">구글 계정은 <b>하나의 열쇠</b>예요. Gmail에 로그인하면 드라이브·문서·지도에도 함께 로그인되고, 로그아웃하면 전체가 함께 정리됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="prep-3">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">탭(Tab) 다루기 — 실습 내내 쓰는 기본기</div>
+        <p class="task-desc">오늘 실습은 Gemini·ChatGPT·드라이브 탭을 오가며 진행해요. 아래 단축키를 한 번씩 직접 눌러보세요. (Windows·크롬 기준, Mac은 Ctrl 대신 Cmd)</p>
+        <table>
+          <tr><th>하고 싶은 것</th><th>단축키</th></tr>
+          <tr><td>새 탭 열기</td><td><kbd>Ctrl + T</kbd></td></tr>
+          <tr><td>지금 탭 닫기</td><td><kbd>Ctrl + W</kbd></td></tr>
+          <tr><td>방금 닫은 탭 되살리기</td><td><kbd>Ctrl + Shift + T</kbd></td></tr>
+          <tr><td>다음 탭으로 이동</td><td><kbd>Ctrl + Tab</kbd></td></tr>
+          <tr><td>새 시크릿 창</td><td><kbd>Ctrl + Shift + N</kbd></td></tr>
+          <tr><td>기록 삭제 창 열기</td><td><kbd>Ctrl + Shift + Delete</kbd></td></tr>
+        </table>
+        <div class="note warn"><span class="ic">⚠️</span><span>탭을 닫아도 로그아웃은 아닙니다 — 수업이 끝나면 페이지 맨 아래 '자리 뜨기 전 최종 점검'을 꼭 실행하세요.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 1교시 ══════════ -->
+<section id="p1" class="period">
+  <div class="sec-head">
+    <span class="sec-tag">1교시 · 50분 
+    <h2 class="serif">개념 잡기 + 디지털 작업실 차리기</h2>
+    <p class="timebox">오프닝·로드맵 15분 → 디지털 환경 구축 15분 → 생성형 AI 개념 20분</p>
+  </div>
+
+  <div class="task" data-id="p1-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">강사 마인드셋 3원칙 — 오늘부터 끝까지 지킬 약속</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span><b>민감정보는 안 준다</b> — 주민번호·카드번호·고객 실명·회사 기밀은 AI 입력창에 넣지 않아요. 인터넷 검색창에 안 칠 것은 AI에도 안 칩니다.</span></li>
+          <li><span class="sn">2</span><span><b>결과는 반드시 검수한다</b> — AI는 '자신 있게 틀리는 인턴'이에요. 숫자·날짜·인용은 사람이 다시 확인합니다.</span></li>
+          <li><span class="sn">3</span><span><b>책임은 사람이 진다</b> — 최종 결과물의 책임은 AI가 아니라 그것을 쓴 사람에게 있어요. 강사는 이 원칙을 수강생에게 전합니다.</span></li>
+        </ul>
+        <p class="task-desc" style="margin-top:10px">💡 이 과정은 '운전학원'과 같아요. 오늘은 시동 거는 법부터 — 이정표 두 개: <b>6회차 제미나이 자격</b>, <b>10회차 구글 공인 제미나이 교육자 인증</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p1-2">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">디지털 환경 구축 5단계 — 오늘 하루 쓸 '작업실' 차리기</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span><b>구글 로그인 확인</b> — 크롬 오른쪽 위 동그란 프로필 → 본인 구글 계정 확인</span></li>
+          <li><span class="sn">2</span><span><b>크롬 준비</b> — 주소창(위쪽 긴 칸) 위치, 즐겨찾기 별표(★) 위치 확인</span></li>
+          <li><span class="sn">3</span><span><b>드라이브 폴더 만들기</b> — drive.google.com → [+ 새로 만들기] → [새 폴더] → 이름 <b>「AI강사양성_내작업」</b></span></li>
+          <li><span class="sn">4</span><span><b>Gemini 접속(유료)</b> — gemini.google.com → 로그인 확인. 상단에 프로/고급 표시가 보여요</span></li>
+          <li><span class="sn">5</span><span><b>ChatGPT 무료 가입</b> — chatgpt.com → [무료로 시작하기] → 구글로 가입 (카드 등록 불필요)</span></li>
+        </ul>
+        <div class="task-links">
+          <a class="golink" href="https://drive.google.com" target="_blank" rel="noopener">📁 드라이브 열기</a>
+          <a class="golink" href="https://gemini.google.com" target="_blank" rel="noopener">✦ Gemini 열기</a>
+          <a class="golink" href="https://chatgpt.com" target="_blank" rel="noopener">🤖 ChatGPT 가입</a>
+        </div>
+        <div class="note tip"><span class="ic">💰</span><span>드라이브·구글 문서는 완전 무료(15GB). 오늘 만든 폴더가 12회 내내 여러분의 '작품 보관함'이 됩니다.</span></div>
+        <div class="note phone"><span class="ic">📱</span><span><b>스마트폰 버전</b> — 드라이브·Gemini·ChatGPT 모두 앱으로 가능해요. 앱스토어에서 '짝퉁' 주의: 제작사가 OpenAI/Google인지 확인하세요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p1-3">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">생성형 AI, 두 문장으로 이해하기</div>
+        <ul class="steps">
+          <li><span class="sn">①</span><span><b>똑똑한 자동완성</b> — 확률로 '다음 단어'를 예측해요. 스마트폰 문자 칠 때 다음 단어 추천, 그걸 문장·문서 단위로 훨씬 똑똑하게 하는 것.</span></li>
+          <li><span class="sn">②</span><span><b>자신 있게 틀리는 인턴</b> — 일은 빠른데 가끔 틀린 걸 당당하게 말해요. AI는 사실을 '검색'하는 게 아니라 '그럴듯한 다음 말'을 만들기 때문에 '환각'이 생기고, 그래서 검수가 필수입니다.</span></li>
+        </ul>
+        <p class="task-desc" style="margin-top:10px"><b>3층 구조</b> — 🧠 모델(두뇌 층: GPT-5.5 계열 / Gemini 3.5·3.6 계열 / Claude 5 계열) · 👀 앱(응용 층: ChatGPT·Gemini·Copilot, 우리가 매일 쓰는 곳) · 🔗 API(연결 층: 이번 과정 범위 밖). 핵심 한 줄: <b>같은 '앱'이라도 안의 '모델(두뇌)'이 무엇이냐에 따라 답의 수준이 달라집니다.</b></p>
+        <table>
+          <tr><th>구분</th><th>두뇌(모델)</th><th>이럴 때 쓰세요</th></tr>
+          <tr><td><b>ChatGPT</b> (OpenAI·무료)</td><td>GPT-5.5 계열<br>(Instant·Thinking·Pro)</td><td>초안·브레인스토밍·요약 — 오늘 실습</td></tr>
+          <tr><td><b>Gemini</b> (Google·본 과정 유료)</td><td>Gemini 3.5·3.6 계열<br>(Flash·Pro)</td><td>최신 검색·긴 자료 요약·구글 문서·드라이브 연동</td></tr>
+          <tr><td><b>Claude</b> (Anthropic·무료/유료)</td><td>Claude 5 계열<br>(Fable·Opus)</td><td>긴 글·보고서·강의안 작성, 문서 분석, 꼼꼼한 글쓰기</td></tr>
+          <tr><td><b>Copilot</b> (MS·참고)</td><td>GPT 계열 기반</td><td>윈도우·엣지·오피스(워드·엑셀) 안에서 문서·표 작업</td></tr>
+        </table>
+        <div class="note tip"><span class="ic">🔄</span><span>모델 이름·버전은 자주 바뀝니다(2026. 8. 기준). 강의 직전 각 공식 페이지에서 현재 모델명을 재확인하세요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p1-4">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">🟡 첫 실습 (3분) — 지금, AI에게 첫 질문을 던져 봅니다</div>
+        <p class="task-desc">Gemini(또는 ChatGPT) 입력창에 아래 프롬프트를 <b>[복사] 버튼으로 복사해 붙여넣고 엔터</b>. 답이 나오는 '느낌'만 봅니다. 관찰 포인트: ① 얼마나 빨리 나오나 ② 말투는 어떤가 ③ 내가 물은 대로 답했나</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 프롬프트 #1 · AI에게 나를 소개시키기</span><button class="copybtn">복사</button></div>
+          <pre>너는 친절한 AI 선생님이야. 나는 AI를 처음 배우는 어른 학습자야.
+'생성형 AI'가 무엇인지 중학생도 이해할 수 있게 3문장으로, 존댓말로 설명해 줘.
+마지막에 일상생활 비유 1개를 덧붙여 줘.</pre>
+        </div>
+        <div class="task-links">
+          <a class="golink dark" href="https://gemini.google.com" target="_blank" rel="noopener">✦ Gemini에서 실행</a>
+          <a class="golink dark" href="https://chatgpt.com" target="_blank" rel="noopener">🤖 ChatGPT에서 실행</a>
+        </div>
+        <div class="note phone"><span class="ic">📱</span><span>제미나이 앱 마이크(🎙️) 버튼으로 '말로' 넣어도 됩니다. 손이 불편한 분께 추천해요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p1-5">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">★ 제미나이 화면 완전정복 — 프로필 메뉴 항목 훑기 (2026. 8. 실제 화면 기준)</div>
+        <p class="task-desc">gemini.google.com → 화면 <b>오른쪽 위 동그란 프로필(계정 아이콘) 클릭</b> → 열리는 메뉴를 아래 목록과 하나씩 맞춰 보세요. 항목 이름은 실제 화면 그대로이고, 각 항목마다 <b>무엇인가 → 들어가서 관리하는 법(따라하기)</b> 순서로 정리했어요.</p>
+        <div class="acc">
+          <button class="acc-head">🗂 프로필 메뉴 전체 항목 펼쳐 보기 <span class="arrow">▾</span></button>
+          <div class="acc-body">
+            <div class="menu-item"><b>🕐 활동</b><span class="badge must">강사필수</span> — <b>무엇</b>: 지난 대화 기록 모아보기·검색·삭제, 기록 저장 여부 관리. <b>관리법</b>: 프로필 → [활동] → 위 검색창에서 지난 대화 찾기 / 항목 옆 삭제 / '활동 저장' 끄면 기록이 남지 않아요(프라이버시 관리).</div>
+            <div class="menu-item"><b>👤 개인 인텔리전스</b><span class="badge today">당일확인</span> — <b>무엇</b>: 내 구글 활동(Gmail·검색 등) 기반 개인 맞춤 답변. <b>관리법</b>: 프로필 → [개인 인텔리전스] → 켜기/끄기. 개인정보 연동이라 민감정보 주의, 오늘은 개념만 소개.</div>
+            <div class="menu-item"><b>📥 Gemini로 메모리 가져오기</b><span class="badge today">당일확인</span> — <b>무엇</b>: 기존 정보·대화를 Gemini '기억(메모리)'으로 가져와 이어서 활용. <b>관리법</b>: 프로필 → [Gemini로 메모리 가져오기] → 안내에 따라 진행. 최신 기능이라 당일 화면에서 동작 재확인.</div>
+            <div class="menu-item"><b>◔ 사용량 한도</b><span class="badge pay">유료</span> — <b>무엇</b>: 현재 요금제의 사용량·잔여량 확인. <b>관리법</b>: 프로필 → [사용량 한도] → 남은 사용량 확인. 느려지거나 한도 안내가 뜨면 여기부터 확인.</div>
+            <div class="menu-item"><b>🕘 예약된 작업</b><span class="badge must">강사필수</span> — <b>무엇</b>: 정해진 시간에 Gemini가 자동 반복 작업(예: 매일 아침 뉴스 요약). <b>관리법</b>: 프로필 → [예약된 작업] → 새 작업 예약 / 목록에서 수정·삭제. 강사 자동화 맛보기로 시연.</div>
+            <div class="menu-item"><b>📋 기능</b><span class="badge today">당일확인</span> — <b>무엇</b>: Gemini가 제공하는 세부 기능 목록을 한눈에 보는 곳(새로 생긴 항목). <b>관리법</b>: 프로필 → [기능] → 어떤 기능이 있는지 훑어보기. 구성은 자주 바뀌니 당일 화면에서 함께 확인.</div>
+            <div class="menu-item"><b>💎 Gems</b><span class="badge must">강사필수</span><span class="badge later">4회차 본편</span> — <b>무엇</b>: 역할·지침·자료를 고정한 나만의 맞춤 AI 도우미(ChatGPT의 GPTs에 해당). <b>관리법</b>: 프로필 → [Gems] → [+ 새 Gem] 만들기 / 기존 Gem 수정·삭제. 오늘은 위치만, 자세히는 4회차.</div>
+            <div class="menu-item"><b>🔗 내 공개 링크</b> — <b>무엇</b>: 내가 공유(공개)한 대화·Gem 링크 목록. <b>관리법</b>: 프로필 → [내 공개 링크] → 링크 확인 / 필요 없으면 공개 해제. 공유 후 링크를 회수·관리하는 습관 들이기.</div>
+            <div class="menu-item"><b>🌗 테마</b> — <b>무엇</b>: 화면 밝게(라이트)/어둡게(다크) 전환(옆 화살표 ▶로 하위 메뉴). <b>관리법</b>: 프로필 → [테마] → '밝게' 선택. <b>빔프로젝터·강의장에서는 밝은 테마 권장</b>(가독성).</div>
+            <div class="menu-item"><b>✨ Gemini Spark 설정</b><span class="badge today">당일확인</span> — <b>무엇</b>: Gemini의 개인용 AI 에이전트 'Spark' 관련 설정(새로 생긴 항목, 일부 요금제·지역부터 순차 제공). <b>관리법</b>: 프로필 → [Gemini Spark 설정] → 제공 여부·설정 항목을 당일 화면에서 확인.</div>
+            <div class="menu-item"><b>① 구독 관리</b><span class="badge pay">유료</span> — <b>무엇</b>: 요금제(구글 AI) 확인·변경·결제 관리. <b>관리법</b>: 프로필 → [구독 관리] → 현재 요금제 상태 확인. 유료 계정인지 여기서 확인.</div>
+            <div class="menu-item"><b>✦ Google AI Ultra(으)로 업그레이드</b><span class="badge pay">유료</span> — <b>무엇</b>: 최상위 요금제(Ultra) 안내. <b>관리법</b>: 지금은 누르지 않아도 됨 — 현재 요금제로 충분하다고 안내.</div>
+            <div class="menu-item"><b>🏔 Gemini Notebook</b><span class="badge later">5·6회차 본편</span> — <b>무엇</b>: 내 자료를 근거로 답하는 노트(NotebookLM 계열). <b>관리법</b>: 프로필 → [Gemini Notebook] → 오늘은 위치만 확인, 본편은 5·6회차.</div>
+            <div class="menu-item"><b>💬 의견 보내기</b> — <b>무엇</b>: 구글에 버그·개선 의견 전달. <b>관리법</b>: 프로필 → [의견 보내기] → 내용 작성·전송. 막히는 부분을 구글에 알리는 통로.</div>
+            <div class="menu-item"><b>❓ 도움말</b> — <b>무엇</b>: 공식 도움말 센터로 이동(▶ 하위 메뉴). <b>관리법</b>: 프로필 → [도움말] → 궁금한 내용 검색. 막힐 때 공식 안내를 찾는 법 알려주기.</div>
+            <div class="menu-item"><b>📍 위치 · ⚙️ 설정</b><span class="badge today">당일확인</span> — <b>무엇</b>: 메뉴 맨 아래쪽 영역. 위치는 지역 맞춤 답('위치 업데이트'로 갱신), 설정(톱니)은 언어·데이터·저장된 정보(개인설정) 등 세부 조정 진입점. <b>관리법</b>: 메뉴를 아래로 내려 확인 — 화면 구성에 따라 표시가 다를 수 있어요.</div>
+          </div>
+        </div>
+        <div class="note tip"><span class="ic">💡</span><span>메뉴 구성·이름은 자주 바뀝니다(위 목록은 2026. 8. 실제 화면 기준). 개인 인텔리전스·메모리 가져오기·기능·Spark·Notebook은 <b>강의 당일 실제 화면에서 재확인</b>하세요.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="break-strip wrap">☕ 휴식 10분 — 물 · 화장실 · 질문받기</div>
+
+<!-- ══════════ 2교시 ══════════ -->
+<section id="p2" class="period">
+  <div class="sec-head">
+    <span class="sec-tag">2교시 · 50분 </span>
+    <h2 class="serif">프롬프트 기본기 — 잘 시키면 잘하고, 대충 시키면 대충 합니다</h2>
+    <p class="desc">프롬프트 = AI에게 시키는 '말'. 잘 시키는 공식은 딱 4개 — <b>역할 · 맥락 · 지시 · 형식.</b> 식당 주문 비유: '떡볶이 주세요'만 하면 매운 게 나올 수 있죠. <b>역할</b>("주방장님") + <b>맥락</b>("아이가 매운 걸 못 먹어요") + <b>지시</b>("떡볶이 하나") + <b>형식</b>("안 맵게, 반만") — 4개를 다 말하면 원하는 게 정확히 나옵니다. 하나만 빠져도 엉뚱한 답이 나와요.</p>
+  </div>
+
+  <div class="task" data-id="p2-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">4요소 완성형 프롬프트 따라하기 + 🟡 내 것으로 바꾸기 (5분)</div>
+        <p class="task-desc">아래 프롬프트를 복사해 실행하고, 대괄호 4개가 각각 무슨 역할인지 확인하세요. 그다음 <b>[맥락]과 [지시]를 '내 업무·일상'으로 바꿔</b> 다시 입력합니다. 예) 학원 원장 → '학부모 안내 문자', 공방 → '체험 클래스 모집글'. 완료 기준: 4개 대괄호가 모두 들어갔는지 옆 사람과 확인.</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 프롬프트 #2 · 4요소 완성형 — 동네 가게 홍보문구</span><button class="copybtn">복사</button></div>
+          <pre>[역할] 너는 10년 경력의 마케팅 카피라이터야.
+[맥락] 나는 우리 동네에서 작은 반찬가게를 운영하는 사장이고, 단골을 늘리고 싶어.
+[지시] 우리 가게 SNS에 올릴 홍보 문구를 만들어 줘.
+[형식] 정중한 존댓말로, 20자 이내 3개, 각 문구 끝에 어울리는 이모지 1개.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p2-2">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">좋은 vs 나쁜 프롬프트 — 같은 목적, 다른 결과</div>
+        <p class="task-desc">같은 목적('회의록 정리')을 두 방식으로 넣어 결과 차이를 직접 확인해 보세요.</p>
+        <div class="prompt bad">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #3 · ✕ 나쁜 예 — 막연한 지시</span><button class="copybtn">복사</button></div>
+          <pre>회의록 좀 정리해 줘.</pre>
+        </div>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #4 · ○ 좋은 예 — 4요소를 갖춤</span><button class="copybtn">복사</button></div>
+          <pre>[역할] 너는 꼼꼼한 회의록 정리 담당자야.
+[맥락] 아래는 오늘 30분 팀 회의를 녹음해 받아쓴 메모야. 두서가 없어.
+[지시] 핵심 결정사항과 각자 할 일(담당자·기한)을 뽑아 정리해 줘.
+[형식] ①결정사항 ②할 일(표: 담당자/할 일/기한) 순서로. 존댓말.
+(여기에 회의 메모 붙여넣기)</pre>
+        </div>
+        <div class="note tip"><span class="ic">🟡</span><span><b>고쳐쓰기 실습 (5분)</b> — '여행 계획 짜줘'를 4요소로 고쳐 다시 실행: (역할)여행플래너 (맥락)부모님과 2박3일 제주 (지시)일정표 (형식)표·하루 3곳·이동시간 포함.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p2-3">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">목적별 프롬프트 4종 — 내 업무에 맞는 1종 골라 실행 (10분)</div>
+        <p class="task-desc">자주 쓰는 4가지 목적: <b>요약 · 번역 · 아이디어 · 초안</b>. 아래 4개 중 지금 내 일에 가장 필요한 하나를 골라 실행하세요.</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 #5 · 요약 — 긴 글을 3줄로</span><button class="copybtn">복사</button></div>
+          <pre>너는 요약 전문가야. 아래 글을 처음 읽는 사람도 이해하게 핵심만 3줄로 요약해 줘.
+어려운 말은 쉬운 말로 바꾸고, 존댓말로.
+(요약할 글 붙여넣기)</pre>
+        </div>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 #6 · 번역 — 자연스러운 한↔영</span><button class="copybtn">복사</button></div>
+          <pre>아래 한국어 문장을 영어로 번역해 줘. 직역 말고, 원어민이 실제로 쓰는
+자연스러운 표현으로. 격식 있는 이메일 톤으로 부탁해.
+(번역할 문장 붙여넣기)</pre>
+        </div>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 #7 · 아이디어 — 브레인스토밍</span><button class="copybtn">복사</button></div>
+          <pre>너는 창의적인 기획자야. '동네 작은 가게가 단골을 늘리는 방법'에 대한
+아이디어를 돈이 적게 드는 것 위주로 10개 뽑아 줘.
+각 아이디어는 한 줄 설명을 붙여서.</pre>
+        </div>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 #8 · 초안 — 안내문·이메일</span><button class="copybtn">복사</button></div>
+          <pre>너는 친절한 행정 담당자야. 다음 내용으로 수강생에게 보낼 안내 문자 초안을 써 줘.
+내용: 다음 수업은 8월 19일 수요일 오후 1시 30분, 준비물은 노트북.
+형식: 200자 이내, 존댓말, 마지막에 '문의는 언제든 연락 주세요' 추가.</pre>
+        </div>
+        <div class="note tip"><span class="ic">💰</span><span><b>무료로 알차게 쓰는 4가지 습관</b> — ① 한 대화창에서 이어 묻기(맥락 유지) ② 긴 작업은 단계로 나눠 시키기 ③ 이미지·최신 검색은 유료 Gemini, 글·요약은 무료 ChatGPT로 나눠 쓰기 ④ 잘 나온 답은 바로 구글 문서에 저장.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p2-4">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">🟡 모델별 응답 비교 — 같은 질문을 Gemini와 ChatGPT에 (10분)</div>
+        <p class="task-desc">아래 '똑같은' 프롬프트를 두 탭에 각각 넣고 답을 나란히 비교하세요. 관찰: ① 길이 ② 말투 ③ 최신 정보 반영 ④ 어느 쪽이 내 맘에 드나. 프롬프트의 <b>(우리 지역 이름)</b>은 본인 지역명으로 바꿔 넣으세요. <b>정답은 없습니다</b> — '용도에 따라 골라 쓰는' 감각을 기르는 게 목표예요. 최신·검색·긴 문서 → Gemini(유료) / 글·요약·아이디어 → ChatGPT(무료).</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #9 · 모델 비교용 — 동일 질문</span><button class="copybtn">복사</button></div>
+          <pre>너는 (우리 지역 이름)의 관광·먹거리 안내자야. 이곳에 처음 온 사람에게 추천할 만한
+'가을에 좋은 반나절 코스'를 3곳으로 짜 줘. 각 장소는 한 줄 이유를 붙이고,
+이동 순서대로 표로 정리해 줘. 존댓말로.</pre>
+        </div>
+        <div class="task-links">
+          <a class="golink dark" href="https://gemini.google.com" target="_blank" rel="noopener">✦ Gemini 탭에서 실행</a>
+          <a class="golink dark" href="https://chatgpt.com" target="_blank" rel="noopener">🤖 ChatGPT 탭에서 실행</a>
+        </div>
+        <div class="note phone"><span class="ic">📱</span><span>폰에서는 긴 프롬프트를 카톡 '나에게 보내기'에 써 두고 복사 → AI 앱에 붙여넣기. 마이크로 말해서 넣어도 됩니다.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="break-strip wrap">☕ 휴식 10분 — 물 · 화장실 · 개별 질문</div>
+
+<!-- ══════════ 3교시 ══════════ -->
+<section id="p3" class="period">
+  <div class="sec-head">
+    <span class="sec-tag">3교시 · 60분 </span>
+    <h2 class="serif">고급 기법 + 개인화 + 오늘의 핵심 산출물</h2>
+    <p class="timebox">고급 기법 15분 → 메모리·개인설정 10분 → 프롬프트 라이브러리 15분 → 정리 10분 → 숙제·예고 10분</p>
+  </div>
+
+  <div class="task" data-id="p3-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">고급 기법 ① 역할 부여 심화 — '전문가'를 구체적으로</div>
+        <p class="task-desc">'너는 마케터야'(약함) → '너는 소상공인 SNS만 10년 한 마케터야. 예산 없이 입소문 내는 데 강해'(강함). 역할이 구체적일수록 답의 전문성·톤이 확 올라갑니다.</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #10 · 역할 심화 예시</span><button class="copybtn">복사</button></div>
+          <pre>너는 20년 경력의 초등학교 선생님이자, 어려운 걸 쉽게 설명하는 걸로 유명한 강사야.
+'생성형 AI'를 우리 부모님(70대)도 이해하실 수 있게,
+화내지 않고 천천히 3단계로 설명해 줘.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p3-2">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">고급 기법 ② '부족하면 먼저 질문하라' — 한 줄의 마법</div>
+        <p class="task-desc">프롬프트 끝에 이 한 줄을 넣으면 AI가 넘겨짚지 않고 필요한 걸 되물어 정확도가 올라갑니다.</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #11 · 되묻기 유도</span><button class="copybtn">복사</button></div>
+          <pre>우리 가게 전단지 문구를 만들어 줘. 단, 시작하기 전에 네가 더 좋은 결과를 내기 위해
+나에게 물어봐야 할 것이 있으면 3가지만 먼저 질문해 줘.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p3-3">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">🟡 고급 기법 ③ 반복 개선 — '대화로' 다듬기 3연타 실습</div>
+        <p class="task-desc">한 번에 완성하려 하지 말고, 첫 답을 받은 뒤 아래 세 마디를 순서대로 이어서 던지세요. 결과가 계단식으로 좋아집니다.</p>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #12 · 반복 개선 — 이어서 던지는 후속 명령</span><button class="copybtn">복사</button></div>
+          <pre>① 방금 문구를 서로 느낌이 다른 3안으로 다시 줘.
+② 그 중 2안을 골라서, 길이를 절반으로 줄여 줘.
+③ 왜 그렇게 줄였는지 이유를 한 줄로 덧붙여 줘.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p3-4">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">메모리·개인설정 — 한 번 알려주면 계속 기억</div>
+        <ul class="steps">
+          <li><span class="sn">G</span><span><b>Gemini 개인 설정(저장된 정보)</b> — 프로필 메뉴 → ⚙️설정 → 저장된 정보에 직업·말투 선호 입력. 매번 소개하지 않아도 됩니다.</span></li>
+          <li><span class="sn">C</span><span><b>ChatGPT 메모리(맞춤 설정)</b> — 설정 → 개인 맞춤 설정 → '메모리' 켜기 후 아래 프롬프트 한 번 입력.</span></li>
+        </ul>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #13 · 메모리에 넣어둘 나의 기본 정보 (한 번만)</span><button class="copybtn">복사</button></div>
+          <pre>앞으로 나를 이렇게 기억해 줘.
+- 나는 AI 강사를 준비하는 성인 학습자다.
+- 답변은 항상 쉬운 말과 존댓말로, 어려운 용어는 괄호로 풀어 준다.
+- 결과에 자신 없으면 '확인 필요'라고 표시해 준다.</pre>
+        </div>
+        <div class="note warn"><span class="ic">⚠️</span><span>메모리에 민감정보(주소·연락처·고객명)는 넣지 않기. '지우기'로 언제든 삭제할 수 있습니다.</span></div>
+        <div class="note phone"><span class="ic">📱</span><span>제미나이 앱: 오른쪽 위 프로필 → 설정 → 저장된 정보. ChatGPT 앱: 왼쪽 위 메뉴 → 설정 → 개인 맞춤 설정.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p3-5" id="library">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">⭐ 오늘의 핵심 산출물 — 「나의 프롬프트 라이브러리」 만들고 2개 저장</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span>drive.google.com → <b>「AI강사양성_내작업」</b> 폴더 열기</span></li>
+          <li><span class="sn">2</span><span>[+ 새로 만들기] → [Google 문서] → 제목 <b>「나의 프롬프트 라이브러리」</b></span></li>
+          <li><span class="sn">3</span><span>오늘 마음에 들었던 프롬프트 <b>2개</b>를 아래 양식으로 붙여넣기 (구글 문서는 자동 저장)</span></li>
+          <li><span class="sn">4</span><span>오른쪽 위 [공유] → <b>'링크가 있는 모든 사용자(뷰어)'</b> → 링크 복사 (숙제 제출용)</span></li>
+        </ul>
+        <div class="prompt">
+          <div class="prompt-head"><span class="prompt-no">📋 복붙 #14 · 라이브러리 저장 양식</span><button class="copybtn">복사</button></div>
+          <pre>─ 프롬프트 제목: (예) 동네 가게 홍보문구
+─ 목적: 무엇에 쓰나
+─ 프롬프트 내용:
+    [역할] ...
+    [맥락] ...
+    [지시] ...
+    [형식] ...
+─ 잘 된 점 / 다음에 고칠 점:</pre>
+        </div>
+        <div class="task-links">
+          <a class="golink dark" href="https://drive.google.com" target="_blank" rel="noopener">📁 드라이브에서 문서 만들기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" data-id="p3-6">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">오늘 핵심 3가지 — 소리내어 복습</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span>생성형 AI = <b>똑똑한 자동완성 / 자신 있게 틀리는 인턴</b> → 그래서 '검수'가 필수</span></li>
+          <li><span class="sn">2</span><span>잘 시키는 공식 = <b>역할 · 맥락 · 지시 · 형식</b> 4가지 → 하나만 빠져도 엉뚱한 답</span></li>
+          <li><span class="sn">3</span><span>잘 된 프롬프트는 <b>「나의 프롬프트 라이브러리」에 저장</b> → 다시 안 물어봐도 재사용</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 숙제 ══════════ -->
+<section id="homework">
+  <div class="sec-head">
+    <span class="sec-tag amber">이번 주 숙제</span>
+    <h2 class="serif">나만의 프롬프트 3개 만들기</h2>
+  </div>
+  <div class="hw">
+    <h3>내 업무·일상에 실제로 쓸 프롬프트 3개</h3>
+    <p>4대 구성요소(역할·맥락·지시·형식)를 모두 갖춰 작성 → 「나의 프롬프트 라이브러리」 구글 문서에 저장 → [공유] 링크(뷰어 권한)를 카카오톡 오픈채팅방에 제출. <b style="color:#fff">기한: 다음 수업 전날 밤까지.</b></p>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-no">📋 복붙 #15 · 숙제용 빈 템플릿 (3번 채우기)</span><button class="copybtn">복사</button></div>
+      <pre>[역할] 너는 (       )야.
+[맥락] 나는 (       ) 상황이고, (       )를 하고 싶어.
+[지시] (       )를 해 줘.
+[형식] (       ) 형태로, (분량·말투·개수).</pre>
+    </div>
+    <ul class="hwlist">
+      <li>프롬프트 3개, 4요소 모두 포함</li>
+      <li>실제로 실행해서 답이 잘 나오는지 확인</li>
+      <li>민감정보 없음</li>
+      <li>공유 링크(뷰어)로 제출 — 폰만으로도 가능: 구글 문서 앱 작성 → 공유 → 링크 복사 → 오픈채팅방</li>
+    </ul>
+  </div>
+  <div class="task final-check" data-id="hw-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">숙제 제출 완료!</div>
+        <p class="task-desc">3개 작성 → 실행 확인 → 공유 링크 제출까지 마쳤으면 체크하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:44px">
+    <span class="sec-tag">다음 회차 예고</span>
+    <h2 class="serif">2회차 — 이제 '만드는' 재미가 시작됩니다</h2>
+    <p class="desc">🎨 이미지 생성(말로 그림 그리기) · 🎵 SUNO AI(나만의 음악 만들기). 오늘 만든 프롬프트 습관이 그대로 무기가 됩니다. 숙제 꼭 해 오세요!</p>
+  </div>
+
+  <div class="sec-head" style="margin-top:44px">
+    <span class="sec-tag warn">자리 뜨기 전 최종 점검</span>
+    <h2 class="serif">공용 PC에서 나가기 전, 5가지</h2>
+  </div>
+  <div class="task" data-id="out-1">
+    <div class="task-row">
+      <button class="chk" aria-label="완료 체크">✓</button>
+      <div class="task-body">
+        <div class="task-title">로그아웃 & 흔적 지우기 완료</div>
+        <ul class="steps">
+          <li><span class="sn">1</span><span>프로필을 눌러 <b>'로그아웃'</b> 했다 (계정이 여러 개면 '모든 계정에서 로그아웃')</span></li>
+          <li><span class="sn">2</span><span>오른쪽 위 <b>프로필 사진이 사라졌다</b> = 로그아웃 완료 신호</span></li>
+          <li><span class="sn">3</span><span>'저장 안 함'을 눌러 비밀번호를 안 남겼다</span></li>
+          <li><span class="sn">4</span><span>일반 창을 썼다면 <kbd>Ctrl+Shift+Delete</kbd> → 기간 '전체 기간' → 기록·쿠키·캐시 체크 → <b>기록 삭제</b></span></li>
+          <li><span class="sn">5</span><span>열어둔 탭·창을 모두 닫았다 (시크릿 창이었다면 창 닫기만으로 로그아웃+기록삭제 자동 처리)</span></li>
+        </ul>
+        <div class="note tip"><span class="ic">🔐</span><span>로그아웃 없이 나왔다면? 집·휴대폰에서 <b>myaccount.google.com → 보안 → 내 기기</b> → 해당 PC '로그아웃'. 더 안전하게 하려면 비밀번호 변경.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>수고하셨습니다. 오늘 여러분은 'AI를 쓰는 사람'을 넘어, <b>'AI를 가르치는 강사'의 첫 단추</b>를 끼웠습니다.</p>
+  <p style="margin-top:8px">AI 강사양성과정 · 1회차 | 강사 임금희</p>
+  <div class="resetline"><button id="reset-btn">진도 초기화</button></div>
+</footer>
+
+<div id="toast">복사되었습니다</div>
+
+<script>
+(function(){
+  // 저장소: localStorage 사용 가능하면 사용, 아니면 세션 메모리로 대체
+  var store=(function(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return localStorage;}catch(e){var m={};return{getItem:function(k){return k in m?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]}}}})();
+  var KEY='ai_s1_progress_v1';
+  var done={};
+  try{done=JSON.parse(store.getItem(KEY)||'{}')}catch(e){done={}}
+
+  var tasks=document.querySelectorAll('.task[data-id]');
+  var total=tasks.length;
+  document.getElementById('p-total').textContent=total;
+
+  function save(){try{store.setItem(KEY,JSON.stringify(done))}catch(e){}}
+  function render(){
+    var n=0;
+    tasks.forEach(function(t){
+      var id=t.getAttribute('data-id');
+      if(done[id]){t.classList.add('done');n++}else{t.classList.remove('done')}
+    });
+    var pct=total?Math.round(n/total*100):0;
+    document.getElementById('p-pct').textContent=pct+'%';
+    document.getElementById('p-count').textContent=n;
+    document.getElementById('pbar-fill').style.width=pct+'%';
+  }
+  function toggle(t){
+    var id=t.getAttribute('data-id');
+    if(done[id]){delete done[id]}else{done[id]=1}
+    save();render();
+  }
+  tasks.forEach(function(t){
+    t.querySelector('.chk').addEventListener('click',function(){toggle(t)});
+    var title=t.querySelector('.task-title');
+    if(title){title.addEventListener('click',function(){toggle(t)})}
+  });
+
+  // 초기화
+  document.getElementById('reset-btn').addEventListener('click',function(){
+    if(confirm('모든 진도 체크를 초기화할까요?')){done={};save();render();}
+  });
+
+  // 복사 버튼
+  var toast=document.getElementById('toast');var toastTimer;
+  function showToast(msg){
+    toast.textContent=msg;toast.classList.add('show');
+    clearTimeout(toastTimer);toastTimer=setTimeout(function(){toast.classList.remove('show')},1800);
+  }
+  function copyText(text,btn){
+    function ok(){
+      showToast('프롬프트가 복사되었습니다 — 실습창에 붙여넣기(Ctrl+V)');
+      var old=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('ok');
+      setTimeout(function(){btn.textContent=old;btn.classList.remove('ok')},1800);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok).catch(function(){fallback()});
+    }else{fallback()}
+    function fallback(){
+      var ta=document.createElement('textarea');ta.value=text;
+      ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+      ta.select();try{document.execCommand('copy');ok()}catch(e){showToast('복사에 실패했어요 — 길게 눌러 직접 복사해 주세요')}
+      document.body.removeChild(ta);
+    }
+  }
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pre=btn.closest('.prompt').querySelector('pre');
+      copyText(pre.textContent.trim(),btn);
+    });
+  });
+
+  // 아코디언
+  document.querySelectorAll('.acc-head').forEach(function(h){
+    h.addEventListener('click',function(){h.parentElement.classList.toggle('open')});
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
