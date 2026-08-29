@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>홍성 4회차 · 노트북LM(NotebookLM) — 실습 복붙 자료</title>
+<meta name="description" content="노트북LM 시작·소스 넣는 4가지 방법·유튜브 자막 우회·복붙 프롬프트(브리핑/요약/예상문제/오디오 개요)·실습 체크리스트. 폰으로 열어 프롬프트를 복사해 바로 실습하세요.">
+<style>
+/* ===== 커리어숲 · 인디고 톤 · 모바일 우선 (r3와 동일 계열) ===== */
+:root{
+  --bg:#f5f6fb; --card:#ffffff; --ink:#1e2233; --sub:#525872; --line:#e5e7f2;
+  --brand:#4f46e5; --brand2:#7c3aed; --brand-soft:#eef0fe; --brand-ink:#3730a3;
+  --ok:#0f9d6b; --ok-soft:#e6f7f0; --warn:#c2410c; --warn-soft:#fff3ec;
+  --paid:#b42318; --paid-soft:#fdecea; --part:#b7791f; --part-soft:#fdf5e6;
+  --radius:16px; --shadow:0 2px 10px rgba(40,44,80,.07);
+  --maxw:820px;
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px; line-height:1.62; word-break:keep-all; overflow-wrap:anywhere;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 15px 60px;}
+img{max-width:100%;}
+
+/* 헤더 */
+header{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
+  color:#fff; padding:26px 15px 22px; text-align:center;
+}
+.hd-in{max-width:var(--maxw); margin:0 auto;}
+.hbadge{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
+  padding:5px 13px; border-radius:999px; font-size:13.5px; font-weight:700; margin-bottom:12px;}
+header h1{font-size:24px; line-height:1.32; margin:0 0 8px; font-weight:800;}
+header .sub{font-size:15px; opacity:.95; margin:0;}
+.ver{margin-top:12px; font-size:13px; opacity:.9; letter-spacing:.02em;}
+.note-date{max-width:var(--maxw); margin:0 auto; padding:11px 15px; background:#fff8ec;
+  color:#7a5b18; font-size:13.5px; text-align:center; border-bottom:1px solid var(--line);}
+
+/* 섹션 내비 */
+nav.toc{position:sticky; top:0; z-index:20; background:rgba(245,246,251,.96);
+  backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:9px 0;}
+.toc-in{max-width:var(--maxw); margin:0 auto; padding:0 12px; display:flex; gap:7px;
+  overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+.toc-in::-webkit-scrollbar{display:none;}
+.toc a{flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--brand-ink);
+  background:var(--brand-soft); padding:7px 12px; border-radius:999px; text-decoration:none; white-space:nowrap;}
+.toc a:active{background:#dfe2fd;}
+
+/* 섹션 공통 */
+section{margin-top:26px;}
+.sec-h{display:flex; align-items:baseline; gap:9px; margin:0 0 5px;}
+.sec-h .sn{font-size:14px; font-weight:800; color:#fff; background:var(--brand);
+  border-radius:8px; padding:2px 9px; flex:0 0 auto;}
+.sec-h h2{font-size:20.5px; margin:0; font-weight:800;}
+.sec-lead{color:var(--sub); font-size:14.5px; margin:0 0 14px;}
+
+/* 카드 */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:15px; box-shadow:var(--shadow); margin-bottom:12px;}
+.card h3{margin:0 0 8px; font-size:16px; color:var(--brand-ink);}
+
+/* 복붙 프롬프트 */
+.pbox{background:#f8f9ff; border:1px solid #e3e6fb; border-radius:12px; padding:11px 12px; margin:9px 0 0;}
+.pt{margin:0 0 9px; font-family:inherit; font-size:15.5px; line-height:1.6; white-space:pre-wrap;
+  color:#232842; font-weight:500;}
+.copy{width:100%; min-height:48px; border:none; border-radius:10px; cursor:pointer;
+  background:var(--brand); color:#fff; font-size:16px; font-weight:800;
+  font-family:inherit; display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:background .12s;}
+.copy:active{background:#3f38c9;}
+.copy.done{background:var(--ok);}
+.copy .ci::before{content:"📋 "; }
+.copy.done .ci::before{content:"✓ "; }
+
+/* 시작 · 링크 버튼 */
+.startbtn{display:block; text-align:center; text-decoration:none; background:var(--brand); color:#fff;
+  font-size:17px; font-weight:800; padding:14px 16px; border-radius:12px; margin:10px 0 4px;}
+.startbtn:active{background:#3f38c9;}
+.linkline{font-size:13.5px; color:var(--sub); word-break:break-all; margin:6px 0 0;}
+.linkline a{color:var(--brand-ink);}
+
+/* 4가지 방법 · 번호 리스트 */
+.way{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
+.way:last-child{border-bottom:none;}
+.wn{flex:0 0 30px; height:30px; line-height:30px; text-align:center; border-radius:50%;
+  background:var(--brand); color:#fff; font-weight:800; font-size:15px;}
+.way b{font-size:15.5px;}
+.way .wd{display:block; font-size:13.5px; color:var(--sub); margin-top:1px;}
+.way .wt{display:inline-block; font-size:12px; font-weight:800; color:var(--part);
+  background:var(--part-soft); padding:2px 8px; border-radius:999px; margin-top:5px;}
+
+/* 단계(스텝) */
+.step{display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1px dashed var(--line);}
+.step:last-child{border-bottom:none;}
+.sn2{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:50%;
+  background:var(--brand2); color:#fff; font-weight:800; font-size:14px;}
+.step b{font-size:15px;}
+.step span{display:block; font-size:13.5px; color:var(--sub);}
+
+/* 체크리스트 */
+.chk{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
+.chk:last-child{border-bottom:none;}
+.cn{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:8px;
+  background:var(--ok); color:#fff; font-weight:800; font-size:14px;}
+.chk b{font-size:15.5px;}
+.chk span{display:block; font-size:13.5px; color:var(--sub);}
+
+/* 주의 박스 */
+.warn{margin:9px 0 0; font-size:13.5px; color:var(--warn); background:var(--warn-soft);
+  border:1px solid #f6d8c4; border-radius:10px; padding:9px 11px; font-weight:600;}
+.tip{margin:9px 0 0; font-size:13.5px; color:var(--brand-ink); background:var(--brand-soft);
+  border-radius:10px; padding:9px 11px;}
+.info-rule{background:#fff8ec; border:1px solid #f2e2bf; border-radius:12px; padding:12px 14px; margin-top:11px;}
+.info-rule b{color:var(--warn);}
+.info-rule p{margin:5px 0 0; font-size:13.5px; color:var(--sub);}
+.oneline{background:var(--brand-soft); border-radius:12px; padding:12px 14px; margin-top:12px;
+  font-size:15px; font-weight:700; color:var(--brand-ink); text-align:center;}
+
+/* 골든룰 박스 */
+.goldbox{background:linear-gradient(135deg,#eef0fe,#f3edff); border:1px solid #ddd8fb;
+  border-radius:14px; padding:15px; margin-bottom:14px;}
+.goldbox h3{margin:0 0 6px; font-size:16px; color:var(--brand-ink);}
+.goldbox ul{margin:0; padding-left:18px;}
+.goldbox li{font-size:14px; margin:4px 0; color:#3a3d55;}
+.goldbox li b{color:var(--brand2);}
+
+/* 프롬프트 카드 제목 */
+.pcard-t{display:flex; align-items:center; gap:8px; margin-bottom:2px;}
+.pcard-t b{font-size:16px;}
+.pcard-t .pe{font-size:18px;}
+.pcard-t .pu{display:block; font-size:13px; color:var(--sub); font-weight:600;}
+
+/* 소제목 */
+.galt{font-size:16px; margin:16px 0 9px; color:var(--brand-ink); font-weight:800;}
+
+/* 추후 업데이트(자리) */
+.soon{background:#fbfbfe; border:1px dashed #c9cbe6; border-radius:14px; padding:18px 15px;
+  text-align:center; color:var(--sub);}
+.soon .badge2{display:inline-block; background:var(--part-soft); color:var(--part);
+  font-size:12.5px; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:8px;}
+.soon p{margin:4px 0; font-size:14px;}
+
+/* 토스트 */
+#toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+  background:#1e2233; color:#fff; padding:12px 22px; border-radius:999px; font-size:15px; font-weight:700;
+  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:60; box-shadow:0 6px 20px rgba(0,0,0,.25);}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* 푸터 */
+footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--line); color:var(--sub); font-size:12.5px;}
+footer p{margin:5px 0;}
+.prbtn{margin:18px 0 6px; text-align:center;}
+.prbtn button{background:#fff; border:1.5px solid var(--brand); color:var(--brand-ink);
+  font-size:15px; font-weight:800; padding:11px 20px; border-radius:11px; cursor:pointer; font-family:inherit;}
+
+/* 반응형 */
+@media (max-width:520px){
+  header h1{font-size:21px;}
+}
+
+/* ===== 인쇄(A4 핸드아웃) ===== */
+@media print{
+  :root{--bg:#fff;}
+  body{font-size:11pt; background:#fff;}
+  nav.toc, #toast, .prbtn, .copy, .toc, .note-date, .startbtn{display:none !important;}
+  header{background:#fff !important; color:#000 !important; border-bottom:2px solid #333; padding:8px 0;}
+  .hbadge{background:#eee !important; color:#333 !important; border-color:#ccc;}
+  header h1{font-size:17pt; color:#000;}
+  header .sub, .ver{color:#333;}
+  .wrap{max-width:100%; padding:0;}
+  section{margin-top:12px; page-break-inside:avoid;}
+  .card,.goldbox,.soon{box-shadow:none; border:1px solid #ccc; break-inside:avoid;}
+  .pbox{background:#f4f4f4; border:1px solid #bbb;}
+  a{color:#000; text-decoration:none;}
+}
+</style>
+</head>
+<body>
+<div id="pwgate" style="position:fixed;inset:0;background:#2C3A78;color:#fff;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Malgun Gothic',sans-serif;padding:20px;text-align:center;">
+<div style="font-size:23px;font-weight:800;margin-bottom:8px;">🔒 홍성 AI 배움터 자료</div>
+<div style="font-size:16px;opacity:.9;margin-bottom:18px;">비밀번호를 입력하세요</div>
+<input id="pwin" type="password" autocomplete="off" style="font-size:18px;padding:13px 14px;border-radius:10px;border:none;width:min(260px,80vw);text-align:center;" placeholder="비밀번호">
+<button id="pwbtn" style="margin-top:12px;font-size:17px;font-weight:800;padding:13px 30px;border:none;border-radius:10px;background:#EAE3D2;color:#2C3A78;cursor:pointer;">들어가기</button>
+<div id="pwerr" style="margin-top:10px;font-size:14px;color:#FFD6D6;min-height:18px;"></div>
+</div>
+<script>
+(function(){var PW="hong2026";
+try{if(sessionStorage.getItem('hong_ok')==='1'){var g=document.getElementById('pwgate');if(g)g.remove();return;}}catch(e){}
+function t(){var v=document.getElementById('pwin').value;if(v===PW){try{sessionStorage.setItem('hong_ok','1');}catch(e){}var g=document.getElementById('pwgate');if(g)g.remove();}else{document.getElementById('pwerr').textContent='비밀번호가 틀렸어요';}}
+document.getElementById('pwbtn').addEventListener('click',t);
+document.getElementById('pwin').addEventListener('keydown',function(e){if(e.key==='Enter')t();});
+document.getElementById('pwin').focus();})();
+</script>
+
+<header>
+  <div class="hd-in">
+    <span class="hbadge">홍성군 AI 강사양성 · 4회차</span>
+    <h1>노트북LM(NotebookLM)<br>자료를 요약·정리하다</h1>
+    <p class="sub">폰으로 열어 프롬프트를 [복사]해 바로 실습하세요</p>
+    <div class="ver">v1 · 2026-08-28 · 제작 커리어숲</div>
+  </div>
+</header>
+<div class="note-date">※ 화면·메뉴 이름·무료 한도·자막 정책은 <b>2026.8 기준</b>이며 수시로 바뀝니다. 강의 직전 각 서비스에서 재확인하세요.</div>
+
+<nav class="toc"><div class="toc-in">
+  <a href="#s1">① 시작하기</a>
+  <a href="#s2">② 소스 4가지</a>
+  <a href="#s3">③ 유튜브 자막</a>
+  <a href="#s4">④ 복붙 프롬프트</a>
+  <a href="#s5">⑤ 실습 소스</a>
+  <a href="#s6">⑥ 실습 순서</a>
+  <a href="#s7">⑦ 데모·확장</a>
+</div></nav>
+
+<div class="wrap">
+
+  <div class="goldbox">
+    <h3>노트북LM 한 줄 정리</h3>
+    <ul>
+      <li><b>내가 넣은 자료만</b> 근거로 답합니다 — 인터넷 전체가 아니라, 올린 PDF·글·영상 안에서만 요약·정리해요(엉뚱한 답이 적음).</li>
+      <li><b>출처를 콕 집어줍니다</b> — 답변마다 “몇 쪽·어디에서”를 표시해 확인이 쉬워요.</li>
+      <li><b>오디오 개요</b> — 자료를 한국어 팟캐스트처럼 대화로 요약해 들려줍니다(운전·산책 중 복습에 좋음).</li>
+    </ul>
+  </div>
+
+  <!-- 섹션 1 -->
+  <section id="s1">
+    <div class="sec-h"><span class="sn">①</span><h2>노트북LM 시작하기</h2></div>
+    <p class="sec-lead">구글 계정으로 로그인하면 끝. 설치 없이 웹에서 바로 씁니다. <b>무료</b>.</p>
+    <div class="card">
+      <a class="startbtn" href="https://notebooklm.google.com" target="_blank" rel="noopener">🔗 노트북LM 열기 (notebooklm.google.com)</a>
+      <p class="linkline">주소: <a href="https://notebooklm.google.com" target="_blank" rel="noopener">https://notebooklm.google.com</a></p>
+      <div class="step" style="margin-top:6px;"><span class="sn2">1</span><div><b>구글 로그인</b><span>평소 쓰는 지메일(구글) 계정으로 “로그인 / 계속하기”.</span></div></div>
+      <div class="step"><span class="sn2">2</span><div><b>새 노트북 만들기</b><span>“새로 만들기(＋)”를 눌러 빈 노트북을 하나 엽니다.</span></div></div>
+      <div class="step"><span class="sn2">3</span><div><b>소스(자료) 넣기</b><span>왼쪽 “소스 추가”로 자료를 올립니다 → 아래 ② 참고.</span></div></div>
+      <div class="tip">💡 언어가 영어로 보이면 오른쪽 위 설정(톱니바퀴)에서 <b>한국어</b>로 바꾸세요. 오디오 개요 언어도 여기서 확인.</div>
+    </div>
+  </section>
+
+  <!-- 섹션 2 -->
+  <section id="s2">
+    <div class="sec-h"><span class="sn">②</span><h2>소스 넣는 4가지 방법</h2></div>
+    <p class="sec-lead">“소스 추가” 창에서 자료 종류를 고릅니다. 한 노트북에 여러 개를 섞어 넣어도 됩니다.</p>
+    <div class="card">
+      <div class="way"><span class="wn">1</span><div><b>PDF 파일 업로드</b><span class="wd">교재·안내서·보고서 PDF를 컴퓨터/폰에서 올리기. 가장 안정적.</span></div></div>
+      <div class="way"><span class="wn">2</span><div><b>웹 URL(사이트 주소)</b><span class="wd">기사·블로그·기관 페이지 주소를 붙여넣기. 본문을 읽어 옵니다.</span></div></div>
+      <div class="way"><span class="wn">3</span><div><b>텍스트 붙여넣기</b><span class="wd">복사한 글을 그대로 붙여넣기. 자막·메모·한글파일 내용에 좋음.</span></div></div>
+      <div class="way"><span class="wn">4</span><div><b>유튜브(YouTube) 링크</b><span class="wd">영상 주소를 붙여넣기. <b>단, 자막(스크립트) 있는 영상만</b> 인식됩니다.</span><span class="wt">★ 자막 있는 영상만</span></div></div>
+      <div class="warn">⚠️ 유튜브는 자막이 없으면 내용이 안 들어옵니다. 이럴 땐 아래 ③ <b>자막 우회 팁</b>으로 텍스트를 넣으세요.</div>
+    </div>
+  </section>
+
+  <!-- 섹션 3 -->
+  <section id="s3">
+    <div class="sec-h"><span class="sn">③</span><h2>유튜브 자막 우회 팁</h2></div>
+    <p class="sec-lead">자막 없는 영상도 이렇게 하면 내용을 넣을 수 있어요.</p>
+    <div class="card">
+      <div class="step"><span class="sn2">1</span><div><b>유튜브에서 [...더보기] 열기</b><span>영상 설명 아래 “...더보기”를 누릅니다.</span></div></div>
+      <div class="step"><span class="sn2">2</span><div><b>[스크립트 표시] 누르기</b><span>“스크립트 표시(대본 표시)”를 누르면 자막 전체가 시간과 함께 뜹니다.</span></div></div>
+      <div class="step"><span class="sn2">3</span><div><b>전체 선택 → 복사</b><span>뜬 스크립트를 위에서 아래까지 드래그해 전체 복사.</span></div></div>
+      <div class="step"><span class="sn2">4</span><div><b>노트북LM에 [텍스트 붙여넣기]</b><span>“소스 추가 → 텍스트 붙여넣기”에 붙여 넣으면 완료.</span></div></div>
+      <div class="warn">⚠️ <b>쇼츠(Shorts)는 부적합</b> — 너무 짧고 자막이 적어 요약할 내용이 부족합니다. 정규 길이 영상(설명·강의)을 쓰세요.</div>
+      <div class="tip">💡 스크립트에 “0:12 / 0:45” 같은 시간 숫자가 섞여도 그대로 붙여넣으면 됩니다. 노트북LM이 알아서 걸러 읽어요.</div>
+    </div>
+  </section>
+
+  <!-- 섹션 4 -->
+  <section id="s4">
+    <div class="sec-h"><span class="sn">④</span><h2>복붙 프롬프트 모음</h2></div>
+    <p class="sec-lead">소스를 넣은 뒤, 아래 프롬프트를 <b>[복사]</b>해 노트북LM 대화창에 붙여넣고 보내세요.</p>
+
+    <div class="card">
+      <div class="pcard-t"><span class="pe">📄</span><div><b>브리핑 문서 만들기</b><span class="pu">여러 자료의 핵심을 종합·구조화</span></div></div>
+      <div class="pbox"><pre class="pt">다음 자료들의 핵심 주제와 아이디어를 종합한 브리핑 문서를 만들어줘. 먼저 핵심 요약으로 가장 중요한 결론을 앞에 제시하고, 본문은 주제·근거·결론을 제목과 불릿으로 구조화해 객관적이고 명확하게 정리해줘.</pre><button type="button" class="copy" data-copy="다음 자료들의 핵심 주제와 아이디어를 종합한 브리핑 문서를 만들어줘. 먼저 핵심 요약으로 가장 중요한 결론을 앞에 제시하고, 본문은 주제·근거·결론을 제목과 불릿으로 구조화해 객관적이고 명확하게 정리해줘."><span class="ci">복사</span></button></div>
+    </div>
+
+    <div class="card">
+      <div class="pcard-t"><span class="pe">🟢</span><div><b>쉬운 요약</b><span class="pu">처음 배우는 사람 눈높이로</span></div></div>
+      <div class="pbox"><pre class="pt">이 자료를 처음 배우는 사람도 이해하도록 핵심만 쉽게 요약해줘.</pre><button type="button" class="copy" data-copy="이 자료를 처음 배우는 사람도 이해하도록 핵심만 쉽게 요약해줘."><span class="ci">복사</span></button></div>
+    </div>
+
+    <div class="card">
+      <div class="pcard-t"><span class="pe">📝</span><div><b>예상문제 만들기</b><span class="pu">자격시험 대비 10문제+정답·해설</span></div></div>
+      <div class="pbox"><pre class="pt">이 자료로 자격시험 대비 예상문제 10개와 정답·해설을 만들어줘.</pre><button type="button" class="copy" data-copy="이 자료로 자격시험 대비 예상문제 10개와 정답·해설을 만들어줘."><span class="ci">복사</span></button></div>
+    </div>
+
+    <div class="card">
+      <div class="pcard-t"><span class="pe">🎧</span><div><b>오디오 개요(한국어 팟캐스트)</b><span class="pu">오른쪽 [오디오 개요] 기능 사용</span></div></div>
+      <div class="pbox"><pre class="pt">우측 [오디오 개요]로 한국어 팟캐스트 요약 생성 (언어 설정 확인)</pre><button type="button" class="copy" data-copy="우측 [오디오 개요]로 한국어 팟캐스트 요약 생성 (언어 설정 확인)"><span class="ci">복사</span></button></div>
+      <div class="tip">💡 오디오 개요는 대화창 프롬프트가 아니라 <b>오른쪽 패널의 [오디오 개요] 버튼</b>을 눌러 생성합니다. 만들기 전에 언어가 한국어인지 확인하세요.</div>
+    </div>
+  </section>
+
+  <!-- 섹션 5 -->
+  <section id="s5">
+    <div class="sec-h"><span class="sn">⑤</span><h2>실습 소스 예시</h2></div>
+    <p class="sec-lead">오늘 함께 넣어볼 자료입니다. 파일은 <b>각자 다운로드</b>해서 노트북LM에 업로드하세요.</p>
+    <div class="card">
+      <h3>보건복지부 「요양보호사 양성 표준교재(2024)」</h3>
+      <p style="margin:0 0 8px;font-size:14.5px;color:var(--sub);">요양보호사 자격 대비에 쓰이는 공식 표준교재. 브리핑·쉬운 요약·예상문제 실습에 좋은 소스입니다.</p>
+      <a class="startbtn" href="https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&tag=&act=view&list_no=1482064" target="_blank" rel="noopener">🔗 보건복지부 자료실 바로가기(출처)</a>
+      <p class="linkline">출처: <a href="https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&tag=&act=view&list_no=1482064" target="_blank" rel="noopener">www.mohw.go.kr … list_no=1482064</a></p>
+      <div class="info-rule">
+        <b>이용 안내(공공누리 제4유형)</b>
+        <p>출처표시 · <b>비상업적 이용만</b> · 변경금지 조건. 강의·학습 목적의 비상업 이용에 한해 출처를 표시하고 사용하세요. 파일은 각자 위 자료실에서 내려받습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 섹션 6 -->
+  <section id="s6">
+    <div class="sec-h"><span class="sn">⑥</span><h2>실습 순서 체크리스트</h2></div>
+    <p class="sec-lead">이 순서대로 하나씩 눌러가며 따라오세요.</p>
+    <div class="card">
+      <div class="chk"><span class="cn">1</span><div><b>소스 넣기</b><span>표준교재 PDF 업로드(또는 텍스트 붙여넣기).</span></div></div>
+      <div class="chk"><span class="cn">2</span><div><b>브리핑 문서</b><span>④의 ‘브리핑 문서’ 프롬프트 붙여넣고 실행 → 핵심 구조 확인.</span></div></div>
+      <div class="chk"><span class="cn">3</span><div><b>오디오 개요</b><span>오른쪽 [오디오 개요]로 한국어 요약 생성(언어 확인).</span></div></div>
+      <div class="chk"><span class="cn">4</span><div><b>예상문제</b><span>④의 ‘예상문제’ 프롬프트로 10문제+해설 뽑기.</span></div></div>
+      <div class="chk"><span class="cn">5</span><div><b>저장</b><span>마음에 드는 답변은 ‘메모에 저장’ 또는 문서로 내보내기.</span></div></div>
+      <div class="oneline">소스 넣기 → 브리핑 → 오디오 개요 → 예상문제 → 저장</div>
+    </div>
+  </section>
+
+  <!-- 섹션 7 (자리만) -->
+  <section id="s7">
+    <div class="sec-h"><span class="sn">⑦</span><h2>추천 데모 영상 · 확장프로그램 베스트5</h2></div>
+    <p class="sec-lead">검증된 목록이 준비되면 이 자리에 채웁니다.</p>
+    <div class="soon">
+      <span class="badge2">추후 업데이트</span>
+      <p><b>추천 데모 영상</b> — (추후 업데이트)</p>
+      <p><b>확장프로그램 베스트5</b> — (추후 업데이트)</p>
+      <p style="margin-top:8px;font-size:13px;">검증을 마친 목록이 오면 링크·설명과 함께 이 섹션을 채울 예정입니다.</p>
+    </div>
+  </section>
+
+  <div class="prbtn"><button type="button" onclick="window.print()">🖨 이 페이지 인쇄 / A4 핸드아웃 저장</button></div>
+
+  <footer>
+    <p><b>홍성 4회차 · 노트북LM(NotebookLM) — 실습 복붙 자료 · v1 · 2026-08-28</b></p>
+    <p>도구: 구글 노트북LM(notebooklm.google.com). 실습 소스: 보건복지부 「요양보호사 양성 표준교재(2024)」(공공누리 제4유형 · 비상업 · 출처표시). 화면·기능·자막 정책은 <b>2026.8 기준</b>이며 재확인 권장.</p>
+    <p>개인정보를 수집·저장·전송하지 않습니다(외부 서버 연결 0 · 완전 자기완결). 제작: 커리어숲.</p>
+  </footer>
+</div>
+
+<div id="toast">복사했어요</div>
+
+<script>
+(function(){
+  "use strict";
+  // ── 복사(클립보드 API + execCommand 폴백) ──
+  var toast = document.getElementById('toast'), toastT;
+  function showToast(msg){
+    toast.textContent = msg || '복사했어요';
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+  }
+  function fallbackCopy(text){
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-9999px'; ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+  function markDone(btn){
+    btn.classList.add('done');
+    var span = btn.querySelector('.ci');
+    var prev = span ? span.textContent : '';
+    if(span) span.textContent = '복사됨';
+    setTimeout(function(){
+      btn.classList.remove('done');
+      if(span) span.textContent = prev || '복사';
+    }, 1400);
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest ? e.target.closest('.copy') : null;
+    if(!btn) return;
+    var text = btn.getAttribute('data-copy') || '';
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        markDone(btn); showToast('복사했어요');
+      }).catch(function(){
+        if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
+        else showToast('길게 눌러 복사해 주세요');
+      });
+    }else{
+      if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
+      else showToast('길게 눌러 복사해 주세요');
+    }
+  });
+})();
+</script>
+</body>
+</html>
