@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>홍성 4회차 · 노트북LM(NotebookLM) — 실습 복붙 자료</title>
-<meta name="description" content="노트북LM 시작·소스 넣는 4가지 방법·유튜브 자막 우회·복붙 프롬프트(브리핑/요약/예상문제/오디오 개요)·실습 체크리스트. 폰으로 열어 프롬프트를 복사해 바로 실습하세요.">
+<title>홍성 4회차 · 미러링 · 저작권 · NotebookLM 강사 실무</title>
+<meta name="description" content="강의장에서 폰 화면 띄우기, AI 저작권·표시의무 정리, NotebookLM으로 교안 만들기. 강사가 현장에서 바로 쓰는 실무 자료.">
 <style>
-/* ===== 커리어숲 · 인디고 톤 · 모바일 우선 (r3와 동일 계열) ===== */
 :root{
-  --bg:#f5f6fb; --card:#ffffff; --ink:#1e2233; --sub:#525872; --line:#e5e7f2;
-  --brand:#4f46e5; --brand2:#7c3aed; --brand-soft:#eef0fe; --brand-ink:#3730a3;
-  --ok:#0f9d6b; --ok-soft:#e6f7f0; --warn:#c2410c; --warn-soft:#fff3ec;
-  --paid:#b42318; --paid-soft:#fdecea; --part:#b7791f; --part-soft:#fdf5e6;
-  --radius:16px; --shadow:0 2px 10px rgba(40,44,80,.07);
+  --bg:#f5f7fa; --card:#ffffff; --ink:#16202e; --sub:#4b5c72; --line:#dde4ee;
+  --brand:#1d4e89; --brand2:#2a6bb0; --brand-soft:#e8eff8; --brand-ink:#143a68;
+  --ok:#0f766e; --accent:#b45309; --accent-soft:#fff7ed; --accent-ink:#8a4008;
+  --danger:#b91c1c; --danger-soft:#fef2f2;
+  --dark:#111a26;
+  --radius:16px; --shadow:0 2px 12px rgba(20,40,70,.08);
   --maxw:820px;
 }
 *{box-sizing:border-box;-webkit-text-size-adjust:100%;}
@@ -20,382 +20,495 @@ html{scroll-behavior:smooth;}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  font-size:17px; line-height:1.62; word-break:keep-all; overflow-wrap:anywhere;
+  font-size:18px; line-height:1.68; word-break:keep-all; overflow-wrap:anywhere;
 }
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 15px 60px;}
-img{max-width:100%;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 16px 70px;}
 
-/* 헤더 */
-header{
-  background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
-  color:#fff; padding:26px 15px 22px; text-align:center;
-}
+header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%); color:#fff; padding:34px 16px 28px; text-align:center;}
 .hd-in{max-width:var(--maxw); margin:0 auto;}
-.hbadge{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
-  padding:5px 13px; border-radius:999px; font-size:13.5px; font-weight:700; margin-bottom:12px;}
-header h1{font-size:24px; line-height:1.32; margin:0 0 8px; font-weight:800;}
-header .sub{font-size:15px; opacity:.95; margin:0;}
-.ver{margin-top:12px; font-size:13px; opacity:.9; letter-spacing:.02em;}
-.note-date{max-width:var(--maxw); margin:0 auto; padding:11px 15px; background:#fff8ec;
-  color:#7a5b18; font-size:13.5px; text-align:center; border-bottom:1px solid var(--line);}
+.hbadge{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.38);
+  padding:6px 16px; border-radius:999px; font-size:15px; font-weight:800; margin-bottom:14px;}
+header h1{font-size:28px; line-height:1.34; margin:0 0 10px; font-weight:800;}
+header .sub{font-size:17px; opacity:.96; margin:0; line-height:1.55;}
+.ver{margin-top:14px; font-size:14.5px; opacity:.9;}
 
-/* 섹션 내비 */
-nav.toc{position:sticky; top:0; z-index:20; background:rgba(245,246,251,.96);
-  backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:9px 0;}
-.toc-in{max-width:var(--maxw); margin:0 auto; padding:0 12px; display:flex; gap:7px;
+.howto{background:#fffdf6; border-bottom:2px solid #f2e4c4; padding:16px;}
+.howto-in{max-width:var(--maxw); margin:0 auto;}
+.howto h2{font-size:19px; margin:0 0 8px; color:#7a5b18;}
+.howto p{margin:0; font-size:17px; color:#5c4a1a; font-weight:600;}
+
+nav.toc{position:sticky; top:0; z-index:20; background:rgba(245,247,250,.97);
+  backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:10px 0;}
+.toc-in{max-width:var(--maxw); margin:0 auto; padding:0 12px; display:flex; gap:8px;
   overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
 .toc-in::-webkit-scrollbar{display:none;}
-.toc a{flex:0 0 auto; font-size:13.5px; font-weight:700; color:var(--brand-ink);
-  background:var(--brand-soft); padding:7px 12px; border-radius:999px; text-decoration:none; white-space:nowrap;}
-.toc a:active{background:#dfe2fd;}
+.toc a{flex:0 0 auto; font-size:15px; font-weight:800; color:#fff;
+  background:var(--brand); padding:8px 14px; border-radius:999px; text-decoration:none; white-space:nowrap;}
+.toc a:active{background:var(--brand-ink);}
 
-/* 섹션 공통 */
-section{margin-top:26px;}
-.sec-h{display:flex; align-items:baseline; gap:9px; margin:0 0 5px;}
-.sec-h .sn{font-size:14px; font-weight:800; color:#fff; background:var(--brand);
-  border-radius:8px; padding:2px 9px; flex:0 0 auto;}
-.sec-h h2{font-size:20.5px; margin:0; font-weight:800;}
-.sec-lead{color:var(--sub); font-size:14.5px; margin:0 0 14px;}
+section{margin-top:34px; scroll-margin-top:60px;}
+.sec-h{display:flex; align-items:center; gap:11px; margin:0 0 6px;}
+.sec-h .sn{font-size:17px; font-weight:800; color:#fff; background:var(--brand);
+  width:36px; height:36px; border-radius:11px; display:grid; place-items:center; flex:0 0 auto;}
+.sec-h h2{font-size:24px; margin:0; line-height:1.35; font-weight:800;}
+.sec-lead{color:var(--sub); font-size:17px; margin:0 0 14px;}
 
-/* 카드 */
 .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-  padding:15px; box-shadow:var(--shadow); margin-bottom:12px;}
-.card h3{margin:0 0 8px; font-size:16px; color:var(--brand-ink);}
+  padding:20px 18px; box-shadow:var(--shadow); margin-bottom:14px;}
+.card h3{font-size:20px; margin:0 0 10px; color:var(--brand-ink); font-weight:800;}
+.card h4{font-size:17.5px; margin:16px 0 8px; color:var(--brand-ink);}
+.card p{margin:0 0 10px;} .card p:last-child{margin-bottom:0;}
 
-/* 복붙 프롬프트 */
-.pbox{background:#f8f9ff; border:1px solid #e3e6fb; border-radius:12px; padding:11px 12px; margin:9px 0 0;}
-.pt{margin:0 0 9px; font-family:inherit; font-size:15.5px; line-height:1.6; white-space:pre-wrap;
-  color:#232842; font-weight:500;}
-.copy{width:100%; min-height:48px; border:none; border-radius:10px; cursor:pointer;
-  background:var(--brand); color:#fff; font-size:16px; font-weight:800;
-  font-family:inherit; display:flex; align-items:center; justify-content:center; gap:6px;
-  transition:background .12s;}
-.copy:active{background:#3f38c9;}
-.copy.done{background:var(--ok);}
-.copy .ci::before{content:"📋 "; }
-.copy.done .ci::before{content:"✓ "; }
+.steps{list-style:none; margin:0; padding:0; counter-reset:st;}
+.steps li{counter-increment:st; position:relative; padding:11px 0 11px 48px; border-bottom:1px dashed var(--line);}
+.steps li:last-child{border-bottom:0; padding-bottom:0;}
+.steps li::before{content:counter(st); position:absolute; left:0; top:11px;
+  width:33px; height:33px; border-radius:50%; background:var(--brand-soft); color:var(--brand-ink);
+  font-weight:800; font-size:17px; display:grid; place-items:center;}
+.steps b{display:block; font-size:18px; margin-bottom:2px;}
+.steps span{color:var(--sub); font-size:17px;}
 
-/* 시작 · 링크 버튼 */
-.startbtn{display:block; text-align:center; text-decoration:none; background:var(--brand); color:#fff;
-  font-size:17px; font-weight:800; padding:14px 16px; border-radius:12px; margin:10px 0 4px;}
-.startbtn:active{background:#3f38c9;}
-.linkline{font-size:13.5px; color:var(--sub); word-break:break-all; margin:6px 0 0;}
-.linkline a{color:var(--brand-ink);}
+.tbl{width:100%; border-collapse:collapse; font-size:16.5px; margin:6px 0 0;}
+.tbl th{background:var(--brand-soft); color:var(--brand-ink); text-align:left; padding:10px 10px; font-size:16px; border:1px solid var(--line);}
+.tbl td{padding:10px 10px; border:1px solid var(--line); vertical-align:top;}
+.tbl tr:nth-child(even) td{background:#fafcfe;}
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch;}
 
-/* 4가지 방법 · 번호 리스트 */
-.way{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
-.way:last-child{border-bottom:none;}
-.wn{flex:0 0 30px; height:30px; line-height:30px; text-align:center; border-radius:50%;
-  background:var(--brand); color:#fff; font-weight:800; font-size:15px;}
-.way b{font-size:15.5px;}
-.way .wd{display:block; font-size:13.5px; color:var(--sub); margin-top:1px;}
-.way .wt{display:inline-block; font-size:12px; font-weight:800; color:var(--part);
-  background:var(--part-soft); padding:2px 8px; border-radius:999px; margin-top:5px;}
+.prompt{background:var(--dark); color:#e7eef7; border-radius:13px; padding:15px 15px 13px; margin:12px 0 0;}
+.prompt .plabel{font-size:14px; font-weight:800; color:#8fc0f0; margin-bottom:7px;}
+.prompt .ptext{font-size:17px; line-height:1.62; white-space:pre-wrap; margin:0 0 11px; color:#f1f6fb;}
+.copy{width:100%; border:0; border-radius:11px; background:var(--ok); color:#fff;
+  font-size:17px; font-weight:800; padding:12px; cursor:pointer; font-family:inherit; transition:background .15s;}
+.copy:active,.copy.done{background:#0b5c56;}
 
-/* 단계(스텝) */
-.step{display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1px dashed var(--line);}
-.step:last-child{border-bottom:none;}
-.sn2{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:50%;
-  background:var(--brand2); color:#fff; font-weight:800; font-size:14px;}
-.step b{font-size:15px;}
-.step span{display:block; font-size:13.5px; color:var(--sub);}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+@media (max-width:620px){ .grid2,.grid3{grid-template-columns:1fr;} }
+.mini{background:var(--brand-soft); border-radius:13px; padding:14px;}
+.mini b{display:block; color:var(--brand-ink); font-size:17.5px; margin-bottom:4px;}
+.mini span{font-size:16.5px; color:var(--sub);}
 
-/* 체크리스트 */
-.chk{display:flex; gap:11px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
-.chk:last-child{border-bottom:none;}
-.cn{flex:0 0 28px; height:28px; line-height:28px; text-align:center; border-radius:8px;
-  background:var(--ok); color:#fff; font-weight:800; font-size:14px;}
-.chk b{font-size:15.5px;}
-.chk span{display:block; font-size:13.5px; color:var(--sub);}
+.tip{background:var(--accent-soft); border:1px solid #fcd9a8; border-left:5px solid var(--accent);
+  border-radius:12px; padding:14px; margin-top:12px;}
+.tip b{color:var(--accent-ink); display:block; margin-bottom:5px; font-size:17px;}
+.tip p{margin:0; font-size:16.5px; color:#7c4410;}
 
-/* 주의 박스 */
-.warn{margin:9px 0 0; font-size:13.5px; color:var(--warn); background:var(--warn-soft);
-  border:1px solid #f6d8c4; border-radius:10px; padding:9px 11px; font-weight:600;}
-.tip{margin:9px 0 0; font-size:13.5px; color:var(--brand-ink); background:var(--brand-soft);
-  border-radius:10px; padding:9px 11px;}
-.info-rule{background:#fff8ec; border:1px solid #f2e2bf; border-radius:12px; padding:12px 14px; margin-top:11px;}
-.info-rule b{color:var(--warn);}
-.info-rule p{margin:5px 0 0; font-size:13.5px; color:var(--sub);}
-.oneline{background:var(--brand-soft); border-radius:12px; padding:12px 14px; margin-top:12px;
-  font-size:15px; font-weight:700; color:var(--brand-ink); text-align:center;}
+.warn{background:var(--danger-soft); border:1px solid #fca5a5; border-left:5px solid var(--danger);
+  border-radius:12px; padding:14px; margin-top:12px;}
+.warn b{color:#991b1b; display:block; margin-bottom:5px; font-size:17px;}
+.warn p,.warn li{margin:0; font-size:16.5px; color:#7f1d1d;}
+.warn ul{margin:0; padding-left:20px;} .warn li{margin:4px 0;}
 
-/* 골든룰 박스 */
-.goldbox{background:linear-gradient(135deg,#eef0fe,#f3edff); border:1px solid #ddd8fb;
-  border-radius:14px; padding:15px; margin-bottom:14px;}
-.goldbox h3{margin:0 0 6px; font-size:16px; color:var(--brand-ink);}
-.goldbox ul{margin:0; padding-left:18px;}
-.goldbox li{font-size:14px; margin:4px 0; color:#3a3d55;}
-.goldbox li b{color:var(--brand2);}
+.qa{border-top:1px solid var(--line); padding:12px 0;}
+.qa:first-of-type{border-top:0;}
+.qa .q{font-weight:800; color:var(--brand-ink); font-size:17.5px; margin:0 0 5px;}
+.qa .a{margin:0; font-size:17px; color:var(--sub);}
+.mark{display:inline-block; font-weight:800; margin-right:5px;}
+.mark.o{color:#15803d;} .mark.t{color:#b45309;}
 
-/* 프롬프트 카드 제목 */
-.pcard-t{display:flex; align-items:center; gap:8px; margin-bottom:2px;}
-.pcard-t b{font-size:16px;}
-.pcard-t .pe{font-size:18px;}
-.pcard-t .pu{display:block; font-size:13px; color:var(--sub); font-weight:600;}
+.key{background:var(--brand-ink); color:#fff; border-radius:var(--radius); padding:22px 18px;}
+.key h3{color:#fff; font-size:21px; margin:0 0 12px; text-align:center;}
+.key ol{margin:0; padding-left:22px;}
+.key li{font-size:17.5px; margin:9px 0; line-height:1.55;}
 
-/* 소제목 */
-.galt{font-size:16px; margin:16px 0 9px; color:var(--brand-ink); font-weight:800;}
+.linkbtn{display:block; text-align:center; background:var(--brand); color:#fff; text-decoration:none;
+  font-size:18px; font-weight:800; padding:15px; border-radius:13px; margin-top:12px;}
+.linkbtn:active{background:var(--brand-ink);}
 
-/* 추후 업데이트(자리) */
-.soon{background:#fbfbfe; border:1px dashed #c9cbe6; border-radius:14px; padding:18px 15px;
-  text-align:center; color:var(--sub);}
-.soon .badge2{display:inline-block; background:var(--part-soft); color:var(--part);
-  font-size:12.5px; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:8px;}
-.soon p{margin:4px 0; font-size:14px;}
-
-/* 토스트 */
-#toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
-  background:#1e2233; color:#fff; padding:12px 22px; border-radius:999px; font-size:15px; font-weight:700;
-  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:60; box-shadow:0 6px 20px rgba(0,0,0,.25);}
-#toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
-
-/* 푸터 */
-footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--line); color:var(--sub); font-size:12.5px;}
-footer p{margin:5px 0;}
-.prbtn{margin:18px 0 6px; text-align:center;}
-.prbtn button{background:#fff; border:1.5px solid var(--brand); color:var(--brand-ink);
-  font-size:15px; font-weight:800; padding:11px 20px; border-radius:11px; cursor:pointer; font-family:inherit;}
-
-/* 반응형 */
-@media (max-width:520px){
-  header h1{font-size:21px;}
-}
-
-/* ===== 인쇄(A4 핸드아웃) ===== */
-@media print{
-  :root{--bg:#fff;}
-  body{font-size:11pt; background:#fff;}
-  nav.toc, #toast, .prbtn, .copy, .toc, .note-date, .startbtn{display:none !important;}
-  header{background:#fff !important; color:#000 !important; border-bottom:2px solid #333; padding:8px 0;}
-  .hbadge{background:#eee !important; color:#333 !important; border-color:#ccc;}
-  header h1{font-size:17pt; color:#000;}
-  header .sub, .ver{color:#333;}
-  .wrap{max-width:100%; padding:0;}
-  section{margin-top:12px; page-break-inside:avoid;}
-  .card,.goldbox,.soon{box-shadow:none; border:1px solid #ccc; break-inside:avoid;}
-  .pbox{background:#f4f4f4; border:1px solid #bbb;}
-  a{color:#000; text-decoration:none;}
-}
+footer{margin-top:42px; padding-top:20px; border-top:1px solid var(--line); text-align:center;
+  color:var(--sub); font-size:15.5px; line-height:1.6;}
+.note{font-size:15.5px; color:var(--sub); margin-top:9px;}
+.toast{position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+  background:var(--dark); color:#fff; padding:12px 20px; border-radius:999px; font-size:17px; font-weight:700;
+  opacity:0; pointer-events:none; transition:all .25s; z-index:60;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
-<div id="pwgate" style="position:fixed;inset:0;background:#2C3A78;color:#fff;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Malgun Gothic',sans-serif;padding:20px;text-align:center;">
-<div style="font-size:23px;font-weight:800;margin-bottom:8px;">🔒 홍성 AI 배움터 자료</div>
-<div style="font-size:16px;opacity:.9;margin-bottom:18px;">비밀번호를 입력하세요</div>
-<input id="pwin" type="password" autocomplete="off" style="font-size:18px;padding:13px 14px;border-radius:10px;border:none;width:min(260px,80vw);text-align:center;" placeholder="비밀번호">
-<button id="pwbtn" style="margin-top:12px;font-size:17px;font-weight:800;padding:13px 30px;border:none;border-radius:10px;background:#EAE3D2;color:#2C3A78;cursor:pointer;">들어가기</button>
-<div id="pwerr" style="margin-top:10px;font-size:14px;color:#FFD6D6;min-height:18px;"></div>
-</div>
-<script>
-(function(){var PW="hong2026";
-try{if(sessionStorage.getItem('hong_ok')==='1'){var g=document.getElementById('pwgate');if(g)g.remove();return;}}catch(e){}
-function t(){var v=document.getElementById('pwin').value;if(v===PW){try{sessionStorage.setItem('hong_ok','1');}catch(e){}var g=document.getElementById('pwgate');if(g)g.remove();}else{document.getElementById('pwerr').textContent='비밀번호가 틀렸어요';}}
-document.getElementById('pwbtn').addEventListener('click',t);
-document.getElementById('pwin').addEventListener('keydown',function(e){if(e.key==='Enter')t();});
-document.getElementById('pwin').focus();})();
-</script>
 
 <header>
   <div class="hd-in">
-    <span class="hbadge">홍성군 AI 강사양성 · 4회차</span>
-    <h1>노트북LM(NotebookLM)<br>자료를 요약·정리하다</h1>
-    <p class="sub">폰으로 열어 프롬프트를 [복사]해 바로 실습하세요</p>
-    <div class="ver">v1 · 2026-08-28 · 제작 커리어숲</div>
+    <div class="hbadge">청양·홍성 AI 강사양성과정 · 4회차</div>
+    <h1>강의장에서 바로 쓰는<br>미러링 · 저작권 · NotebookLM</h1>
+    <p class="sub">폰 화면 띄우기 3가지 방법 · AI 저작권과 표시의무 · 내 자료로 교안 만들기</p>
+    <p class="ver">강사 임금희 · 커리어숲 &nbsp;|&nbsp; 화면·약관은 2026년 기준 (강의 직전 재확인)</p>
   </div>
 </header>
-<div class="note-date">※ 화면·메뉴 이름·무료 한도·자막 정책은 <b>2026.8 기준</b>이며 수시로 바뀝니다. 강의 직전 각 서비스에서 재확인하세요.</div>
 
-<nav class="toc"><div class="toc-in">
-  <a href="#s1">① 시작하기</a>
-  <a href="#s2">② 소스 4가지</a>
-  <a href="#s3">③ 유튜브 자막</a>
-  <a href="#s4">④ 복붙 프롬프트</a>
-  <a href="#s5">⑤ 실습 소스</a>
-  <a href="#s6">⑥ 실습 순서</a>
-  <a href="#s7">⑦ 데모·확장</a>
-</div></nav>
+<div class="howto">
+  <div class="howto-in">
+    <h2>이 페이지 쓰는 법</h2>
+    <p>검은 상자의 <b>[복사하기]</b>를 눌러 NotebookLM 채팅창에 붙여넣으세요. 괄호 ( ) 안만 각자 주제로 바꾸면 됩니다. 강의 때는 이 페이지를 화면에 띄워 두고 수강생이 따라 복사하게 하세요 — <b>타이핑시키면 오타로 시간 다 갑니다.</b></p>
+  </div>
+</div>
+
+<nav class="toc">
+  <div class="toc-in">
+    <a href="#s1">① 미러링</a>
+    <a href="#s2">② 저작권·표시의무</a>
+    <a href="#s3">③ NotebookLM 개념</a>
+    <a href="#s4">④ 소스·인용 확인</a>
+    <a href="#s5">⑤ 스튜디오 실습</a>
+    <a href="#s6">⑥ 활용 갤러리</a>
+    <a href="#s7">⑦ 점검표·숙제</a>
+  </div>
+</nav>
 
 <div class="wrap">
 
-  <div class="goldbox">
-    <h3>노트북LM 한 줄 정리</h3>
-    <ul>
-      <li><b>내가 넣은 자료만</b> 근거로 답합니다 — 인터넷 전체가 아니라, 올린 PDF·글·영상 안에서만 요약·정리해요(엉뚱한 답이 적음).</li>
-      <li><b>출처를 콕 집어줍니다</b> — 답변마다 “몇 쪽·어디에서”를 표시해 확인이 쉬워요.</li>
-      <li><b>오디오 개요</b> — 자료를 한국어 팟캐스트처럼 대화로 요약해 들려줍니다(운전·산책 중 복습에 좋음).</li>
-    </ul>
-  </div>
-
-  <!-- 섹션 1 -->
   <section id="s1">
-    <div class="sec-h"><span class="sn">①</span><h2>노트북LM 시작하기</h2></div>
-    <p class="sec-lead">구글 계정으로 로그인하면 끝. 설치 없이 웹에서 바로 씁니다. <b>무료</b>.</p>
+    <div class="sec-h"><div class="sn">1</div><h2>강의장 미러링 — 폰 화면 큰 화면에 띄우기</h2></div>
+    <p class="sec-lead">미러링(화면 복사) = 내 폰 화면을 큰 화면에 '똑같이, 실시간으로' 띄우는 것. 실습 강의의 기본기입니다.</p>
+
     <div class="card">
-      <a class="startbtn" href="https://notebooklm.google.com" target="_blank" rel="noopener">🔗 노트북LM 열기 (notebooklm.google.com)</a>
-      <p class="linkline">주소: <a href="https://notebooklm.google.com" target="_blank" rel="noopener">https://notebooklm.google.com</a></p>
-      <div class="step" style="margin-top:6px;"><span class="sn2">1</span><div><b>구글 로그인</b><span>평소 쓰는 지메일(구글) 계정으로 “로그인 / 계속하기”.</span></div></div>
-      <div class="step"><span class="sn2">2</span><div><b>새 노트북 만들기</b><span>“새로 만들기(＋)”를 눌러 빈 노트북을 하나 엽니다.</span></div></div>
-      <div class="step"><span class="sn2">3</span><div><b>소스(자료) 넣기</b><span>왼쪽 “소스 추가”로 자료를 올립니다 → 아래 ② 참고.</span></div></div>
-      <div class="tip">💡 언어가 영어로 보이면 오른쪽 위 설정(톱니바퀴)에서 <b>한국어</b>로 바꾸세요. 오디오 개요 언어도 여기서 확인.</div>
+      <h3>3가지 방법, 한눈에 고르기</h3>
+      <div class="scrollx">
+        <table class="tbl">
+          <thead><tr><th>방법</th><th>언제 좋은가</th><th>준비물</th><th>난이도</th></tr></thead>
+          <tbody>
+            <tr><td><b>① Windows 무선 미러링</b></td><td>앱 설치 없이 바로 · 갤럭시에 강함</td><td>같은 와이파이 · 윈도우11</td><td>★★☆</td></tr>
+            <tr><td><b>② 무료 미러링 앱</b><br>(LetsView 등)</td><td>안드로이드·아이폰 모두 · 기종 상관없이 공통</td><td>같은 와이파이 · 앱 설치(무료)</td><td>★★☆</td></tr>
+            <tr><td><b>③ USB 케이블 연결</b></td><td>와이파이 불안정할 때 가장 안정적</td><td>USB 케이블(데이터용)</td><td>★★★</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip"><b>이렇게 고르세요</b><p>갤럭시 → ① 무선 &nbsp;|&nbsp; 아이폰·기종 섞임 → ② 앱 &nbsp;|&nbsp; 와이파이 불안 → ③ USB</p></div>
+    </div>
+
+    <div class="card">
+      <h3>방법 ① 무선 — PC 설정 (최초 1회)</h3>
+      <ul class="steps">
+        <li><b>설정 열기</b><span>⊞시작 → 톱니바퀴(⚙️ 설정) 클릭</span></li>
+        <li><b>시스템</b><span>「시스템」 → 「이 PC에 화면 표시」</span></li>
+        <li><b>기능 추가</b><span>「선택적 기능」 → 「기능 보기」</span></li>
+        <li><b>검색</b><span>검색창에 「무선」 입력</span></li>
+        <li><b>체크·추가</b><span>「무선 디스플레이」 체크 → 다음 → 설치 완료까지 대기(끝나면 재시작 권장)</span></li>
+      </ul>
+      <h4>'이 PC에 화면 표시' 값 4가지 맞추기</h4>
+      <div class="grid2">
+        <div class="mini"><b>표시할 수 있는 위치</b><span>어디서나 사용 가능</span></div>
+        <div class="mini"><b>연결 요청 시기</b><span>연결이 요청될 때마다</span></div>
+        <div class="mini"><b>연결에 PIN 필요</b><span>안 함</span></div>
+        <div class="mini"><b>이 PC를 화면 표시에 사용</b><span>켬 (토글 ON)</span></div>
+      </div>
+      <div class="warn"><b>자주 막히는 곳</b>
+        <ul>
+          <li>메뉴 이름은 윈도우 버전마다 달라요('화면 투사'로 보이기도) — 실제 화면 글자 우선</li>
+          <li><b>노트북에 충전기를 꽂아두세요</b> — 배터리 절전 상태면 폰 목록에 내 노트북이 안 뜹니다</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>방법 ① 무선 — 강의 때마다 반복할 순서</h3>
+      <ul class="steps">
+        <li><b>PC 실행</b><span>검색창에 「연결」 입력 → 「연결」 앱 실행</span></li>
+        <li><b>대기화면 확인</b><span>「무선으로 연결할 준비가 됨」 화면 확인</span></li>
+        <li><b>폰 준비</b><span>갤럭시: 위에서 쓸어내려 「Smart View」</span></li>
+        <li><b>PC 선택</b><span>목록에서 내 노트북 이름 선택 → 폰 화면이 그대로 나타납니다</span></li>
+      </ul>
+      <div class="warn"><b>자주 막히는 곳</b><p>폰·노트북이 <b>'같은 와이파이'</b>인지 꼭 확인. 기관 와이파이가 막히면 <b>폰 핫스팟</b>으로 노트북을 연결하세요.</p></div>
+    </div>
+
+    <div class="card">
+      <h3>방법 ② 무료 앱 (안드로이드·아이폰 공통)</h3>
+      <ul class="steps">
+        <li><b>앱 설치</b><span>폰·PC에 같은 무료 앱 설치(LetsView 등 · 무료)</span></li>
+        <li><b>같은 와이파이</b><span>폰과 PC를 같은 와이파이에 연결</span></li>
+        <li><b>앱에서 검색</b><span>폰 앱 실행 → [미러링] → 같은 이름의 내 PC 찾기</span></li>
+        <li><b>선택·허용</b><span>목록에서 내 PC 선택 → 화면의 [허용] 누르기 (아이폰: 제어센터 '화면 미러링'도 가능)</span></li>
+      </ul>
+      <div class="warn"><b>자주 막히는 곳</b><p>같은 와이파이 확인 · 앱 최신 버전 · 공용 와이파이 차단 시 폰 핫스팟 · 방화벽 '허용'</p></div>
+    </div>
+
+    <div class="card">
+      <h3>방법 ③ USB 케이블 (가장 안정적)</h3>
+      <ul class="steps">
+        <li><b>케이블 준비</b><span>데이터 전송용 USB 케이블(충전전용 X)</span></li>
+        <li><b>폰·PC 연결</b><span>케이블로 폰과 노트북을 연결</span></li>
+        <li><b>폰에서 허용</b><span>알림 「USB 사용 목적」 → <b>[파일 전송(MTP)]</b> 선택 → [허용]</span></li>
+        <li><b>앱에서 USB</b><span>미러링 앱에서 [USB 연결] 선택 (드라이버 설치 잠시 대기)</span></li>
+      </ul>
+      <div class="tip"><b>강사 포인트 — 기기별 결정적 차이</b><p>① 와이파이 의존도 — 아이폰은 "같은 와이파이" 필수라 다인원 접속 시 과부하에 더 취약<br>② 아이폰은 윈도우 PC에서 기본 미지원 → <b>기종이 섞이면 방법②(무료 앱)로 통일</b>하는 게 편합니다</p></div>
     </div>
   </section>
 
-  <!-- 섹션 2 -->
   <section id="s2">
-    <div class="sec-h"><span class="sn">②</span><h2>소스 넣는 4가지 방법</h2></div>
-    <p class="sec-lead">“소스 추가” 창에서 자료 종류를 고릅니다. 한 노트북에 여러 개를 섞어 넣어도 됩니다.</p>
+    <div class="sec-h"><div class="sn">2</div><h2>AI 저작권 · 표시의무 — 강사가 정확히 알아야 할 것</h2></div>
+    <p class="sec-lead">'만들었다'와 '팔 수 있다'와 '표시해야 한다'는 서로 다른 문제입니다.</p>
+
     <div class="card">
-      <div class="way"><span class="wn">1</span><div><b>PDF 파일 업로드</b><span class="wd">교재·안내서·보고서 PDF를 컴퓨터/폰에서 올리기. 가장 안정적.</span></div></div>
-      <div class="way"><span class="wn">2</span><div><b>웹 URL(사이트 주소)</b><span class="wd">기사·블로그·기관 페이지 주소를 붙여넣기. 본문을 읽어 옵니다.</span></div></div>
-      <div class="way"><span class="wn">3</span><div><b>텍스트 붙여넣기</b><span class="wd">복사한 글을 그대로 붙여넣기. 자막·메모·한글파일 내용에 좋음.</span></div></div>
-      <div class="way"><span class="wn">4</span><div><b>유튜브(YouTube) 링크</b><span class="wd">영상 주소를 붙여넣기. <b>단, 자막(스크립트) 있는 영상만</b> 인식됩니다.</span><span class="wt">★ 자막 있는 영상만</span></div></div>
-      <div class="warn">⚠️ 유튜브는 자막이 없으면 내용이 안 들어옵니다. 이럴 땐 아래 ③ <b>자막 우회 팁</b>으로 텍스트를 넣으세요.</div>
+      <h3>"AI로 만들면 내 저작권이 생긴다?" — 흔한 오해</h3>
+      <p>한국 저작권법 제2조 제1호: 저작물 = <b>"인간의 사상·감정을 표현한 창작물"</b>. '인간'이 명문 요건이라, <b>AI가 단독으로 만든 산출물은 저작권으로 보호받지 못합니다.</b> 특정 판례가 아니라 현행법 문언에 기반한 확립된 원칙입니다.</p>
+      <div class="grid2">
+        <div class="mini"><b>한국·미국 결론이 같다</b><span>미국 저작권청도 2025년 1월 보고서에서 동일 원칙 확인 — 인간 저작자성이 근간이고, 상세한 프롬프트 입력만으로는 저작물이 성립하지 않는다.</span></div>
+        <div class="mini"><b>정부 안내서 2종</b><span>①「생성형 AI 저작권 안내서」(2023.12) ②「생성형 AI 활용 저작물의 저작권 등록 안내서」(2025.6) — 단, 정부의 유권해석은 아님.</span></div>
+      </div>
+      <div class="tip"><b>강의 포인트 — 수강생 오해 1순위</b><p>"AI로 만들면 내 저작권이 생긴다"가 아니라 — <b>내 창작 기여가 있어야 '그 부분만' 보호됩니다.</b></p></div>
+    </div>
+
+    <div class="card">
+      <h3>도구별 상업이용 약관 — 무료는 대체로 금지, 유료는 대체로 허용</h3>
+      <div class="scrollx">
+        <table class="tbl">
+          <thead><tr><th>도구</th><th>무료 요금제</th><th>유료 요금제</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td><b>Suno</b> (음악)</td><td>상업이용 불가</td><td>Pro/Premier에서 상업 배포 허용, 회사 보유 권리를 이용자에게 양도(구독 유지 조건)</td><td>구독 중단 시 권리 변동 소지 · 음반사 소송 중이라 정책 변동 주의</td></tr>
+            <tr><td><b>Midjourney</b> (이미지)</td><td>원칙 불가</td><td>유료 구독자 상업이용 가능 (연매출 100만$↑ 기업은 Pro 이상)</td><td>생성 이미지 소유·이용권은 약관에 따름</td></tr>
+            <tr><td><b>ChatGPT·DALL·E</b></td><td>약관·법령 준수 시 이용자가 output 소유</td><td>동일하게 이용자 귀속</td><td>타인 상표·저작물 유사 산출물은 별도 침해 위험</td></tr>
+            <tr><td><b>공통 원칙</b></td><td>무료 tier는 대부분 상업이용 금지</td><td>유료 tier에서 상업이용·권리 귀속 허용이 일반</td><td>약관은 수시 개정 → 사용 시점 원문 재확인 필수</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn"><b>변동 항목</b><p>위 조건은 2025~2026 공개 약관 요약(기준 2026.8)입니다. 플랫폼이 수시 개정하므로, <b>상업적으로 쓰기 전 반드시 해당 도구의 최신 약관을 직접 확인</b>하세요. 특히 공적 자금으로 만든 교재·홍보물은 '유료 플랜으로 만들었는지' 점검 필요.</p></div>
+    </div>
+
+    <div class="card">
+      <h3>오늘의 열쇠 — 나는 '이용자'인가 '사업자'인가</h3>
+      <div class="grid3">
+        <div class="mini"><b>이용자 — 규제 대상 아님</b><span>타사 AI를 도구로 써서 교안·썸네일·홍보 이미지를 만든다. → <b>표시 의무 없음.</b> 여기 계신 대부분!</span></div>
+        <div class="mini"><b>AI 이용사업자 — 표시 의무</b><span>남의 AI로 고객·학생에게 '새 AI 서비스'를 제공·판매(예: AI 상담 서비스). → 사전고지·표시 의무 발생.</span></div>
+        <div class="mini"><b>AI 개발사업자 — 안전성 확보 의무</b><span>AI 모델 자체를 직접 개발해 제공. → 가장 강력한 의무. (극소수 개발사)</span></div>
+      </div>
+      <div class="tip"><b>집에 가져갈 한 문장</b><p>"강사·크리에이터가 교안·썸네일·홍보 이미지를 AI로 만드는 것은 단순 <b>'이용자'</b>에 해당하여 <b>법적 표시 의무가 없습니다.</b>" 의무는 없지만 자율 표시는 신뢰를 주므로 권장 — 단 그건 <b>매너의 영역이지 법의 강제가 아닙니다.</b></p></div>
+    </div>
+
+    <div class="card">
+      <h3>현장 Q&amp;A — 매번 나오는 4가지</h3>
+      <div class="qa"><p class="q">Q. 유튜브·SNS 썸네일을 AI로 만들면?</p><p class="a"><span class="mark o">○</span>괜찮음. 수익 유무 무관 — 도구를 쓴 '이용자'라 의무 없음. 자율 표시는 권장.</p></div>
+      <div class="qa"><p class="q">Q. AI가 만든 걸 사람이 일부 수정·리터칭하면?</p><p class="a"><span class="mark o">○</span>괜찮음. 도구로 다듬는 수준이면 표시 의무 없음(오히려 사람 손이 더 들어감).</p></div>
+      <div class="qa"><p class="q">Q. 광고·인쇄물 제작에 AI를 썼다면?</p><p class="a"><span class="mark t">△</span>갈림. 도구로 쓴 '이용자'면 의무 없음. 단 <b>'AI로 광고 만들어 드립니다'를 서비스로 팔면</b> 합리적 표시 필요.</p></div>
+      <div class="qa"><p class="q">Q. 법 시행일(2026.1.22) 이전에 올린 게시물은?</p><p class="a"><span class="mark o">○</span>안심. 소급 적용 안 됨 — 예전 영상·이미지를 지금 삭제·워터마크할 필요 전혀 없음.</p></div>
+      <div class="tip"><b>관통하는 원리</b><p>'내가 <b>도구로 썼나(이용자)</b>, <b>서비스로 파나(사업자)</b>?' — 이 질문 하나면 네 가지가 전부 풀립니다.</p></div>
+    </div>
+
+    <div class="key">
+      <h3>집에 가져갈 다섯 문장</h3>
+      <ol>
+        <li>AI 단독 산출물은 저작권 보호가 약하다 — 내 창작 기여가 있는 '그 부분'만 보호된다.</li>
+        <li>'저작권 인정'과 '상업 이용'은 별개 — 파는 것의 1차 관문은 저작권법이 아니라 <b>도구 약관</b>이다.</li>
+        <li>AI 음악은 만들 수 있어도 국내 정식 유통·정산은 까다롭다 — 인간 기여·권리·투명 표시가 열쇠.</li>
+        <li>AI 기본법의 표시의무는 <b>'사업자'의 몫</b> — 도구로 쓰는 '이용자'는 대부분 해당 없다.</li>
+        <li>계도기간은 '과태료 유예'일 뿐 — 의무는 시행일(2026.1.22)부터 이미 시작됐다.</li>
+      </ol>
     </div>
   </section>
 
-  <!-- 섹션 3 -->
   <section id="s3">
-    <div class="sec-h"><span class="sn">③</span><h2>유튜브 자막 우회 팁</h2></div>
-    <p class="sec-lead">자막 없는 영상도 이렇게 하면 내용을 넣을 수 있어요.</p>
+    <div class="sec-h"><div class="sn">3</div><h2>NotebookLM — 왜 지금 이 도구인가</h2></div>
+    <p class="sec-lead">지난 시간까지의 '아쉬움'을 오늘 메웁니다.</p>
+
+    <a class="linkbtn" href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM 열기 (notebooklm.google.com)</a>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>한마디로: 인턴 vs 꼼꼼한 조사원</h3>
+      <div class="grid2">
+        <div class="mini"><b>일반 챗봇 (ChatGPT·제미나이)</b><span>세상만사 다 아는 척하는 똑똑한 인턴. 빠르고 아는 게 많지만, 모를 땐 그럴듯하게 지어내고 근거를 콕 집어 주지 않아요.</span></div>
+        <div class="mini"><b>NotebookLM</b><span>내가 준 자료만 읽고 답하는 꼼꼼한 조사원. 자료 밖은 '모른다'고 하고, 답한 곳마다 출처를 붙여 줘요. 대신 자료가 부실하면 답도 부실.</span></div>
+      </div>
+      <h4>결정적 차이는 딱 두 가지</h4>
+      <div class="grid2">
+        <div class="mini"><b>① 소스 한정</b><span>내가 올린 자료 안에서만 답한다 — 그래서 틀리면 안 되는 일에 쓸 수 있다.</span></div>
+        <div class="mini"><b>② 인용 표시</b><span>답마다 '몇 번째 소스 어디'인지 번호를 붙인다 — 눌러서 원문 확인이 된다.</span></div>
+      </div>
+      <div class="tip"><b>강사 시연 추천</b><p>같은 질문을 두 도구에 던지세요 — <b>"우리 기관 규정에서 환불 조건이 뭐야?"</b> 일반 챗봇의 그럴듯한 답 vs NotebookLM의 인용 붙은 답. 이 대비 하나가 오늘 강의 전체를 설명합니다.</p></div>
+    </div>
+
     <div class="card">
-      <div class="step"><span class="sn2">1</span><div><b>유튜브에서 [...더보기] 열기</b><span>영상 설명 아래 “...더보기”를 누릅니다.</span></div></div>
-      <div class="step"><span class="sn2">2</span><div><b>[스크립트 표시] 누르기</b><span>“스크립트 표시(대본 표시)”를 누르면 자막 전체가 시간과 함께 뜹니다.</span></div></div>
-      <div class="step"><span class="sn2">3</span><div><b>전체 선택 → 복사</b><span>뜬 스크립트를 위에서 아래까지 드래그해 전체 복사.</span></div></div>
-      <div class="step"><span class="sn2">4</span><div><b>노트북LM에 [텍스트 붙여넣기]</b><span>“소스 추가 → 텍스트 붙여넣기”에 붙여 넣으면 완료.</span></div></div>
-      <div class="warn">⚠️ <b>쇼츠(Shorts)는 부적합</b> — 너무 짧고 자막이 적어 요약할 내용이 부족합니다. 정규 길이 영상(설명·강의)을 쓰세요.</div>
-      <div class="tip">💡 스크립트에 “0:12 / 0:45” 같은 시간 숫자가 섞여도 그대로 붙여넣으면 됩니다. 노트북LM이 알아서 걸러 읽어요.</div>
+      <h3>화면은 딱 3영역 — '요리'로 기억</h3>
+      <div class="grid3">
+        <div class="mini"><b>소스 (왼쪽)</b><span>냉장고에 재료 넣기 — 내 자료를 여기에</span></div>
+        <div class="mini"><b>채팅 (가운데)</b><span>주방장에게 주문하기 — 물어보고 답 받기</span></div>
+        <div class="mini"><b>스튜디오 (오른쪽)</b><span>완성 요리 담아내기 — 인포그래픽·슬라이드·오디오</span></div>
+      </div>
+      <h4>내 노트북 만들기 — 3단계</h4>
+      <ul class="steps">
+        <li><b>접속</b><span>notebooklm.google.com → 구글 계정 로그인</span></li>
+        <li><b>새 노트북</b><span>[＋ 새로 만들기] → '자료 추가' 창</span></li>
+        <li><b>이름 정하기</b><span>왼쪽 위 제목을 「○○ 노트북」으로 변경 — 안 바꾸면 나중에 못 찾습니다</span></li>
+      </ul>
     </div>
   </section>
 
-  <!-- 섹션 4 -->
   <section id="s4">
-    <div class="sec-h"><span class="sn">④</span><h2>복붙 프롬프트 모음</h2></div>
-    <p class="sec-lead">소스를 넣은 뒤, 아래 프롬프트를 <b>[복사]</b>해 노트북LM 대화창에 붙여넣고 보내세요.</p>
+    <div class="sec-h"><div class="sn">4</div><h2>소스 넣기 · 인용 확인 — 오늘의 진짜 핵심</h2></div>
+    <p class="sec-lead">강사가 수강생에게 <b>물려줄 습관</b>이 여기 있습니다.</p>
 
     <div class="card">
-      <div class="pcard-t"><span class="pe">📄</span><div><b>브리핑 문서 만들기</b><span class="pu">여러 자료의 핵심을 종합·구조화</span></div></div>
-      <div class="pbox"><pre class="pt">다음 자료들의 핵심 주제와 아이디어를 종합한 브리핑 문서를 만들어줘. 먼저 핵심 요약으로 가장 중요한 결론을 앞에 제시하고, 본문은 주제·근거·결론을 제목과 불릿으로 구조화해 객관적이고 명확하게 정리해줘.</pre><button type="button" class="copy" data-copy="다음 자료들의 핵심 주제와 아이디어를 종합한 브리핑 문서를 만들어줘. 먼저 핵심 요약으로 가장 중요한 결론을 앞에 제시하고, 본문은 주제·근거·결론을 제목과 불릿으로 구조화해 객관적이고 명확하게 정리해줘."><span class="ci">복사</span></button></div>
+      <h3>소스로 넣을 수 있는 것</h3>
+      <div class="grid3">
+        <div class="mini"><b>PDF · 워드</b><span>내 컴퓨터 문서 파일</span></div>
+        <div class="mini"><b>웹 주소(URL)</b><span>기사·블로그·기관 공지</span></div>
+        <div class="mini"><b>복사한 글</b><span>카톡·메모 글 그대로</span></div>
+        <div class="mini"><b>유튜브 영상</b><span>링크 (자막을 읽어 옴)</span></div>
+        <div class="mini"><b>구글 문서</b><span>드라이브의 내 문서</span></div>
+        <div class="mini"><b>여러 개 한꺼번에</b><span>한 노트북에 여러 자료</span></div>
+      </div>
+      <div class="tip"><b>실습 지시</b><p>내 자료 <b>2~3건</b>을 섞어서 넣어 보세요(문서 1 + 웹 1 + 메모 1). 소스 목록에 ☑ 체크된 채 올라오면 성공.</p></div>
+      <div class="warn"><b>유튜브 링크가 막혔을 때</b><p>링크가 안 되는 거지 <b>내용이 안 되는 게 아닙니다.</b> 자막을 복사해 '복사한 텍스트'로 넣으면 그대로 활용됩니다.</p></div>
     </div>
 
     <div class="card">
-      <div class="pcard-t"><span class="pe">🟢</span><div><b>쉬운 요약</b><span class="pu">처음 배우는 사람 눈높이로</span></div></div>
-      <div class="pbox"><pre class="pt">이 자료를 처음 배우는 사람도 이해하도록 핵심만 쉽게 요약해줘.</pre><button type="button" class="copy" data-copy="이 자료를 처음 배우는 사람도 이해하도록 핵심만 쉽게 요약해줘."><span class="ci">복사</span></button></div>
+      <h3>체크(☑) 하나로 '무엇을 근거로 답할지' 정한다</h3>
+      <p>소스 목록의 각 자료 앞에는 체크박스가 있습니다. <b>체크된 소스만</b> 답변 근거로 쓰입니다 — 이 사실 하나로 답의 품질을 통제할 수 있어요.</p>
+      <div class="prompt">
+        <div class="plabel">복붙 #1 · 3줄 요약</div>
+        <p class="ptext">지금 선택된 소스들을 처음 보는 사람도 이해하게 핵심만 3줄로 요약해 줘. 어려운 말은 쉽게, 존댓말로. 각 줄 끝에 인용 표시를 남겨 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="prompt">
+        <div class="plabel">복붙 #4 · 대상 맞춤</div>
+        <p class="ptext">이 소스를 'AI를 처음 접한 소상공인'이 이해하기 쉽게 다시 설명해 줘. 전문 용어는 괄호로 뜻을 풀고, 실제 가게 상황 예시를 하나 들어 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="tip"><b>교수 팁</b><p>프롬프트는 화면에 띄워 두고 '복사→붙여넣기' 하게 하세요. <b>타이핑시키면 오타로 시간 다 갑니다.</b> #1을 다 함께 복붙해 각자 요약을 뽑아 보게 하면 자연스럽게 '인용 확인'으로 넘어갑니다.</p></div>
     </div>
 
     <div class="card">
-      <div class="pcard-t"><span class="pe">📝</span><div><b>예상문제 만들기</b><span class="pu">자격시험 대비 10문제+정답·해설</span></div></div>
-      <div class="pbox"><pre class="pt">이 자료로 자격시험 대비 예상문제 10개와 정답·해설을 만들어줘.</pre><button type="button" class="copy" data-copy="이 자료로 자격시험 대비 예상문제 10개와 정답·해설을 만들어줘."><span class="ci">복사</span></button></div>
-    </div>
-
-    <div class="card">
-      <div class="pcard-t"><span class="pe">🎧</span><div><b>오디오 개요(한국어 팟캐스트)</b><span class="pu">오른쪽 [오디오 개요] 기능 사용</span></div></div>
-      <div class="pbox"><pre class="pt">우측 [오디오 개요]로 한국어 팟캐스트 요약 생성 (언어 설정 확인)</pre><button type="button" class="copy" data-copy="우측 [오디오 개요]로 한국어 팟캐스트 요약 생성 (언어 설정 확인)"><span class="ci">복사</span></button></div>
-      <div class="tip">💡 오디오 개요는 대화창 프롬프트가 아니라 <b>오른쪽 패널의 [오디오 개요] 버튼</b>을 눌러 생성합니다. 만들기 전에 언어가 한국어인지 확인하세요.</div>
+      <h3>인용번호 확인 3단계 — 강사가 물려줄 습관</h3>
+      <ul class="steps">
+        <li><b>답변 속 인용번호 찾기</b><span>문장 끝의 [1] [2] — '이 말의 근거'라는 표시</span></li>
+        <li><b>번호를 누른다</b><span>오른쪽에 소스 원문의 바로 그 문장이 하이라이트됨</span></li>
+        <li><b>원문과 대조한다</b><span>답과 원문이 같은 말을 하는지 눈으로 확인. 다르면 의심하고 다시 질문</span></li>
+      </ul>
+      <div class="prompt">
+        <div class="plabel">복붙 #5 · 근거 강제</div>
+        <p class="ptext">반드시 지금 선택된 소스에 실제로 있는 내용만으로 답해 줘. 근거가 없으면 지어내지 말고 '소스에 없음'이라고 분명히 말해 줘. 문장마다 인용 표시를 붙여 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="prompt">
+        <div class="plabel">복붙 #6 · 원문 대조</div>
+        <p class="ptext">방금 답변에서 가장 중요한 결론 하나를 고르고, 그 근거가 된 소스의 '원문 문장'을 따옴표로 그대로 인용해 줘. 몇 번째 소스인지도 알려 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="tip"><b>고급 — 강사·상위 학습자용</b><p>① 일부러 <b>소스에 없는 걸</b> 물어보게 하세요(무관한 통계 등). '소스에 없음'이라 답하는지 확인 → 안전장치를 체감.<br>② 같은 질문을 '소스 전체 체크'와 '한 개만 체크' 두 조건으로 물어 답이 어떻게 달라지는지 비교.<br>③ 검수 습관을 팀 규칙으로: 결과물을 남에게 보내기 전 <b>'인용 최소 1곳은 눌러 확인'</b>.</p></div>
     </div>
   </section>
 
-  <!-- 섹션 5 -->
   <section id="s5">
-    <div class="sec-h"><span class="sn">⑤</span><h2>실습 소스 예시</h2></div>
-    <p class="sec-lead">오늘 함께 넣어볼 자료입니다. 파일은 <b>각자 다운로드</b>해서 노트북LM에 업로드하세요.</p>
+    <div class="sec-h"><div class="sn">5</div><h2>스튜디오 실습 — 인포그래픽 · 슬라이드</h2></div>
+    <p class="sec-lead">한 자료로 여러 결과물이 나옵니다. 오늘은 두 가지를 손으로 만듭니다.</p>
+
     <div class="card">
-      <h3>보건복지부 「요양보호사 양성 표준교재(2024)」</h3>
-      <p style="margin:0 0 8px;font-size:14.5px;color:var(--sub);">요양보호사 자격 대비에 쓰이는 공식 표준교재. 브리핑·쉬운 요약·예상문제 실습에 좋은 소스입니다.</p>
-      <a class="startbtn" href="https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&tag=&act=view&list_no=1482064" target="_blank" rel="noopener">🔗 보건복지부 자료실 바로가기(출처)</a>
-      <p class="linkline">출처: <a href="https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&tag=&act=view&list_no=1482064" target="_blank" rel="noopener">www.mohw.go.kr … list_no=1482064</a></p>
-      <div class="info-rule">
-        <b>이용 안내(공공누리 제4유형)</b>
-        <p>출처표시 · <b>비상업적 이용만</b> · 변경금지 조건. 강의·학습 목적의 비상업 이용에 한해 출처를 표시하고 사용하세요. 파일은 각자 위 자료실에서 내려받습니다.</p>
+      <h3>인포그래픽 1건 만들기</h3>
+      <ul class="steps">
+        <li><b>스튜디오 → [인포그래픽]</b><span>오른쪽 영역에서 선택</span></li>
+        <li><b>설명 칸 채우기</b><span>제목·핵심 3가지를 내 주제로 (아래 복붙)</span></li>
+        <li><b>생성 → 확인 → 다운로드</b><span>마음에 안 들면 '핵심 3가지'만 바꿔 재생성</span></li>
+      </ul>
+      <div class="prompt">
+        <div class="plabel">복붙 #7 · 인포그래픽</div>
+        <p class="ptext">내 소스를 바탕으로 인포그래픽 한 장을 만들어 줘. 제목은 '(우리 주제)', 꼭 담을 핵심 3가지는 (① ② ③). 숫자·핵심 단어 위주로 간결하게, 처음 보는 사람도 한눈에 이해되게.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="tip"><b>교수 팁</b><p>한 번에 완벽하려 애쓰지 마세요. <b>'핵심 3가지'만 바꿔 2~3번 다시 생성</b>하면 확 좋아집니다 — 이 말을 실습 전에 미리 해 두면 재시도에 부담이 없습니다. 괄호를 각자 주제로 채우게 하는 것이 곧 실습 준비입니다.</p></div>
+      <div class="warn"><b>검수</b><p>AI가 뽑은 <b>큰 숫자가 소스와 맞는지</b> 반드시 확인. 예뻐서 그냥 믿기 쉬운 지점입니다.</p></div>
+    </div>
+
+    <div class="card">
+      <h3>슬라이드 만들기 — '목차 먼저'가 핵심</h3>
+      <p>바로 만들면 결과가 산만합니다. <b>목차 확인 → 수정 → 완성</b> 순서가 훨씬 낫습니다.</p>
+      <div class="prompt">
+        <div class="plabel">복붙 #8 · 목차부터</div>
+        <p class="ptext">바로 만들지 말고, 먼저 목차(슬라이드 제목 순서)만 8장 이내로 제안해 줘. 대상은 (우리 팀/주민), 발표 5분 기준.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="prompt">
+        <div class="plabel">복붙 #9 · 목차 수정</div>
+        <p class="ptext">(○번) 슬라이드는 빼고, (△내용)을 (두 번째)로 넣어 줘. 마지막에 '핵심 요약 한 장' 추가. 수정 목차 보여 준 뒤 완성해 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="prompt">
+        <div class="plabel">복붙 #10 · 공유 전 최종 점검</div>
+        <p class="ptext">공유 전, 핵심 주장 2가지가 어느 소스 몇 번 근거인지 인용으로 정리해 줘.</p>
+        <button class="copy">복사하기</button>
+      </div>
+      <div class="tip"><b>교수 팁</b><p>목차 수정을 <b>'말로' 한다</b>는 게 포인트 — 강사가 한 번 고쳐 보이면 수강생이 따라 합니다. 공유는 '편집 가능'이 아니라 <b>'뷰어'</b>로(원본 보호), 공유 전 #10으로 근거를 한 번 더 확인하는 습관까지 붙이세요.</p></div>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-h"><div class="sn">6</div><h2>활용 아이디어 갤러리</h2></div>
+    <div class="card">
+      <h3>강사가 되면 — 교육·강의에 이렇게 씁니다</h3>
+      <div class="grid2">
+        <div class="mini"><b>교안 초안 뽑기</b><span>기관 공지·교재를 소스로 넣고 회차별 교안 초안</span></div>
+        <div class="mini"><b>대상 맞춤 재설명</b><span>같은 내용을 시니어용 / 강사용으로 각각 변환</span></div>
+        <div class="mini"><b>슬라이드 초안</b><span>목차 먼저 → 수정 → 완성</span></div>
+        <div class="mini"><b>요약·FAQ·타임라인</b><span>수강생 배포용 유인물로 바로 활용</span></div>
+      </div>
+      <h4>업무·소상공인 활용</h4>
+      <div class="grid2">
+        <div class="mini"><b>공고문 해독</b><span>지원사업 공고를 넣고 '우리가 해당되나' 근거와 함께 확인</span></div>
+        <div class="mini"><b>규정·약관 확인</b><span>환불·계약 조건을 인용 붙은 답으로</span></div>
+        <div class="mini"><b>회의·상담 정리</b><span>메모를 넣고 핵심·할 일로 정리</span></div>
+        <div class="mini"><b>홍보물 초안</b><span>내 자료 기반 인포그래픽 한 장</span></div>
       </div>
     </div>
   </section>
 
-  <!-- 섹션 6 -->
-  <section id="s6">
-    <div class="sec-h"><span class="sn">⑥</span><h2>실습 순서 체크리스트</h2></div>
-    <p class="sec-lead">이 순서대로 하나씩 눌러가며 따라오세요.</p>
-    <div class="card">
-      <div class="chk"><span class="cn">1</span><div><b>소스 넣기</b><span>표준교재 PDF 업로드(또는 텍스트 붙여넣기).</span></div></div>
-      <div class="chk"><span class="cn">2</span><div><b>브리핑 문서</b><span>④의 ‘브리핑 문서’ 프롬프트 붙여넣고 실행 → 핵심 구조 확인.</span></div></div>
-      <div class="chk"><span class="cn">3</span><div><b>오디오 개요</b><span>오른쪽 [오디오 개요]로 한국어 요약 생성(언어 확인).</span></div></div>
-      <div class="chk"><span class="cn">4</span><div><b>예상문제</b><span>④의 ‘예상문제’ 프롬프트로 10문제+해설 뽑기.</span></div></div>
-      <div class="chk"><span class="cn">5</span><div><b>저장</b><span>마음에 드는 답변은 ‘메모에 저장’ 또는 문서로 내보내기.</span></div></div>
-      <div class="oneline">소스 넣기 → 브리핑 → 오디오 개요 → 예상문제 → 저장</div>
-    </div>
-  </section>
-
-  <!-- 섹션 7 (자리만) -->
   <section id="s7">
-    <div class="sec-h"><span class="sn">⑦</span><h2>추천 데모 영상 · 확장프로그램 베스트5</h2></div>
-    <p class="sec-lead">검증된 목록이 준비되면 이 자리에 채웁니다.</p>
-    <div class="soon">
-      <span class="badge2">추후 업데이트</span>
-      <p><b>추천 데모 영상</b> — (추후 업데이트)</p>
-      <p><b>확장프로그램 베스트5</b> — (추후 업데이트)</p>
-      <p style="margin-top:8px;font-size:13px;">검증을 마친 목록이 오면 링크·설명과 함께 이 섹션을 채울 예정입니다.</p>
+    <div class="sec-h"><div class="sn">7</div><h2>강의 30분 전 점검표 · 숙제</h2></div>
+    <div class="card">
+      <h3>사전 점검 체크리스트</h3>
+      <ul class="steps">
+        <li><b>노트북 전원 연결</b><span>배터리 절전이면 미러링 목록에 안 뜸</span></li>
+        <li><b>와이파이 동일 확인</b><span>폰·PC 같은 망 / 막히면 폰 핫스팟 대비</span></li>
+        <li><b>미러링 1회 리허설</b><span>강의 시작 전 반드시 한 번 붙여 보기</span></li>
+        <li><b>NotebookLM 로그인</b><span>구글 계정 로그인 상태 + 시연용 노트북 미리 준비</span></li>
+        <li><b>이 페이지 띄워 두기</b><span>프롬프트 복사용 — 수강생에게 링크·QR 공유</span></li>
+        <li><b>화면 글자 크기</b><span>브라우저 확대(Ctrl +)로 뒷자리까지 보이게</span></li>
+      </ul>
+      <div class="warn"><b>다인원 동시 접속 주의</b><p>여러 명이 동시에 미러링을 붙으면 와이파이가 과부하됩니다. 시연은 <b>강사 1대만</b> 띄우고, 수강생은 각자 화면에서 따라 하게 하세요.</p></div>
+    </div>
+
+    <div class="card">
+      <h3>이번 주 숙제 — 다음 회차에 이어 씁니다</h3>
+      <div class="grid2">
+        <div class="mini"><b>① 내 노트북 1개</b><span>내 업무·강의 자료 2~3건을 넣은 노트북 완성</span></div>
+        <div class="mini"><b>② 시각 결과물 1건</b><span>인포그래픽 또는 슬라이드 1건 생성 후 저장</span></div>
+      </div>
+      <p class="note">제출 전 <b>복붙 #10</b>으로 핵심 주장의 근거를 한 번 확인해 오세요.</p>
     </div>
   </section>
-
-  <div class="prbtn"><button type="button" onclick="window.print()">🖨 이 페이지 인쇄 / A4 핸드아웃 저장</button></div>
 
   <footer>
-    <p><b>홍성 4회차 · 노트북LM(NotebookLM) — 실습 복붙 자료 · v1 · 2026-08-28</b></p>
-    <p>도구: 구글 노트북LM(notebooklm.google.com). 실습 소스: 보건복지부 「요양보호사 양성 표준교재(2024)」(공공누리 제4유형 · 비상업 · 출처표시). 화면·기능·자막 정책은 <b>2026.8 기준</b>이며 재확인 권장.</p>
-    <p>개인정보를 수집·저장·전송하지 않습니다(외부 서버 연결 0 · 완전 자기완결). 제작: 커리어숲.</p>
+    청양·홍성 AI 강사양성과정 · 4회차<br>
+    강사 임금희 · 커리어숲<br>
+    <span class="note">화면·메뉴·약관은 2026년 기준입니다. 도구 정책은 수시로 바뀌므로 강의 직전 실제 화면과 최신 약관을 반드시 재확인하세요.</span>
   </footer>
 </div>
 
-<div id="toast">복사했어요</div>
+<div class="toast" id="toast">복사했습니다</div>
 
 <script>
 (function(){
-  "use strict";
-  // ── 복사(클립보드 API + execCommand 폴백) ──
-  var toast = document.getElementById('toast'), toastT;
-  function showToast(msg){
-    toast.textContent = msg || '복사했어요';
-    toast.classList.add('show');
-    clearTimeout(toastT);
-    toastT = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+  var toast = document.getElementById('toast'), timer;
+  function show(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(timer); timer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
   }
   function fallbackCopy(text){
-    try{
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.setAttribute('readonly','');
-      ta.style.position='fixed'; ta.style.top='-9999px'; ta.style.opacity='0';
-      document.body.appendChild(ta);
-      ta.select(); ta.setSelectionRange(0, text.length);
-      var ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      return ok;
-    }catch(e){ return false; }
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.top='-1000px';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
   }
-  function markDone(btn){
-    btn.classList.add('done');
-    var span = btn.querySelector('.ci');
-    var prev = span ? span.textContent : '';
-    if(span) span.textContent = '복사됨';
-    setTimeout(function(){
-      btn.classList.remove('done');
-      if(span) span.textContent = prev || '복사';
-    }, 1400);
-  }
-  document.addEventListener('click', function(e){
-    var btn = e.target.closest ? e.target.closest('.copy') : null;
-    if(!btn) return;
-    var text = btn.getAttribute('data-copy') || '';
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(function(){
-        markDone(btn); showToast('복사했어요');
-      }).catch(function(){
-        if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
-        else showToast('길게 눌러 복사해 주세요');
-      });
-    }else{
-      if(fallbackCopy(text)){ markDone(btn); showToast('복사했어요'); }
-      else showToast('길게 눌러 복사해 주세요');
-    }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest('.prompt');
+      var text = box.querySelector('.ptext').innerText.trim();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(ok, function(){ fallbackCopy(text); ok(); });
+      } else { fallbackCopy(text); ok(); }
+      function ok(){
+        btn.textContent = '복사됨 ✓'; btn.classList.add('done');
+        show('복사했습니다 — 붙여넣기 하세요');
+        setTimeout(function(){ btn.textContent='복사하기'; btn.classList.remove('done'); }, 2200);
+      }
+    });
   });
 })();
 </script>
