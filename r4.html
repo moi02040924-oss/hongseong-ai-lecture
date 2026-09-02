@@ -138,6 +138,25 @@ footer{margin-top:42px; padding-top:20px; border-top:1px solid var(--line); text
 </head>
 <body>
 
+
+<!-- 회차 이동 바 -->
+<style>
+.rnav{position:sticky;top:0;z-index:9000;display:flex;gap:6px;justify-content:center;
+ flex-wrap:wrap;padding:9px 10px;background:#2C3A78;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.rnav a{font-family:'Malgun Gothic',sans-serif;font-size:15px;font-weight:800;
+ text-decoration:none;color:#DCE3F5;background:rgba(255,255,255,.12);
+ padding:9px 16px;border-radius:999px;line-height:1;white-space:nowrap}
+.rnav a.on{background:#EAE3D2;color:#2C3A78}
+@media(max-width:430px){.rnav a{font-size:14px;padding:8px 12px}}
+</style>
+<nav class="rnav">
+  <a href="index.html">홈</a>
+  <a href="r1.html">1회차</a>
+  <a href="r2.html">2회차</a>
+  <a href="r3.html">3회차</a>
+  <a href="r4.html" class="on">4회차</a>
+</nav>
+
 <header>
   <div class="hd-in">
     <div class="hbadge">청양·홍성 AI 강사양성과정 · 4회차</div>
